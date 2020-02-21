@@ -1,6 +1,6 @@
 # RSA
 
-Library for use openPGP
+Library for use RSA
 
 ## Usage
 
