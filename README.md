@@ -1,12 +1,12 @@
-# RSA
+# Fast RSA
 
 Library for use RSA
 
 ## Usage
 
 ```dart
-import 'package:rsa/key_pair.dart';
-import 'package:rsa/rsa.dart';
+import 'package:fast_rsa/key_pair.dart';
+import 'package:fast_rsa/rsa.dart';
 
 
 const passphrase = '123456789';

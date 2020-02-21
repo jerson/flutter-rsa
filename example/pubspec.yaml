@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  rsa:
+  fast_rsa:
     path: ../
 
 # For information on the generic Dart part of this file, see the

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:rsa/key_pair.dart';
-import 'package:rsa/rsa.dart';
+import 'package:fast_rsa/key_pair.dart';
+import 'package:fast_rsa/rsa.dart';
 
 const passphrase = '123456789';
 const pkcs12 = '''MIIQSQIBAzCCEA8GCSqGSIb3DQEHAaCCEAAEgg/8MIIP+DCCBi8GCSqGSIb3DQEH

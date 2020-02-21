@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:rsa/key_pair.dart';
+import 'package:fast_rsa/key_pair.dart';
 
 enum RSAHash {
   md5,
