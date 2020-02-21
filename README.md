@@ -17,63 +17,21 @@ UKFwK/UCAggAgIIF6N5rjkv/eidrXYlkrkyl2EBNfK8hQU+cJt0lkLt6zVC+ddNW
 ...MORE OF YOUR PKCS12
 BgUrDgMCGgUABBQ9GTbjyC/z9oi+bg8R3kdod+2+XQQINXgTTMTGIPkCAggA''';
 
-var encrypted = await RSA.encryptOAEP(
-                            "text",
-                            "",
-                            RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
-                          );
+var encrypted = await RSA.encryptOAEP("text", "", RSAHash.sha256, pkcs12, passphrase);
 
-var decrypted = await RSA.decryptOAEP(
-                            "text encrypted",
-                            "",
-                            RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
-                          );
+var decrypted = await RSA.decryptOAEP("text encrypted", "", RSAHash.sha256, pkcs12, passphrase );
 
-var encrypted = await RSA.encryptPKCS1v15(
-                            "text",
-                            pkcs12,
-                            passphrase,
-                          );
+var encrypted = await RSA.encryptPKCS1v15("text", pkcs12, passphrase);
 
-var decrypted = await RSA.decryptPKCS1v15(
-                            "text encrypted",
-                            pkcs12,
-                            passphrase,
-                          );
+var decrypted = await RSA.decryptPKCS1v15("text encrypted", pkcs12, passphrase);
 
-var signed = await RSA.signPSS(
-                            "text",
-                            RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
-                          );
+var signed = await RSA.signPSS("text", RSAHash.sha256, pkcs12, passphrase);
 
-var verified = await RSA.verifyPSS(
-                            "signed text",
-                            "text",
-                            RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
-                          );
+var verified = await RSA.verifyPSS("signed text", "text", RSAHash.sha256, pkcs12, passphrase);
 
-var signed = await RSA.signPKCS1v15(
-                            "text",
-                            RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
-                          );
+var signed = await RSA.signPKCS1v15("text", RSAHash.sha256, pkcs12, passphrase);
 
-var verified = await RSA.verifyPKCS1v15(
-                            "signed text",
-                            "text",
-                            RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
-                          );
+var verified = await RSA.verifyPKCS1v15("signed text", "text", RSAHash.sha256, pkcs12, passphrase);
 
 var keyPair = await RSA.generate(2048);
 
