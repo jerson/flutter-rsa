@@ -17,11 +17,6 @@ UKFwK/UCAggAgIIF6N5rjkv/eidrXYlkrkyl2EBNfK8hQU+cJt0lkLt6zVC+ddNW
 ...MORE OF YOUR PKCS12
 BgUrDgMCGgUABBQ9GTbjyC/z9oi+bg8R3kdod+2+XQQINXgTTMTGIPkCAggA''';
 
-var keyPair = await RSA.generate(2048);
-
-var hash = await RSA.hash("text here", RSAHash.sha512);
-var base64 = await RSA.base64("text here");
-
 var encrypted = await RSA.encryptOAEP(
                             "text",
                             "",
@@ -80,6 +75,10 @@ var verified = await RSA.verifyPKCS1v15(
                             passphrase,
                           );
 
+var keyPair = await RSA.generate(2048);
+
+var hash = await RSA.hash("text here", RSAHash.sha512);
+var base64 = await RSA.base64("text here");
 
 ```
 
