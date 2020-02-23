@@ -1,4 +1,4 @@
-## 0.3.0
+## 0.4.0
 
 - Fixed android, now running on background
 
