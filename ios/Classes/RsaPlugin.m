@@ -8,6 +8,7 @@
 
 @implementation RsaPlugin{
     dispatch_queue_t queue;
+    RsaFastRSA *instance;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -70,6 +71,14 @@
 - (void)setup
 {
     queue = dispatch_queue_create("fast-rsa", DISPATCH_QUEUE_SERIAL);
+    instance = RsaNewFastRSA();
+}
+
+- (void)result: (FlutterResult)result output:(id) output
+{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        result(output);
+    });
 }
 
 - (void) encryptPKCS1v15: (NSString *)message
@@ -79,22 +88,17 @@
 {
     dispatch_async(queue, ^(void){
         @try {
-            
-             NSError *error;
-             NSString * output = [RsaNewFastRSA() encryptPKCS1v15:message pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSError *error;
+            NSString * output = [self->instance encryptPKCS1v15:message pkcs12:pkcs12 passphrase:passphrase error:&error];
 
-             dispatch_async(dispatch_get_main_queue(), ^(void){
-                 if(error!=nil){
-                     result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                 }else{
-                     result(output);
-                 }
-             });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
     
@@ -110,20 +114,16 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [RsaNewFastRSA() encryptOAEP:message label:label hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance encryptOAEP:message label:label hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(output);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
 }
@@ -138,20 +138,16 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [RsaNewFastRSA() decryptOAEP:message label:label hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance decryptOAEP:message label:label hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
             
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(output);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
 }
@@ -163,20 +159,16 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [RsaNewFastRSA() decryptPKCS1v15:message pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance decryptPKCS1v15:message pkcs12:pkcs12 passphrase:passphrase error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(output);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
 }
@@ -190,20 +182,16 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [RsaNewFastRSA() signPKCS1v15:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance signPKCS1v15:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(output);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
 }
@@ -218,20 +206,16 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [RsaNewFastRSA() signPSS:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance signPSS:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(output);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
     
@@ -248,20 +232,16 @@
         @try {
             NSError *error;
             BOOL ret0_;
-            BOOL output = [RsaNewFastRSA() verifyPKCS1v15:signature message:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase ret0_:&ret0_ error:&error];
+            BOOL output = [self->instance verifyPKCS1v15:signature message:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase ret0_:&ret0_ error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result([NSNumber numberWithBool:output]);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:[NSNumber numberWithBool:output]];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
     
@@ -278,20 +258,16 @@
         @try {
             NSError *error;
             BOOL ret0_;
-            BOOL output = [RsaNewFastRSA() verifyPSS:signature message:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase ret0_:&ret0_ error:&error];
+            BOOL output = [self->instance verifyPSS:signature message:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase ret0_:&ret0_ error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result([NSNumber numberWithBool:output]);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:[NSNumber numberWithBool:output]];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
 
@@ -304,20 +280,16 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [RsaNewFastRSA() hash:message name:name error:&error];
+            NSString * output = [self->instance hash:message name:name error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(output);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
 }
@@ -328,20 +300,16 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [RsaNewFastRSA() base64:message error:&error];
+            NSString * output = [self->instance base64:message error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(output);
-                }
-            });
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
     
@@ -353,23 +321,19 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            RsaKeyPair * output = [RsaNewFastRSA() generate:[bits floatValue] error:&error];
+            RsaKeyPair * output = [self->instance generate:[bits floatValue] error:&error];
 
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if(error!=nil){
-                    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]);
-                }else{
-                    result(@{
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:@{
                               @"publicKey":output.publicKey,
                               @"privateKey":output.privateKey,
-                            });
-                }
-            });
+                            }];
+            }
         }
         @catch (NSException * e) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                result([FlutterError errorWithCode:e.name message:e.reason details:nil]);
-            });
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
         }
     });
 }
