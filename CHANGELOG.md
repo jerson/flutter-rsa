@@ -1,3 +1,7 @@
+## 0.5.0
+
+- Now run on background on ios
+
 ## 0.4.0
 
 - Fixed android, now running on background
