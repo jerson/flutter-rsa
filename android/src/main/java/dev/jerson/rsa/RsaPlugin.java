@@ -1,5 +1,8 @@
 package dev.jerson.rsa;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.annotation.NonNull;
 
 import java.util.HashMap;
@@ -24,12 +27,14 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
     private FastRSA instance;
+    private Handler handler;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         instance = Rsa.newFastRSA();
         channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "rsa");
         channel.setMethodCallHandler(this);
+        handler = new Handler(Looper.getMainLooper());
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -154,115 +159,181 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
         channel.setMethodCallHandler(null);
     }
 
-    private void decryptOAEP(String message, String label, String hashName, String pkcs12, String passphrase, Result promise) {
-        try {
-            String result = instance.decryptOAEP(message, label, hashName, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void success(final Result promise, final Object result) {
+        Runnable local = new Runnable() {
+            @Override
+            public void run() {
+                promise.success(result);
+            }
+        };
+
+        handler.post(local);
+    }
+
+    private void error(final Result promise, final String errorCode, final String errorMessage, final Object errorDetails) {
+        Runnable local = new Runnable() {
+            @Override
+            public void run() {
+                promise.error(errorCode, errorMessage, errorDetails);
+            }
+        };
+
+        handler.post(local);
+    }
+
+    private void decryptOAEP(final String message, final String label, final String hashName, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.decryptOAEP(message, label, hashName, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void decryptPKCS1v15(String message, String pkcs12, String passphrase, Result promise) {
-        try {
-            String result = instance.decryptPKCS1v15(message, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void decryptPKCS1v15(final String message, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.decryptPKCS1v15(message, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void encryptOAEP(String message, String label, String hashName, String pkcs12, String passphrase, Result promise) {
-        try {
-            String result = instance.encryptOAEP(message, label, hashName, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void encryptOAEP(final String message, final String label, final String hashName, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.encryptOAEP(message, label, hashName, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void encryptPKCS1v15(String message, String pkcs12, String passphrase, Result promise) {
-        try {
-            String result = instance.encryptPKCS1v15(message, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void encryptPKCS1v15(final String message, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.encryptPKCS1v15(message, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void signPSS(String message, String hashName, String pkcs12, String passphrase, Result promise) {
-        try {
-            String result = instance.signPSS(message, hashName, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void signPSS(final String message, final String hashName, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.signPSS(message, hashName, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void signPKCS1v15(String message, String hashName, String pkcs12, String passphrase, Result promise) {
-        try {
-            String result = instance.signPKCS1v15(message, hashName, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void signPKCS1v15(final String message, final String hashName, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.signPKCS1v15(message, hashName, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void verifyPSS(String signature, String message, String hashName, String pkcs12, String passphrase, Result promise) {
-        try {
-            Boolean result = instance.verifyPSS(signature, message, hashName, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void verifyPSS(final String signature, final String message, final String hashName, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Boolean result = instance.verifyPSS(signature, message, hashName, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void verifyPKCS1v15(String signature, String message, String hashName, String pkcs12, String passphrase, Result promise) {
-        try {
-            Boolean result = instance.verifyPKCS1v15(signature, message, hashName, pkcs12, passphrase);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void verifyPKCS1v15(final String signature, final String message, final String hashName, final String pkcs12, final String passphrase, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Boolean result = instance.verifyPKCS1v15(signature, message, hashName, pkcs12, passphrase);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void hash(String message, String name, Result promise) {
-        try {
-            String result = instance.hash(message, name);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void hash(final String message, final String name, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.hash(message, name);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void base64(String message, Result promise) {
-        try {
-            String result = instance.base64(message);
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void base64(final String message, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.base64(message);
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
 
-    private void generate(Integer bits, Result promise) {
-        try {
-            KeyPair keyPair = instance.generate(bits);
-            HashMap<String, Object> result = new HashMap<>();
-            result.put("publicKey", keyPair.getPublicKey());
-            result.put("privateKey", keyPair.getPrivateKey());
-            promise.success(result);
-        } catch (Exception e) {
-            promise.error("error", e.getMessage(), e);
-        }
+    private void generate(final Integer bits, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    KeyPair keyPair = instance.generate(bits);
+                    HashMap<String, Object> result = new HashMap<>();
+                    result.put("publicKey", keyPair.getPublicKey());
+                    result.put("privateKey", keyPair.getPrivateKey());
+                    success(promise,result);
+                } catch (Exception e) {
+                    error(promise,"error", e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 }
