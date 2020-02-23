@@ -99,6 +99,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                         (String) call.argument("passphrase"),
                         result
                 );
+                break;
             case "signPKCS1v15":
                 signPKCS1v15(
                         (String) call.argument("message"),
@@ -182,16 +183,18 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
     private void decryptOAEP(final String message, final String label, final String hashName, final String pkcs12, final String passphrase, final Result promise) {
+
         new Thread(new Runnable() {
             public void run() {
                 try {
                     String result = instance.decryptOAEP(message, label, hashName, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
+
     }
 
 
@@ -202,7 +205,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     String result = instance.decryptPKCS1v15(message, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -216,7 +219,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     String result = instance.encryptOAEP(message, label, hashName, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -230,7 +233,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     String result = instance.encryptPKCS1v15(message, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -244,7 +247,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     String result = instance.signPSS(message, hashName, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -258,7 +261,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     String result = instance.signPKCS1v15(message, hashName, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -272,7 +275,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     Boolean result = instance.verifyPSS(signature, message, hashName, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -286,7 +289,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     Boolean result = instance.verifyPKCS1v15(signature, message, hashName, pkcs12, passphrase);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -300,7 +303,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     String result = instance.hash(message, name);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -314,7 +317,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     String result = instance.base64(message);
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -331,9 +334,10 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                     result.put("privateKey", keyPair.getPrivateKey());
                     success(promise,result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), e);
+                    error(promise,"error", e.getMessage(), null);
                 }
             }
         }).start();
     }
 }
+
