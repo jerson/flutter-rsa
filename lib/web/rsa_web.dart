@@ -269,7 +269,7 @@ class RsaPlugin {
 
   Future<dynamic> generate(int bits) async {
     var completer = new Completer<dynamic>();
-    RSAGenerate(1024, allowInterop((String error, dynamic result) {
+    RSAGenerate(bits, allowInterop((String error, dynamic result) {
       if (error != null && error != "") {
         completer.completeError(error);
         return;
