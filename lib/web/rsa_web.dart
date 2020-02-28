@@ -27,15 +27,10 @@ class RsaPlugin {
       return completer.future;
     }
 
-    var request = await HttpRequest.request(
-      'http://localhost:3000/rsa.wasm',
-      responseType: 'arraybuffer',
-      mimeType: 'application/wasm',
-    );
-
+    var data = await rootBundle.load('packages/fast_rsa/assets/rsa.wasm');
     var go = new Go();
     WebAssembly.instantiate(
-      request.response,
+      data.buffer,
       go.importObject,
     ).then((result) {
       go.run(result.instance);

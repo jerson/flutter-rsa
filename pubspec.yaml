@@ -39,10 +39,9 @@ flutter:
         pluginClass: RsaPlugin
         fileName: web/rsa_web.dart
   # To add assets to your plugin package, add an assets section, like this:
-  #assets:
-  # - assets/wasm_exec.js
-  # - assets/rsa.wasm
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - lib/assets/wasm_exec.js
+    - lib/assets/rsa.wasm
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
