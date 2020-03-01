@@ -70,14 +70,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1"
   fast_rsa_web:
     dependency: "direct dev"
     description:
       path: "../../fast_rsa_web"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.2.0"
   flutter:
     dependency: "direct main"
     description: flutter

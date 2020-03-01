@@ -1,6 +1,6 @@
 name: fast_rsa
 description: library for use RSA with support for android and ios
-version: 0.6.0
+version: 0.6.1
 homepage: https://github.com/jerson/flutter-rsa
 
 environment:
