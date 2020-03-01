@@ -20,7 +20,7 @@ This is what the above means to your `pubspec.yaml`:
 dependencies:
   ...
   fast_rsa: ^0.6.0
-  fast_rsa_web: ^0.1.0
+  fast_rsa_web: ^0.4.0
   ...
 ```
 

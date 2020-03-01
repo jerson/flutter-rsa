@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Format
+
 ## 0.3.0
 
 - Fixed web release mode support
