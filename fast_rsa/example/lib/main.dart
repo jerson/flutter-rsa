@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_rsa/key_pair.dart';
 import 'package:fast_rsa/rsa.dart';
@@ -92,7 +95,13 @@ d4k6nehNbjrrhTDkeV4i7kRFjDQRQn8dX1XrVng3c1w4tJI46J82E1re1dCw9eU5
 SqLMMSUwIwYJKoZIhvcNAQkVMRYEFMlOPeNFP3dsXCHkZzNfcbC+SIwiMDEwITAJ
 BgUrDgMCGgUABBQ9GTbjyC/z9oi+bg8R3kdod+2+XQQINXgTTMTGIPkCAggA''';
 
-void main() => runApp(MyApp());
+void main() {
+  if (!kIsWeb && (Platform.isLinux || Platform.isWindows)) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+
+  runApp(new MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
