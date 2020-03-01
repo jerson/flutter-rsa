@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Fixed web release mode support
+
 ## 0.2.0
 
 - Removed additional files

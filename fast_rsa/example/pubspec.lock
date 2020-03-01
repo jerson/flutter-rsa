@@ -77,7 +77,7 @@ packages:
       path: "../../fast_rsa_web"
       relative: true
     source: path
-    version: "0.2.0"
+    version: "0.3.0"
   flutter:
     dependency: "direct main"
     description: flutter

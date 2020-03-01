@@ -1,6 +1,6 @@
 name: fast_rsa_web
 description: library for use RSA with support for web
-version: 0.2.0
+version: 0.3.0
 homepage: https://github.com/jerson/flutter-rsa
 
 environment:
@@ -32,9 +32,9 @@ flutter:
       web:
         pluginClass: RsaPlugin
         fileName: rsa_web.dart
-  assets:
-    - lib/assets/wasm_exec.js
-    - lib/assets/rsa.wasm
+  #assets:
+  #  - lib/assets/wasm_exec.js
+  #  - lib/assets/rsa.wasm
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

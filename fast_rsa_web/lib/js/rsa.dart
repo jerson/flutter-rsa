@@ -93,5 +93,11 @@ external RSABase64(
 @JS()
 external RSAGenerate(
   int bits,
-  Function(String error, dynamic result) callback,
+  Function(String error, KeyPairObject result) callback,
 );
+
+@JS()
+class KeyPairObject {
+  external String get publicKey;
+  external String get privateKey;
+}

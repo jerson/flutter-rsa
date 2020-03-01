@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fast_rsa_web/js/go.dart';
+import 'package:fast_rsa_web/js/promise.dart';
 import 'package:fast_rsa_web/js/rsa.dart';
 import 'package:fast_rsa_web/js/wasm.dart';
 
@@ -19,27 +20,27 @@ class RsaPlugin {
   }
 
   Future<bool> loadInstance() async {
-    var completer = new Completer<bool>();
-
     if (_ready == true) {
-      completer.complete(true);
-      return completer.future;
+      return true;
     }
 
     var data = await rootBundle.load('packages/fast_rsa_web/assets/rsa.wasm');
     var go = new Go();
-    WebAssembly.instantiate(
+
+    var result = await promiseToFutureInterop(WebAssembly.instantiate(
       data.buffer,
       go.importObject,
-    ).then((result) {
-      go.run(result.instance);
-      _ready = true;
-      completer.complete(_ready);
-    }, (error) {
-      completer.completeError(error);
+    ));
+
+    promiseToFutureInterop(go.run(result.instance)).then((result) {
+      consoleLog(result);
+      _ready = false;
+      loadInstance();
     });
 
-    return completer.future;
+    _ready = true;
+
+    return true;
   }
 
   Future<dynamic> handleMethodCall(MethodCall call) async {
@@ -263,7 +264,7 @@ class RsaPlugin {
 
   Future<dynamic> generate(int bits) async {
     var completer = new Completer<dynamic>();
-    RSAGenerate(bits, allowInterop((String error, dynamic result) {
+    RSAGenerate(bits, allowInterop((String error, KeyPairObject result) {
       if (error != null && error != "") {
         completer.completeError(error);
         return;
