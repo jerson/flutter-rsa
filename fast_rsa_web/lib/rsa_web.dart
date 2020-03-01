@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:html';
 
-import 'package:fast_rsa/web/js/go.dart';
-import 'package:fast_rsa/web/js/rsa.dart';
-import 'package:fast_rsa/web/js/wasm.dart';
+import 'package:fast_rsa_web/js/go.dart';
+import 'package:fast_rsa_web/js/rsa.dart';
+import 'package:fast_rsa_web/js/wasm.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -27,7 +26,7 @@ class RsaPlugin {
       return completer.future;
     }
 
-    var data = await rootBundle.load('packages/fast_rsa/assets/rsa.wasm');
+    var data = await rootBundle.load('packages/fast_rsa_web/assets/rsa.wasm');
     var go = new Go();
     WebAssembly.instantiate(
       data.buffer,

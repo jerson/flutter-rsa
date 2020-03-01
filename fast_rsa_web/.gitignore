@@ -1,0 +1,11 @@
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+.vscode/
+
+build/
+
+.idea/
+*._*

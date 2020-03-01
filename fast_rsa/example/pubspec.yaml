@@ -20,6 +20,9 @@ dev_dependencies:
   fast_rsa:
     path: ../
 
+  fast_rsa_web:
+    path: ../../fast_rsa_web
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -32,8 +35,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - packages/fast_rsa/assets/wasm_exec.js
-    - packages/fast_rsa/assets/rsa.wasm
+    - packages/fast_rsa_web/assets/wasm_exec.js
+    - packages/fast_rsa_web/assets/rsa.wasm
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

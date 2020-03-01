@@ -71,6 +71,13 @@ packages:
       relative: true
     source: path
     version: "0.6.0"
+  fast_rsa_web:
+    dependency: "direct dev"
+    description:
+      path: "../../fast_rsa_web"
+      relative: true
+    source: path
+    version: "0.6.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -121,13 +128,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.4"
-  path_provider:
-    dependency: transitive
-    description:
-      name: path_provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.0+1"
   petitparser:
     dependency: transitive
     description:
