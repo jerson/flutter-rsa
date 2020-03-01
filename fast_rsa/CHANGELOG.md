@@ -1,3 +1,7 @@
+## 0.6.1
+
+- Updated ignore
+
 ## 0.6.0
 
 - Single instance for ios
