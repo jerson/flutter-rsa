@@ -29,4 +29,4 @@ dependencies:
 Once you have the `fast_rsa_web` dependency in your pubspec, you should
 be able to use `package:fast_rsa` as normal.
 
-[1]: ../fast_rsa
+[1]: ../fast_rsa/README.md
