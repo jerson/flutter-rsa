@@ -44,7 +44,7 @@ end
 
 target 'Runner' do
   use_frameworks!
-  use_modular_headers!
+  #use_modular_headers!
 
   # Prepare symlinks folder. We use symlinks to avoid having Podfile.lock
   # referring to absolute paths on developers' machines.
