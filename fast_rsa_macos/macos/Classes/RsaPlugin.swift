@@ -120,11 +120,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func encryptPKCS1v15(message: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.encryptPKCS1v15(message, pkcs12: pkcs12, passphrase: passphrase, error: error!)
+                var error: NSError?
+                let output = try self.instance?.encryptPKCS1v15(message, pkcs12: pkcs12, passphrase: passphrase, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -137,11 +137,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func encryptOAEP(message: String?, label: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.encryptOAEP(message, label: label, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: error!)
+                var error: NSError?
+                let output = try self.instance?.encryptOAEP(message, label: label, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -154,11 +154,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func decryptOAEP(message: String?, label: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.decryptOAEP(message, label: label, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: error!)
+                var error: NSError?
+                let output = try self.instance?.decryptOAEP(message, label: label, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -171,11 +171,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func decryptPKCS1v15(message: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.decryptPKCS1v15(message, pkcs12: pkcs12, passphrase: passphrase, error: error!)
+                var error: NSError?
+                let output = try self.instance?.decryptPKCS1v15(message, pkcs12: pkcs12, passphrase: passphrase, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -188,11 +188,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func signPKCS1v15(message: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.signPKCS1v15(message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: error!)
+                var error: NSError?
+                let output = try self.instance?.signPKCS1v15(message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -205,11 +205,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func signPSS(message: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.signPSS(message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: error!)
+                var error: NSError?
+                let output = try self.instance?.signPSS(message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -222,8 +222,8 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func verifyPKCS1v15(signature: String?, message: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let ret0_: UnsafeMutablePointer<ObjCBool>
-                let output = try self.instance?.verifyPKCS1v15(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: ret0_)
+                var ret0_: ObjCBool = false
+                _ = try self.instance?.verifyPKCS1v15(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: &ret0_)
 
                 self.result(result, output: ret0_)
             } catch {
@@ -236,8 +236,8 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
 
-                let ret0_: UnsafeMutablePointer<ObjCBool>
-                let output = try self.instance?.verifyPSS(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: ret0_)
+                var ret0_: ObjCBool = false
+                _ = try self.instance?.verifyPSS(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: &ret0_)
 
                 self.result(result, output: ret0_)
             } catch {
@@ -249,11 +249,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func hash(message: String?, name: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.hash(message, name: name, error: error!)
+                var error: NSError?
+                let output = try self.instance?.hash(message, name: name, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -266,11 +266,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func base64(message: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
-                let output = try self.instance?.base64(message, error: error!)
+                var error: NSError?
+                let output = try self.instance?.base64(message, error: &error)
 
                 if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
                     self.result(result, output: output)
                 }
@@ -283,17 +283,13 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func generate(bits: Int?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                let error: NSErrorPointer?
                 let output = try self.instance?.generate(bits!)
 
-                if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error??.pointee?.code ?? 0), message: error??.pointee?.description, details: nil))
-                } else {
-                    self.result(result, output: [
-                        "publicKey": output?.publicKey,
-                        "privateKey": output?.privateKey,
-                    ])
-                }
+                self.result(result, output: [
+                    "publicKey": output?.publicKey,
+                    "privateKey": output?.privateKey,
+                ])
+
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
             }
