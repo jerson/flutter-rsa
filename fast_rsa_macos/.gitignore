@@ -6,7 +6,7 @@
 
 build/
 
-linux/flutter
+macos/Flutter
 .idea/
 *._*
 .flutter*

@@ -1,5 +1,5 @@
-name: fast_rsa_linux
-description: library for use RSA with support for linux
+name: fast_rsa_macos
+description: library for use RSA with support for macOS
 version: 0.1.0
 homepage: https://github.com/jerson/flutter-rsa
 

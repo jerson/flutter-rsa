@@ -3,7 +3,7 @@
 # Run `pod lib lint rsa.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'rsa'
+  s.name             = 'fast_rsa_macos'
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
