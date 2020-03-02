@@ -225,7 +225,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                 var ret0_: ObjCBool = false
                 _ = try self.instance?.verifyPKCS1v15(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: &ret0_)
 
-                self.result(result, output: ret0_)
+                self.result(result, output: ret0_.boolValue as NSNumber)
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
             }
@@ -239,7 +239,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                 var ret0_: ObjCBool = false
                 _ = try self.instance?.verifyPSS(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: &ret0_)
 
-                self.result(result, output: ret0_)
+                self.result(result, output: ret0_.boolValue as NSNumber)
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
             }

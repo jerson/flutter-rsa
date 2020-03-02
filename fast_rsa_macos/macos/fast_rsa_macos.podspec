@@ -15,22 +15,8 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files     = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
+  s.vendored_frameworks = 'Rsa.framework'
   s.platform = :osx, '10.11'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
-  
-  #s.library = 'rsa'
-  s.preserve_paths = 'Rsa.framework'
-  s.xcconfig = { 'OTHER_LDFLAGS' => '-framework Rsa' }
-  s.vendored_frameworks = 'Rsa.framework'
-  
-  #s.resources = ['Classes/*.a']
-  #s.preserve_paths = 'Classes/*.a'
-  #s.vendored_libraries = 'Classes/*.a'
-  
-  #s.public_header_files = 'Classes/**/*.h'
-  #s.header_mappings_dir = 'Classes'
-  #s.xcconfig  =  { 'LIBRARY_SEARCH_PATHS' => "#{File.join(File.dirname(__FILE__), 'Classes')}" }
-    
-  
 end

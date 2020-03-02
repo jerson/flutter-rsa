@@ -5,16 +5,16 @@ PODS:
 
 DEPENDENCIES:
   - fast_rsa_macos (from `Flutter/ephemeral/.symlinks/plugins/fast_rsa_macos/macos`)
-  - FlutterMacOS (from `Flutter/ephemeral/.symlinks/flutter/darwin-x64-release`)
+  - FlutterMacOS (from `Flutter/ephemeral/.symlinks/flutter/darwin-x64`)
 
 EXTERNAL SOURCES:
   fast_rsa_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/fast_rsa_macos/macos
   FlutterMacOS:
-    :path: Flutter/ephemeral/.symlinks/flutter/darwin-x64-release
+    :path: Flutter/ephemeral/.symlinks/flutter/darwin-x64
 
 SPEC CHECKSUMS:
-  fast_rsa_macos: 736d8bcbc19a73b42d949506281b1aecf7dd0470
+  fast_rsa_macos: 5ca6b3db0c1b6f4bea8fdd7a444aa1fc3105af97
   FlutterMacOS: 15bea8a44d2fa024068daa0140371c020b4b6ff9
 
 PODFILE CHECKSUM: a93337fa42d4627d8439fc2cef9bda80a1dd7842
