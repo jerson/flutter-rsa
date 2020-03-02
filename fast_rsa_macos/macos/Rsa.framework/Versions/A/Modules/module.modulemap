@@ -1,0 +1,8 @@
+framework module "Rsa" {
+	header "ref.h"
+    header "Rsa.objc.h"
+    header "Universe.objc.h"
+    header "Rsa.h"
+
+    export *
+}
