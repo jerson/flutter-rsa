@@ -37,6 +37,54 @@ char *WriteableChar(const std::string &str)
   return writable;
 }
 
+void decryptOAEP(
+      char *message, 
+      char *label, 
+      char *hashName, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = DecryptOAEP(
+          message,
+          label,
+          hashName,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void decryptPKCS1v15(
+      char *message, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = DecryptPKCS1v15(
+          message,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
 void encryptOAEP(
       char *message, 
       char *label, 
@@ -46,16 +94,200 @@ void encryptOAEP(
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
-    char *output = EncryptOAEP(
-        message,
-        label,
-        hashName,
-        pkcs12,
-        passphrase
-    );
+  try {
+      char *output = EncryptOAEP(
+          message,
+          label,
+          hashName,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
 
-    flutter::EncodableValue response(output);
-    result->Success(&response);
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void encryptPKCS1v15(
+      char *message, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = EncryptPKCS1v15(
+          message,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void signPSS(
+      char *message, 
+      char *hashName, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = SignPSS(
+          message,
+          hashName,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void signPKCS1v15(
+      char *message, 
+      char *hashName, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = SignPKCS1v15(
+          message,
+          hashName,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void verifyPSS(
+      char *signature, 
+      char *message, 
+      char *hashName, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = VerifyPSS(
+          signature,
+          message,
+          hashName,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void verifyPKCS1v15(
+      char *signature, 
+      char *message, 
+      char *hashName, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = VerifyPKCS1v15(
+          signature,
+          message,
+          hashName,
+          pkcs12,
+          passphrase
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void hash(
+      char *message, 
+      char *name, 
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = Hash(
+          message,
+          name
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void base64(
+      char *message, 
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      char *output = Hash(
+          message,
+          message
+      );
+      flutter::EncodableValue response(output);
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
+
+}
+
+void generate(
+      int32_t bits, 
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try {
+      /*GoMap * output = Generate(
+          bits
+      );*/
+      
+      flutter::EncodableValue response("ss");
+      result->Success(&response);
+
+  } catch (const std::exception& e) {
+      result->Error("error", e.what());
+  }
 
 }
 
@@ -101,14 +333,27 @@ void FastRsaLinuxPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
-  if (method_call.method_name().compare("getPlatformVersion") == 0)
+  if (method_call.method_name().compare("decryptOAEP") == 0)
   {
-    struct utsname uname_data = {};
-    uname(&uname_data);
-    std::ostringstream version_stream;
-    version_stream << "Linux " << uname_data.version;
-    flutter::EncodableValue response(version_stream.str());
-    result->Success(&response);
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    decryptOAEP(
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "label").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("decryptPKCS1v15") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    decryptPKCS1v15(
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        move(result)
+    );
   }
   else if (method_call.method_name().compare("encryptOAEP") == 0)
   {
@@ -119,14 +364,89 @@ void FastRsaLinuxPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
         WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
         WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
-        &result
+        move(result)
     );
   }
-  else if (method_call.method_name().compare("decryptOAEP") == 0)
+  else if (method_call.method_name().compare("encryptPKCS1v15") == 0)
   {
-
-    flutter::EncodableValue response("");
-    result->Success(&response);
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    encryptPKCS1v15(
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("signPSS") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    signPSS(
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("signPKCS1v15") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    signPKCS1v15(
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("verifyPSS") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    verifyPSS(
+        WriteableChar(ValueOrNull(args, "signature").StringValue()),
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("verifyPKCS1v15") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    verifyPKCS1v15(
+        WriteableChar(ValueOrNull(args, "signature").StringValue()),
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("hash") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    hash(
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "name").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("base64") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    base64(
+        WriteableChar(ValueOrNull(args, "message").StringValue()),
+        move(result)
+    );
+  }
+  else if (method_call.method_name().compare("generate") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    generate(
+      ValueOrNull(args, "bits").IntValue(),
+      move(result)
+    );
   }
   else
   {
