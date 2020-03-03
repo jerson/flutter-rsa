@@ -56,6 +56,11 @@ void decryptOAEP(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
@@ -78,6 +83,11 @@ void decryptPKCS1v15(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
@@ -104,6 +114,11 @@ void encryptOAEP(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
@@ -126,6 +141,11 @@ void encryptPKCS1v15(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
@@ -150,6 +170,11 @@ void signPSS(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
@@ -174,6 +199,11 @@ void signPKCS1v15(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
@@ -200,6 +230,11 @@ void verifyPSS(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(strcmp(output,"1")==0 );
       result->Success(&response);
 
@@ -226,6 +261,11 @@ void verifyPKCS1v15(
           pkcs12,
           passphrase
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(strcmp(output,"1")==0 );
       result->Success(&response);
 
@@ -246,6 +286,11 @@ void hash(
           message,
           name
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
@@ -264,6 +309,11 @@ void base64(
       char *output = Base64(
           message
       );
+      if (output==NULL)
+      {
+        result->Error("error", "null pointer");
+        return;
+      }
       flutter::EncodableValue response(output);
       result->Success(&response);
 
