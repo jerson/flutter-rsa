@@ -25,6 +25,9 @@ dev_dependencies:
 
   fast_rsa_linux:
     path: ../../fast_rsa_linux
+
+  fast_rsa_macos:
+    path: ../../fast_rsa_macos
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
