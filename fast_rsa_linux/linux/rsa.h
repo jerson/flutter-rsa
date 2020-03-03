@@ -19,6 +19,10 @@ typedef struct { const char *p; ptrdiff_t n; } _GoString_;
 /* Start of preamble from import "C" comments.  */
 
 
+#line 3 "main.go"
+// #include <module.gcc>
+
+#line 1 "cgo-generated-wrapper"
 
 
 /* End of preamble from import "C" comments.  */
@@ -80,6 +84,8 @@ extern char* EncryptPKCS1v15(char* p0, char* p1, char* p2);
 extern GoMap Generate(GoInt p0);
 
 extern char* Hash(char* p0, char* p1);
+
+extern char* Base64(char* p0);
 
 extern char* SignPKCS1v15(char* p0, char* p1, char* p2, char* p3);
 

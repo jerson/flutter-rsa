@@ -261,8 +261,7 @@ void base64(
 {
 
   try {
-      char *output = Hash(
-          message,
+      char *output = Base64(
           message
       );
       flutter::EncodableValue response(output);
