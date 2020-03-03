@@ -10,6 +10,8 @@
 #include <memory>
 #include <sstream>
 #include <iostream>
+#include <string.h>
+#include <stdio.h>
 
 namespace
 {
@@ -198,7 +200,7 @@ void verifyPSS(
           pkcs12,
           passphrase
       );
-      flutter::EncodableValue response(output);
+      flutter::EncodableValue response(strcmp(output,"1")==0 );
       result->Success(&response);
 
   } catch (const std::exception& e) {
@@ -224,7 +226,7 @@ void verifyPKCS1v15(
           pkcs12,
           passphrase
       );
-      flutter::EncodableValue response(output);
+      flutter::EncodableValue response(strcmp(output,"1")==0 );
       result->Success(&response);
 
   } catch (const std::exception& e) {
