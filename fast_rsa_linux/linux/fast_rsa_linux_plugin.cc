@@ -34,11 +34,31 @@ char *WriteableChar(const std::string &str)
   char *writable = new char[str.size() + 1];
   std::copy(str.begin(), str.end(), writable);
   writable[str.size()] = '\0';
-  //delete[] writable;
   return writable;
 }
 
-// *** Rename this class to match the linux pluginClass in your pubspec.yaml.
+void encryptOAEP(
+      char *message, 
+      char *label, 
+      char *hashName, 
+      char *pkcs12, 
+      char *passphrase,
+      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+    char *output = EncryptOAEP(
+        message,
+        label,
+        hashName,
+        pkcs12,
+        passphrase
+    );
+
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+
+}
+
 class FastRsaLinuxPlugin : public flutter::Plugin
 {
 public:
@@ -92,17 +112,15 @@ void FastRsaLinuxPlugin::HandleMethodCall(
   }
   else if (method_call.method_name().compare("encryptOAEP") == 0)
   {
-
     const EncodableMap &args = method_call.arguments()->MapValue();
-    char *output = EncryptOAEP(
+    encryptOAEP(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
         WriteableChar(ValueOrNull(args, "label").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
         WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()));
-
-    flutter::EncodableValue response(output);
-    result->Success(&response);
+        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        &result
+    );
   }
   else if (method_call.method_name().compare("decryptOAEP") == 0)
   {
@@ -116,13 +134,11 @@ void FastRsaLinuxPlugin::HandleMethodCall(
   }
 }
 
-} // namespace
+} 
 
 void FastRsaLinuxPluginRegisterWithRegistrar(
     FlutterDesktopPluginRegistrarRef registrar)
 {
-  // The plugin registrar wrappers owns the plugins, registered callbacks, etc.,
-  // so must remain valid for the life of the application.
   static auto *plugin_registrars =
       new std::map<FlutterDesktopPluginRegistrarRef,
                    std::unique_ptr<flutter::PluginRegistrarGlfw>>;
