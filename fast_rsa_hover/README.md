@@ -9,10 +9,6 @@ The hover implementation of [`fast_rsa`][1].
 To use this plugin in your Flutter Hover app, simply add it as a dependency in
 your pubspec alongside the base `fast_rsa` plugin.
 
-_(This is only temporary: in the future we hope to make this package an
-"endorsed" implementation of `fast_rsa`, so that it is automatically
-included in your Flutter Hover app when you depend on `package:fast_rsa`.)_
-
 This is what the above means to your `pubspec.yaml`:
 
 ```yaml
