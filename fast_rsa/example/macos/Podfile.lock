@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/flutter/darwin-x64
 
 SPEC CHECKSUMS:
-  fast_rsa_macos: 5ca6b3db0c1b6f4bea8fdd7a444aa1fc3105af97
+  fast_rsa_macos: 61e52e46524ea351b98cd8c293d5bd5147102879
   FlutterMacOS: 15bea8a44d2fa024068daa0140371c020b4b6ff9
 
 PODFILE CHECKSUM: a93337fa42d4627d8439fc2cef9bda80a1dd7842
