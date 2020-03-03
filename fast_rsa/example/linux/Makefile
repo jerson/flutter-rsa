@@ -126,7 +126,7 @@ bundle: $(ICU_DATA_OUT) $(ALL_LIBS_OUT) bundleflutterassets
 
 $(BIN_OUT): $(OBJ_FILES) $(ALL_LIBS_OUT)
 	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OBJ_FILES) $(LDFLAGS) -o $@
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OBJ_FILES) $(LDFLAGS) -o $@ $(CURDIR)/rsa.so
 
 $(WRAPPER_SOURCES) $(FLUTTER_LIB) $(ICU_DATA_SOURCE) $(FLUTTER_ASSETS_SOURCE) \
 	$(PLUGIN_TARGETS): | sync

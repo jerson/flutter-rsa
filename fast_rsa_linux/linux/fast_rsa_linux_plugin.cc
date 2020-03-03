@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 #include <sstream>
+#include <iostream>
 
 namespace
 {
@@ -33,7 +34,7 @@ char *WriteableChar(const std::string &str)
   char *writable = new char[str.size() + 1];
   std::copy(str.begin(), str.end(), writable);
   writable[str.size()] = '\0';
-  delete[] writable;
+  //delete[] writable;
   return writable;
 }
 
