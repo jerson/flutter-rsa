@@ -2,6 +2,7 @@
 
 /* package command-line-arguments */
 
+
 #line 1 "cgo-builtin-export-prolog"
 
 #include <stddef.h> /* for ptrdiff_t below */
@@ -10,23 +11,22 @@
 #define GO_CGO_EXPORT_PROLOGUE_H
 
 #ifndef GO_CGO_GOSTRING_TYPEDEF
-typedef struct
-{
-  const char *p;
-  ptrdiff_t n;
-} _GoString_;
+typedef struct { const char *p; ptrdiff_t n; } _GoString_;
 #endif
 
 #endif
 
 /* Start of preamble from import "C" comments.  */
 
+
 #line 3 "main.go"
-// #include <module.gcc>
+ #include <stdint.h>
 
 #line 1 "cgo-generated-wrapper"
 
+
 /* End of preamble from import "C" comments.  */
+
 
 /* Start of boilerplate cgo prologue.  */
 #line 1 "cgo-gcc-export-header-prolog"
@@ -54,55 +54,46 @@ typedef double _Complex GoComplex128;
   static assertion to make sure the file is being used on architecture
   at least with matching size of GoInt.
 */
-typedef char _check_for_64_bit_pointer_matching_GoInt[sizeof(void *) == 64 / 8 ? 1 : -1];
+typedef char _check_for_64_bit_pointer_matching_GoInt[sizeof(void*)==64/8 ? 1:-1];
 
 #ifndef GO_CGO_GOSTRING_TYPEDEF
 typedef _GoString_ GoString;
 #endif
 typedef void *GoMap;
 typedef void *GoChan;
-typedef struct
-{
-  void *t;
-  void *v;
-} GoInterface;
-typedef struct
-{
-  void *data;
-  GoInt len;
-  GoInt cap;
-} GoSlice;
+typedef struct { void *t; void *v; } GoInterface;
+typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 
 #endif
 
 /* End of boilerplate cgo prologue.  */
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-  extern char *DecryptOAEP(char *p0, char *p1, char *p2, char *p3, char *p4);
 
-  extern char *DecryptPKCS1v15(char *p0, char *p1, char *p2);
+extern char* DecryptOAEP(char* p0, char* p1, char* p2, char* p3, char* p4);
 
-  extern char *EncryptOAEP(char *p0, char *p1, char *p2, char *p3, char *p4);
+extern char* DecryptPKCS1v15(char* p0, char* p1, char* p2);
 
-  extern char *EncryptPKCS1v15(char *p0, char *p1, char *p2);
+extern char* EncryptOAEP(char* p0, char* p1, char* p2, char* p3, char* p4);
 
-  extern GoMap *Generate(GoInt p0);
+extern char* EncryptPKCS1v15(char* p0, char* p1, char* p2);
 
-  extern char *Hash(char *p0, char *p1);
+extern uintptr_t Generate(GoInt p0);
 
-  extern char *Base64(char *p0);
+extern char* Hash(char* p0, char* p1);
 
-  extern char *SignPKCS1v15(char *p0, char *p1, char *p2, char *p3);
+extern char* Base64(char* p0);
 
-  extern char *SignPSS(char *p0, char *p1, char *p2, char *p3);
+extern char* SignPKCS1v15(char* p0, char* p1, char* p2, char* p3);
 
-  extern char *VerifyPKCS1v15(char *p0, char *p1, char *p2, char *p3, char *p4);
+extern char* SignPSS(char* p0, char* p1, char* p2, char* p3);
 
-  extern char *VerifyPSS(char *p0, char *p1, char *p2, char *p3, char *p4);
+extern char* VerifyPKCS1v15(char* p0, char* p1, char* p2, char* p3, char* p4);
+
+extern char* VerifyPSS(char* p0, char* p1, char* p2, char* p3, char* p4);
 
 #ifdef __cplusplus
 }

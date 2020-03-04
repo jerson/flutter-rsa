@@ -5,6 +5,7 @@
 #include <flutter/standard_method_codec.h>
 #include <sys/utsname.h>
 #include "rsa.h"
+#include "rsa_bridge.h"
 
 #include <map>
 #include <memory>
@@ -330,24 +331,22 @@ void generate(
 
   try
   {
-    GoInt goBits = bits;
-    std::cout << "0ddd";
-    GoMap *output = Generate(goBits);
-    std::cout << "0";
+    char *str1 = (char*) "This is d";
+    char *str2 = (char*) "This is dc";
 
-    std::cout << "1";
-    std::map<char *, char *> *mapResult = static_cast<std::map<char *, char *> *>(*output);
+    KeyPair *output = {};
+    output->publicKey = str1;
+    output->privateKey = str2;
 
-    std::cout << "2";
-    for (const auto &i : *mapResult)
-    {
-      std::cout << i.first << ":" << i.second << "\n";
-    }
-    std::cout << "3";
-    // result->Error("error", "null ddd");
-    flutter::EncodableValue response("");
-    result->Success(&response);
-    std::cout << "4";
+    //GoInt goBits = bits;
+    //KeyPair *output = (KeyPair*) Generate(goBits);
+    //std::cout << output->privateKey;
+    
+    flutter::EncodableValue encoded = flutter::EncodableValue(flutter::EncodableMap{
+       {flutter::EncodableValue("publicKey"), flutter::EncodableValue(output->publicKey)},
+       {flutter::EncodableValue("privateKey"), flutter::EncodableValue(output->privateKey)}
+    });
+    result->Success(&encoded);
   }
   catch (const std::exception &e)
   {
