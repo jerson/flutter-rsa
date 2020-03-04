@@ -329,24 +329,28 @@ void generate(
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
+ 
   try
   {
-    char *str1 = (char*) "This is d";
-    char *str2 = (char*) "This is dc";
+   /*
+char *str1 = (char*) "This is d";
+    char *str2 = (char*) "This is dedc";
 
-    KeyPair *output = {};
+    KeyPair *output =  new KeyPair;
     output->publicKey = str1;
     output->privateKey = str2;
-
-    //GoInt goBits = bits;
-    //KeyPair *output = (KeyPair*) Generate(goBits);
-    //std::cout << output->privateKey;
+    */
+    GoInt goBits = bits;
+    KeyPair *output = (KeyPair*) Generate(goBits);
+   // std::cerr << output->privateKey;
     
-    flutter::EncodableValue encoded = flutter::EncodableValue(flutter::EncodableMap{
+    flutter::EncodableValue response(flutter::EncodableMap{
        {flutter::EncodableValue("publicKey"), flutter::EncodableValue(output->publicKey)},
        {flutter::EncodableValue("privateKey"), flutter::EncodableValue(output->privateKey)}
     });
-    result->Success(&encoded);
+    
+    //flutter::EncodableValue response("dd");
+    result->Success(&response);
   }
   catch (const std::exception &e)
   {
