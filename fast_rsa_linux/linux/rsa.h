@@ -21,6 +21,7 @@ typedef struct { const char *p; ptrdiff_t n; } _GoString_;
 
 #line 3 "main.go"
  #include <stdint.h>
+ typedef struct { char *publicKey; char *privateKey; } KeyPair;
 
 #line 1 "cgo-generated-wrapper"
 
@@ -81,7 +82,7 @@ extern char* EncryptOAEP(char* p0, char* p1, char* p2, char* p3, char* p4);
 
 extern char* EncryptPKCS1v15(char* p0, char* p1, char* p2);
 
-extern uintptr_t Generate(GoInt p0);
+extern KeyPair Generate(GoInt p0);
 
 extern char* Hash(char* p0, char* p1);
 

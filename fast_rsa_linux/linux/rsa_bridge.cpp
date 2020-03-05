@@ -3,7 +3,7 @@
 
 KeyPair *buildKeyPair(char * publicKey,char * privateKey)
 {
-  KeyPair *keyPair;
+  KeyPair *keyPair = new KeyPair;
   keyPair->publicKey = publicKey;
   keyPair->privateKey = privateKey;
   return keyPair;
