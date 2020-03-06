@@ -14,7 +14,7 @@ extern "C"
 {
 #endif
 
-    FLUTTER_PLUGIN_EXPORT void FastRsaLinuxPluginRegisterWithRegistrar(
+    FLUTTER_PLUGIN_EXPORT void FastRsaPluginRegisterWithRegistrar(
         FlutterDesktopPluginRegistrarRef registrar);
 
 #if defined(__cplusplus)

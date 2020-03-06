@@ -349,14 +349,14 @@ void generate(
   }
 }
 
-class FastRsaLinuxPlugin : public flutter::Plugin
+class FastRsaPlugin : public flutter::Plugin
 {
 public:
   static void RegisterWithRegistrar(flutter::PluginRegistrarGlfw *registrar);
 
-  FastRsaLinuxPlugin();
+  FastRsaPlugin();
 
-  virtual ~FastRsaLinuxPlugin();
+  virtual ~FastRsaPlugin();
 
 private:
   // Called when a method is called on this plugin's channel from Dart.
@@ -366,14 +366,14 @@ private:
 };
 
 // static
-void FastRsaLinuxPlugin::RegisterWithRegistrar(
+void FastRsaPlugin::RegisterWithRegistrar(
     flutter::PluginRegistrarGlfw *registrar)
 {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
           registrar->messenger(), "rsa",
           &flutter::StandardMethodCodec::GetInstance());
-  auto plugin = std::make_unique<FastRsaLinuxPlugin>();
+  auto plugin = std::make_unique<FastRsaPlugin>();
 
   channel->SetMethodCallHandler(
       [plugin_pointer = plugin.get()](const auto &call, auto result) {
@@ -383,11 +383,11 @@ void FastRsaLinuxPlugin::RegisterWithRegistrar(
   registrar->AddPlugin(std::move(plugin));
 }
 
-FastRsaLinuxPlugin::FastRsaLinuxPlugin() {}
+FastRsaPlugin::FastRsaPlugin() {}
 
-FastRsaLinuxPlugin::~FastRsaLinuxPlugin() {}
+FastRsaPlugin::~FastRsaPlugin() {}
 
-void FastRsaLinuxPlugin::HandleMethodCall(
+void FastRsaPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
@@ -503,7 +503,7 @@ void FastRsaLinuxPlugin::HandleMethodCall(
 
 } // namespace
 
-void FastRsaLinuxPluginRegisterWithRegistrar(
+void FastRsaPluginRegisterWithRegistrar(
     FlutterDesktopPluginRegistrarRef registrar)
 {
   static auto *plugin_registrars =
@@ -512,5 +512,5 @@ void FastRsaLinuxPluginRegisterWithRegistrar(
   auto insert_result = plugin_registrars->emplace(
       registrar, std::make_unique<flutter::PluginRegistrarGlfw>(registrar));
 
-  FastRsaLinuxPlugin::RegisterWithRegistrar(insert_result.first->second.get());
+  FastRsaPlugin::RegisterWithRegistrar(insert_result.first->second.get());
 }
