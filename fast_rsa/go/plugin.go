@@ -1,4 +1,4 @@
-package rsa
+package fast_rsa
 
 import (
 	"errors"
@@ -8,18 +8,19 @@ import (
 	rsaMobile "github.com/jerson/rsa-mobile/rsa"
 )
 
-// Plugin ...
+const channelName = "rsa"
+
+// Plugin implements flutter.Plugin and handles method.
 type Plugin struct {
 	channel  *plugin.MethodChannel
 	instance *rsaMobile.FastRSA
 }
 
-var _ flutter.Plugin = &Plugin{}
+var _ flutter.Plugin = &Plugin{} // compile-time type check
 
-// InitPlugin creates a MethodChannel and set a HandleFunc
+// InitPlugin initializes the plugin.
 func (p *Plugin) InitPlugin(messenger plugin.BinaryMessenger) error {
-
-	p.channel = plugin.NewMethodChannel(messenger, "rsa", plugin.StandardMethodCodec{})
+	p.channel = plugin.NewMethodChannel(messenger, channelName, plugin.StandardMethodCodec{})
 	p.instance = rsaMobile.NewFastRSA()
 	p.channel.HandleFunc("decryptOAEP", p.decryptOAEP)
 	p.channel.HandleFunc("decryptPKCS1v15", p.decryptPKCS1v15)
