@@ -463,7 +463,7 @@ class _MyAppState extends State<MyApp> {
                       RaisedButton(
                         child: Text("Generate"),
                         onPressed: () async {
-                          var keyPair = await RSA.generate(2048);
+                          var keyPair = await RSA.generate(4096);
                           setState(() {
                             _keyPair = keyPair;
                           });

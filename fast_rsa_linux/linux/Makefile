@@ -70,6 +70,7 @@ $(PLUGIN_NAME) : $(LIBRARY_OUT)
 $(LIBRARY_OUT): $(OBJ_FILES)
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ $(LDFLAGS) -o $@
+	cp -r $(CURDIR)/rsa.so $(OUT_DIR)/$(BUILD)/lib/librsa.so
 
 -include $(DEPENDENCY_FILES)
 
