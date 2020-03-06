@@ -1,3 +1,11 @@
+## 0.9.0
+
+- Fixed linux support and hover support
+
+## 0.8.0
+
+- Support for Linux, macOS and web in a single package
+
 ## 0.6.1
 
 - Updated ignore
