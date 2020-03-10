@@ -121,7 +121,7 @@ class RsaPlugin {
       default:
         throw PlatformException(
             code: 'Unimplemented',
-            details: "The fast_rsa_web plugin for web doesn't implement "
+            details: "The fast_rsa plugin for web doesn't implement "
                 "the method '${call.method}'");
     }
   }
