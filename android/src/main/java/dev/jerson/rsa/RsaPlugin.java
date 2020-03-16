@@ -29,12 +29,17 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     private FastRSA instance;
     private Handler handler;
 
+    private static RsaPlugin pluginFactory() {
+        RsaPlugin plugin = new RsaPlugin();
+        plugin.initialize();
+        return plugin;
+    }
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        instance = Rsa.newFastRSA();
+        initialize();
         channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "rsa");
         channel.setMethodCallHandler(this);
-        handler = new Handler(Looper.getMainLooper());
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -48,7 +53,12 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     // in the same class.
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "rsa");
-        channel.setMethodCallHandler(new RsaPlugin());
+        channel.setMethodCallHandler(pluginFactory());
+    }
+
+    private void initialize(){
+        instance = Rsa.newFastRSA();
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
