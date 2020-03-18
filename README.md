@@ -43,7 +43,7 @@ var base64 = await RSA.base64("text here");
 ## Android
 ### ProGuard
 
-Add this lines to `proguard-rules.pro` for proguard support
+Add this lines to `android/app/proguard-rules.pro` for proguard support
 
 ```proguard
 -keep class go.** { *; }
