@@ -2,6 +2,20 @@
 
 Library for use RSA with support for android and ios, macos, linux, web and hover
 
+## Contents
+
+- [Usage](#usage)
+- [Setup](#setup)
+  - [Android](#android)
+    - [ProGuard](#proguard)
+  - [iOS](#ios)
+  - [Web](#web)
+  - [Linux](#linux)
+  - [MacOS](#macos)
+  - [Hover](#hover)
+- [Example](#example)
+- [Native Code](#native-code)
+
 ## Usage
 
 ```dart
@@ -40,8 +54,9 @@ var base64 = await RSA.base64("text here");
 
 ```
 
-## Android
-### ProGuard
+## Setup
+### Android
+#### ProGuard
 
 Add this lines to `android/app/proguard-rules.pro` for proguard support
 
@@ -49,11 +64,11 @@ Add this lines to `android/app/proguard-rules.pro` for proguard support
 -keep class go.** { *; }
 -keep class rsa.** { *; }
 ```
-## iOS
+### iOS
 
 no additional setup required
 
-## Web
+### Web
 
 add to you `pubspec.yaml`
 
@@ -71,7 +86,7 @@ and in you `web/index.html`
 ```
 ref: https://github.com/jerson/flutter-rsa/blob/master/example/web/index.html
 
-## Linux
+### Linux
 
 add to you `linux/app_configuration.mk`
 
@@ -80,11 +95,11 @@ EXTRA_LDFLAGS=-lrsa
 ```
 ref: https://github.com/jerson/flutter-rsa/blob/master/example/linux/app_configuration.mk
 
-## MacOS
+### MacOS
 
 no additional setup required
 
-## Hover
+### Hover
 
 just update your plugins
 
@@ -92,7 +107,7 @@ just update your plugins
 hover plugins get
 ```
 
-## Sample
+## Example
 
 Inside example folder
 
