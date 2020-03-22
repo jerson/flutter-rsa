@@ -1,10 +1,10 @@
 ## 0.9.2
 
-Updated docs
+- Updated docs
 
 ## 0.9.1
 
-Implemented registerWith for android
+- Implemented registerWith for android
 
 ## 0.9.0
 
