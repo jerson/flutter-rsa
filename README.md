@@ -1,6 +1,6 @@
 # Fast RSA
 
-Library for use RSA with support for android and ios, macos, linux, web and hover
+Library for use RSA with support for android, ios, macos, linux, web and hover
 
 ## Contents
 
