@@ -1,3 +1,11 @@
+## 0.9.3
+
+- Merge conflicts
+
+## 0.9.2
+
+- Updated docs
+
 ## 0.9.1
 
 - Implemented registerWith for android

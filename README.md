@@ -1,6 +1,20 @@
 # Fast RSA
 
-Library for use RSA
+Library for use RSA with support for android, ios, macos, linux, web and hover
+
+## Contents
+
+- [Usage](#usage)
+- [Setup](#setup)
+  - [Android](#android)
+    - [ProGuard](#proguard)
+  - [iOS](#ios)
+  - [Web](#web)
+  - [Linux](#linux)
+  - [MacOS](#macos)
+  - [Hover](#hover)
+- [Example](#example)
+- [Native Code](#native-code)
 
 ## Usage
 
@@ -40,16 +54,60 @@ var base64 = await RSA.base64("text here");
 
 ```
 
-## ProGuard
+## Setup
+### Android
+#### ProGuard
 
-Add this lines to `proguard-rules.pro` for proguard support
+Add this lines to `android/app/proguard-rules.pro` for proguard support
 
 ```proguard
 -keep class go.** { *; }
 -keep class rsa.** { *; }
 ```
+### iOS
 
-## Sample
+no additional setup required
+
+### Web
+
+add to you `pubspec.yaml`
+
+```yaml
+  assets:
+    - packages/fast_rsa/web/assets/wasm_exec.js
+    - packages/fast_rsa/web/assets/rsa.wasm
+```
+ref: https://github.com/jerson/flutter-rsa/blob/master/example/pubspec.yaml
+
+
+and in you `web/index.html`
+```html
+<script src="assets/packages/fast_rsa/web/assets/wasm_exec.js" type="application/javascript"></script>
+```
+ref: https://github.com/jerson/flutter-rsa/blob/master/example/web/index.html
+
+### Linux
+
+add to you `linux/app_configuration.mk`
+
+```make
+EXTRA_LDFLAGS=-lrsa
+```
+ref: https://github.com/jerson/flutter-rsa/blob/master/example/linux/app_configuration.mk
+
+### MacOS
+
+no additional setup required
+
+### Hover
+
+just update your plugins
+
+```bash
+hover plugins get
+```
+
+## Example
 
 Inside example folder
 
