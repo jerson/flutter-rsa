@@ -47,63 +47,118 @@ class RsaPlugin {
     await loadInstance();
 
     switch (call.method) {
+      case 'convertJWKToPrivateKey':
+        return await convertJWKToPrivateKey(
+          call.arguments['data'],
+          call.arguments['keyId'],
+        );
+      case 'convertJWKToPublicKey':
+        return await convertJWKToPublicKey(
+          call.arguments['data'],
+          call.arguments['keyId'],
+        );
+      case 'convertKeyPairToPKCS12':
+        return await convertKeyPairToPKCS12(
+          call.arguments['privateKey'],
+          call.arguments['certificate'],
+          call.arguments['password'],
+        );
+      case 'convertPKCS12ToKeyPair':
+        return await convertPKCS12ToKeyPair(
+          call.arguments['pkcs12'],
+          call.arguments['password'],
+        );
+      case 'convertPrivateKeyToPKCS8':
+        return await convertPrivateKeyToPKCS8(
+          call.arguments['privateKey'],
+        );
+      case 'convertPrivateKeyToPKCS1':
+        return await convertPrivateKeyToPKCS1(
+          call.arguments['privateKey'],
+        );
+      case 'convertPrivateKeyToJWK':
+        return await convertPrivateKeyToJWK(
+          call.arguments['privateKey'],
+        );
+      case 'convertPrivateKeyToPublicKey':
+        return await convertPrivateKeyToPublicKey(
+          call.arguments['privateKey'],
+        );
+      case 'convertPublicKeyToPKIX':
+        return await convertPublicKeyToPKIX(
+          call.arguments['publicKey'],
+        );
+      case 'convertPublicKeyToPKCS1':
+        return await convertPublicKeyToPKCS1(
+          call.arguments['publicKey'],
+        );
+      case 'convertPublicKeyToJWK':
+        return await convertPublicKeyToJWK(
+          call.arguments['publicKey'],
+        );
+      case 'decryptPrivateKey':
+        return await decryptPrivateKey(
+          call.arguments['privateKeyEncrypted'],
+          call.arguments['password'],
+        );
+      case 'encryptPrivateKey':
+        return await encryptPrivateKey(
+          call.arguments['privateKey'],
+          call.arguments['password'],
+          call.arguments['cipherName'],
+        );
+
       case 'decryptOAEP':
         return await decryptOAEP(
           call.arguments['message'],
           call.arguments['label'],
           call.arguments['hashName'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['privateKey'],
         );
       case 'decryptPKCS1v15':
         return await decryptPKCS1v15(
           call.arguments['message'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['privateKey'],
         );
       case 'encryptOAEP':
         return await encryptOAEP(
           call.arguments['message'],
           call.arguments['label'],
           call.arguments['hashName'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['publicKey'],
         );
       case 'encryptPKCS1v15':
         return await encryptPKCS1v15(
           call.arguments['message'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['publicKey'],
         );
       case 'signPSS':
         return await signPSS(
           call.arguments['message'],
           call.arguments['hashName'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['saltLengthName'],
+          call.arguments['privateKey'],
         );
       case 'signPKCS1v15':
         return await signPKCS1v15(
           call.arguments['message'],
           call.arguments['hashName'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['privateKey'],
         );
       case 'verifyPSS':
         return await verifyPSS(
           call.arguments['signature'],
           call.arguments['message'],
           call.arguments['hashName'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['saltLengthName'],
+          call.arguments['publicKey'],
         );
       case 'verifyPKCS1v15':
         return await verifyPKCS1v15(
           call.arguments['signature'],
           call.arguments['message'],
           call.arguments['hashName'],
-          call.arguments['pkcs12'],
-          call.arguments['passphrase'],
+          call.arguments['publicKey'],
         );
       case 'hash':
         return await hash(
@@ -126,10 +181,9 @@ class RsaPlugin {
     }
   }
 
-  Future<String> decryptOAEP(String message, String label, String hashName,
-      String pkcs12, String passphrase) async {
+  Future<String> convertJWKToPrivateKey(String data, String keyId) async {
     var completer = new Completer<String>();
-    RSADecryptOAEP(message, label, hashName, pkcs12, passphrase,
+    RSAConvertJWKToPrivateKey(data, keyId,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -140,10 +194,9 @@ class RsaPlugin {
     return completer.future;
   }
 
-  Future<String> decryptPKCS1v15(
-      String message, String pkcs12, String passphrase) async {
+  Future<String> convertJWKToPublicKey(String data, String keyId) async {
     var completer = new Completer<String>();
-    RSADecryptPKCS1v15(message, pkcs12, passphrase,
+    RSAConvertJWKToPublicKey(data, keyId,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -154,10 +207,10 @@ class RsaPlugin {
     return completer.future;
   }
 
-  Future<String> encryptOAEP(String message, String label, String hashName,
-      String pkcs12, String passphrase) async {
+  Future<String> convertKeyPairToPKCS12(
+      String privateKey, String certificate, String password) async {
     var completer = new Completer<String>();
-    RSAEncryptOAEP(message, label, hashName, pkcs12, passphrase,
+    RSAConvertKeyPairToPKCS12(privateKey, certificate, password,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -168,10 +221,26 @@ class RsaPlugin {
     return completer.future;
   }
 
-  Future<String> encryptPKCS1v15(
-      String message, String pkcs12, String passphrase) async {
+  Future<dynamic> convertPKCS12ToKeyPair(String pkcs12, String password) async {
+    var completer = new Completer<dynamic>();
+    RSAConvertPKCS12ToKeyPair(pkcs12, password,
+        allowInterop((String error, PKCS12KeyPairObject result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete({
+        "privateKey": result.privateKey,
+        "publicKey": result.publicKey,
+        "certificate": result.certificate,
+      });
+    }));
+    return completer.future;
+  }
+
+  Future<String> convertPrivateKeyToPKCS8(String privateKey) async {
     var completer = new Completer<String>();
-    RSAEncryptPKCS1v15(message, pkcs12, passphrase,
+    RSAConvertPrivateKeyToPKCS8(privateKey,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -182,10 +251,170 @@ class RsaPlugin {
     return completer.future;
   }
 
-  Future<String> signPSS(
-      String message, String hashName, String pkcs12, String passphrase) async {
+  Future<String> convertPrivateKeyToPKCS1(String privateKey) async {
     var completer = new Completer<String>();
-    RSASignPSS(message, hashName, pkcs12, passphrase,
+    RSAConvertPrivateKeyToPKCS1(privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> convertPrivateKeyToJWK(String privateKey) async {
+    var completer = new Completer<String>();
+    RSAConvertPrivateKeyToJWK(privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> convertPrivateKeyToPublicKey(String privateKey) async {
+    var completer = new Completer<String>();
+    RSAConvertPrivateKeyToPublicKey(privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> convertPublicKeyToPKIX(String privateKey) async {
+    var completer = new Completer<String>();
+    RSAConvertPublicKeyToPKIX(privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> convertPublicKeyToPKCS1(String publicKey) async {
+    var completer = new Completer<String>();
+    RSAConvertPublicKeyToPKCS1(publicKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> convertPublicKeyToJWK(String publicKey) async {
+    var completer = new Completer<String>();
+    RSAConvertPublicKeyToJWK(publicKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> decryptPrivateKey(
+      String privateKeyEncrypted, String password) async {
+    var completer = new Completer<String>();
+    RSADecryptPrivateKey(privateKeyEncrypted, password,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> encryptPrivateKey(
+      String privateKey, String password, String cipherName) async {
+    var completer = new Completer<String>();
+    RSAEncryptPrivateKey(privateKey, password, cipherName,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> decryptOAEP(
+      String message, String label, String hashName, String privateKey) async {
+    var completer = new Completer<String>();
+    RSADecryptOAEP(message, label, hashName, privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> decryptPKCS1v15(String message, String privateKey) async {
+    var completer = new Completer<String>();
+    RSADecryptPKCS1v15(message, privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> encryptOAEP(
+      String message, String label, String hashName, String publicKey) async {
+    var completer = new Completer<String>();
+    RSAEncryptOAEP(message, label, hashName, publicKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> encryptPKCS1v15(String message, String publicKey) async {
+    var completer = new Completer<String>();
+    RSAEncryptPKCS1v15(message, publicKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<String> signPSS(String message, String hashName, String saltLengthName,
+      String privateKey) async {
+    var completer = new Completer<String>();
+    RSASignPSS(message, hashName, saltLengthName, privateKey,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -197,9 +426,9 @@ class RsaPlugin {
   }
 
   Future<String> signPKCS1v15(
-      String message, String hashName, String pkcs12, String passphrase) async {
+      String message, String hashName, String privateKey) async {
     var completer = new Completer<String>();
-    RSASignPKCS1v15(message, hashName, pkcs12, passphrase,
+    RSASignPKCS1v15(message, hashName, privateKey,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -211,9 +440,9 @@ class RsaPlugin {
   }
 
   Future<bool> verifyPSS(String signature, String message, String hashName,
-      String pkcs12, String passphrase) async {
+      String saltLengthName, String publicKey) async {
     var completer = new Completer<bool>();
-    RSAVerifyPSS(signature, message, hashName, pkcs12, passphrase,
+    RSAVerifyPSS(signature, message, hashName, saltLengthName, publicKey,
         allowInterop((String error, bool result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -225,9 +454,9 @@ class RsaPlugin {
   }
 
   Future<bool> verifyPKCS1v15(String signature, String message, String hashName,
-      String pkcs12, String passphrase) async {
+      String publicKey) async {
     var completer = new Completer<bool>();
-    RSAVerifyPKCS1v15(signature, message, hashName, pkcs12, passphrase,
+    RSAVerifyPKCS1v15(signature, message, hashName, publicKey,
         allowInterop((String error, bool result) {
       if (error != null && error != "") {
         completer.completeError(error);
@@ -270,8 +499,8 @@ class RsaPlugin {
         return;
       }
       completer.complete({
-        "publicKey": result.publicKey,
         "privateKey": result.privateKey,
+        "publicKey": result.publicKey,
       });
     }));
     return completer.future;

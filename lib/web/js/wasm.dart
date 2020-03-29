@@ -17,6 +17,7 @@ class WebAssembly {
 }
 
 @JS()
+@anonymous
 class InstanceResult {
   external dynamic get module;
   external dynamic get instance;

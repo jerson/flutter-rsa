@@ -22,6 +22,19 @@ var _ flutter.Plugin = &Plugin{} // compile-time type check
 func (p *Plugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 	p.channel = plugin.NewMethodChannel(messenger, channelName, plugin.StandardMethodCodec{})
 	p.instance = rsaMobile.NewFastRSA()
+	p.channel.HandleFunc("convertJWKToPrivateKey", p.convertJWKToPrivateKey)
+	p.channel.HandleFunc("convertJWKToPublicKey", p.convertJWKToPublicKey)
+	p.channel.HandleFunc("convertKeyPairToPKCS12", p.convertKeyPairToPKCS12)
+	p.channel.HandleFunc("convertPKCS12ToKeyPair", p.convertPKCS12ToKeyPair)
+	p.channel.HandleFunc("convertPrivateKeyToPKCS8", p.convertPrivateKeyToPKCS8)
+	p.channel.HandleFunc("convertPrivateKeyToPKCS1", p.convertPrivateKeyToPKCS1)
+	p.channel.HandleFunc("convertPrivateKeyToJWK", p.convertPrivateKeyToJWK)
+	p.channel.HandleFunc("convertPrivateKeyToPublicKey", p.convertPrivateKeyToPublicKey)
+	p.channel.HandleFunc("convertPublicKeyToPKIX", p.convertPublicKeyToPKIX)
+	p.channel.HandleFunc("convertPublicKeyToPKCS1", p.convertPublicKeyToPKCS1)
+	p.channel.HandleFunc("convertPublicKeyToJWK", p.convertPublicKeyToJWK)
+	p.channel.HandleFunc("decryptPrivateKey", p.decryptPrivateKey)
+	p.channel.HandleFunc("encryptPrivateKey", p.encryptPrivateKey)
 	p.channel.HandleFunc("decryptOAEP", p.decryptOAEP)
 	p.channel.HandleFunc("decryptPKCS1v15", p.decryptPKCS1v15)
 	p.channel.HandleFunc("encryptOAEP", p.encryptOAEP)
@@ -38,6 +51,174 @@ func (p *Plugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 	return nil
 }
 
+func (p *Plugin) convertJWKToPrivateKey(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertJWKToPrivateKey(
+		args["data"].(string),
+		args["keyId"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertJWKToPublicKey(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertJWKToPublicKey(
+		args["data"].(string),
+		args["keyId"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertKeyPairToPKCS12(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertKeyPairToPKCS12(
+		args["privateKey"].(string),
+		args["certificate"].(string),
+		args["password"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertPKCS12ToKeyPair(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPKCS12ToKeyPair(
+		args["pkcs12"].(string),
+		args["password"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return map[interface{}]interface{}{
+		"privateKey":  result.PrivateKey,
+		"publicKey":   result.PublicKey,
+		"certificate": result.Certificate,
+	}, nil
+}
+
+func (p *Plugin) convertPrivateKeyToPKCS8(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPrivateKeyToPKCS8(
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertPrivateKeyToPKCS1(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPrivateKeyToPKCS1(
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertPrivateKeyToJWK(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPrivateKeyToJWK(
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertPrivateKeyToPublicKey(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPrivateKeyToPublicKey(
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertPublicKeyToPKIX(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPublicKeyToPKIX(
+		args["publicKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertPublicKeyToPKCS1(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPublicKeyToPKCS1(
+		args["publicKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) convertPublicKeyToJWK(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.ConvertPublicKeyToJWK(
+		args["publicKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) decryptPrivateKey(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.DecryptPrivateKey(
+		args["privateKeyEncrypted"].(string),
+		args["password"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) encryptPrivateKey(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.EncryptPrivateKey(
+		args["privateKey"].(string),
+		args["password"].(string),
+		args["cipherName"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
 func (p *Plugin) decryptOAEP(arguments interface{}) (reply interface{}, err error) {
 	args := arguments.(map[interface{}]interface{})
 
@@ -45,8 +226,7 @@ func (p *Plugin) decryptOAEP(arguments interface{}) (reply interface{}, err erro
 		args["message"].(string),
 		args["label"].(string),
 		args["hashName"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["privateKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)
@@ -59,8 +239,7 @@ func (p *Plugin) decryptPKCS1v15(arguments interface{}) (reply interface{}, err 
 
 	result, err := p.instance.DecryptPKCS1v15(
 		args["message"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["privateKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)
@@ -75,8 +254,7 @@ func (p *Plugin) encryptOAEP(arguments interface{}) (reply interface{}, err erro
 		args["message"].(string),
 		args["label"].(string),
 		args["hashName"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["publicKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)
@@ -89,8 +267,7 @@ func (p *Plugin) encryptPKCS1v15(arguments interface{}) (reply interface{}, err 
 
 	result, err := p.instance.EncryptPKCS1v15(
 		args["message"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["publicKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)
@@ -104,8 +281,8 @@ func (p *Plugin) signPSS(arguments interface{}) (reply interface{}, err error) {
 	result, err := p.instance.SignPSS(
 		args["message"].(string),
 		args["hashName"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["saltLengthName"].(string),
+		args["privateKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)
@@ -119,8 +296,7 @@ func (p *Plugin) signPKCS1v15(arguments interface{}) (reply interface{}, err err
 	result, err := p.instance.SignPKCS1v15(
 		args["message"].(string),
 		args["hashName"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["privateKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)
@@ -135,8 +311,8 @@ func (p *Plugin) verifyPSS(arguments interface{}) (reply interface{}, err error)
 		args["signature"].(string),
 		args["message"].(string),
 		args["hashName"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["saltLengthName"].(string),
+		args["publicKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)
@@ -151,8 +327,7 @@ func (p *Plugin) verifyPKCS1v15(arguments interface{}) (reply interface{}, err e
 		args["signature"].(string),
 		args["message"].(string),
 		args["hashName"].(string),
-		args["pkcs12"].(string),
-		args["passphrase"].(string),
+		args["publicKey"].(string),
 	)
 	if err != nil {
 		return nil, plugin.NewError("error", err)

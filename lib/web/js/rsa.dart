@@ -4,20 +4,104 @@ library rsa;
 import 'package:js/js.dart';
 
 @JS()
+external RSAConvertJWKToPrivateKey(
+  String data,
+  String keyId,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertJWKToPublicKey(
+  String data,
+  String keyId,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertKeyPairToPKCS12(
+  String privateKey,
+  String certificate,
+  String password,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertPKCS12ToKeyPair(
+  String pkcs12,
+  String password,
+  Function(String error, PKCS12KeyPairObject result) callback,
+);
+
+@JS()
+external RSAConvertPrivateKeyToPKCS8(
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertPrivateKeyToPKCS1(
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertPrivateKeyToJWK(
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertPrivateKeyToPublicKey(
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertPublicKeyToPKIX(
+  String publicKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertPublicKeyToPKCS1(
+  String publicKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAConvertPublicKeyToJWK(
+  String publicKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSADecryptPrivateKey(
+  String privateKeyEncrypted,
+  String password,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAEncryptPrivateKey(
+  String privateKey,
+  String password,
+  String cipherName,
+  Function(String error, String result) callback,
+);
+
+@JS()
 external RSADecryptOAEP(
   String message,
   String label,
   String hashName,
-  String pkcs12,
-  String passphrase,
+  String privateKey,
   Function(String error, String result) callback,
 );
 
 @JS()
 external RSADecryptPKCS1v15(
   String message,
-  String pkcs12,
-  String passphrase,
+  String privateKey,
   Function(String error, String result) callback,
 );
 
@@ -26,16 +110,14 @@ external RSAEncryptOAEP(
   String message,
   String label,
   String hashName,
-  String pkcs12,
-  String passphrase,
+  String publicKey,
   Function(String error, String result) callback,
 );
 
 @JS()
 external RSAEncryptPKCS1v15(
   String message,
-  String pkcs12,
-  String passphrase,
+  String publicKey,
   Function(String error, String result) callback,
 );
 
@@ -43,8 +125,8 @@ external RSAEncryptPKCS1v15(
 external RSASignPSS(
   String message,
   String hashName,
-  String pkcs12,
-  String passphrase,
+  String saltLengthName,
+  String privateKey,
   Function(String error, String result) callback,
 );
 
@@ -52,8 +134,7 @@ external RSASignPSS(
 external RSASignPKCS1v15(
   String message,
   String hashName,
-  String pkcs12,
-  String passphrase,
+  String privateKey,
   Function(String error, String result) callback,
 );
 
@@ -62,8 +143,8 @@ external RSAVerifyPSS(
   String signature,
   String message,
   String hashName,
-  String pkcs12,
-  String passphrase,
+  String saltLengthName,
+  String publicKey,
   Function(String error, bool result) callback,
 );
 
@@ -72,8 +153,7 @@ external RSAVerifyPKCS1v15(
   String signature,
   String message,
   String hashName,
-  String pkcs12,
-  String passphrase,
+  String publicKey,
   Function(String error, bool result) callback,
 );
 
@@ -97,7 +177,16 @@ external RSAGenerate(
 );
 
 @JS()
+@anonymous
 class KeyPairObject {
-  external String get publicKey;
   external String get privateKey;
+  external String get publicKey;
+}
+
+@JS()
+@anonymous
+class PKCS12KeyPairObject {
+  external String get privateKey;
+  external String get publicKey;
+  external String get certificate;
 }

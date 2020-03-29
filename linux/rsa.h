@@ -21,7 +21,8 @@ typedef struct { const char *p; ptrdiff_t n; } _GoString_;
 
 #line 3 "main.go"
  #include <stdint.h>
- typedef struct { char *publicKey; char *privateKey; } KeyPair;
+ typedef struct { char *privateKey; char *publicKey; } KeyPair;
+ typedef struct { char *privateKey; char *publicKey; char *certificate; } PKCS12KeyPair;
 
 #line 1 "cgo-generated-wrapper"
 
@@ -74,13 +75,39 @@ extern "C" {
 #endif
 
 
-extern char* DecryptOAEP(char* p0, char* p1, char* p2, char* p3, char* p4);
+extern char* ConvertJWKToPrivateKey(char* p0, char* p1);
 
-extern char* DecryptPKCS1v15(char* p0, char* p1, char* p2);
+extern char* ConvertJWKToPublicKey(char* p0, char* p1);
 
-extern char* EncryptOAEP(char* p0, char* p1, char* p2, char* p3, char* p4);
+extern char* ConvertKeyPairToPKCS12(char* p0, char* p1, char* p2);
 
-extern char* EncryptPKCS1v15(char* p0, char* p1, char* p2);
+extern PKCS12KeyPair ConvertPKCS12ToKeyPair(char* p0, char* p1);
+
+extern char* ConvertPrivateKeyToPKCS8(char* p0);
+
+extern char* ConvertPrivateKeyToPKCS1(char* p0);
+
+extern char* ConvertPrivateKeyToJWK(char* p0);
+
+extern char* ConvertPrivateKeyToPublicKey(char* p0);
+
+extern char* ConvertPublicKeyToPKIX(char* p0);
+
+extern char* ConvertPublicKeyToPKCS1(char* p0);
+
+extern char* ConvertPublicKeyToJWK(char* p0);
+
+extern char* DecryptPrivateKey(char* p0, char* p1);
+
+extern char* EncryptPrivateKey(char* p0, char* p1, char* p2);
+
+extern char* DecryptOAEP(char* p0, char* p1, char* p2, char* p3);
+
+extern char* DecryptPKCS1v15(char* p0, char* p1);
+
+extern char* EncryptOAEP(char* p0, char* p1, char* p2, char* p3);
+
+extern char* EncryptPKCS1v15(char* p0, char* p1);
 
 extern KeyPair Generate(GoInt p0);
 
@@ -88,11 +115,11 @@ extern char* Hash(char* p0, char* p1);
 
 extern char* Base64(char* p0);
 
-extern char* SignPKCS1v15(char* p0, char* p1, char* p2, char* p3);
+extern char* SignPKCS1v15(char* p0, char* p1, char* p2);
 
 extern char* SignPSS(char* p0, char* p1, char* p2, char* p3);
 
-extern char* VerifyPKCS1v15(char* p0, char* p1, char* p2, char* p3, char* p4);
+extern char* VerifyPKCS1v15(char* p0, char* p1, char* p2, char* p3);
 
 extern char* VerifyPSS(char* p0, char* p1, char* p2, char* p3, char* p4);
 

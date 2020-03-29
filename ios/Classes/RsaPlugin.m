@@ -24,35 +24,35 @@
    
   if ([@"encryptPKCS1v15" isEqualToString:call.method]) {
       
-      [self encryptPKCS1v15:[call arguments][@"message"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self encryptPKCS1v15:[call arguments][@"message"] publicKey:[call arguments][@"publicKey"] result:result];
       
   } else if ([@"encryptOAEP" isEqualToString:call.method]) {
       
-      [self encryptOAEP:[call arguments][@"message"] label:[call arguments][@"label"] hashName:[call arguments][@"hashName"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self encryptOAEP:[call arguments][@"message"] label:[call arguments][@"label"] hashName:[call arguments][@"hashName"] publicKey:[call arguments][@"publicKey"]  result:result];
       
   } else if ([@"decryptOAEP" isEqualToString:call.method]) {
       
-      [self decryptOAEP:[call arguments][@"message"] label:[call arguments][@"label"] hashName:[call arguments][@"hashName"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self decryptOAEP:[call arguments][@"message"] label:[call arguments][@"label"] hashName:[call arguments][@"hashName"] privateKey:[call arguments][@"privateKey"] result:result];
       
   } else if ([@"decryptPKCS1v15" isEqualToString:call.method]) {
       
-      [self decryptPKCS1v15:[call arguments][@"message"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self decryptPKCS1v15:[call arguments][@"message"] privateKey:[call arguments][@"privateKey"] result:result];
        
   } else if ([@"signPKCS1v15" isEqualToString:call.method]) {
       
-      [self signPKCS1v15:[call arguments][@"message"] hashName:[call arguments][@"hashName"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self signPKCS1v15:[call arguments][@"message"] hashName:[call arguments][@"hashName"] privateKey:[call arguments][@"privateKey"] result:result];
       
   } else if ([@"signPSS" isEqualToString:call.method]) {
       
-      [self signPSS:[call arguments][@"message"] hashName:[call arguments][@"hashName"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self signPSS:[call arguments][@"message"] hashName:[call arguments][@"hashName"] saltLengthName:[call arguments][@"saltLengthName"] privateKey:[call arguments][@"privateKey"] result:result];
       
   } else if ([@"verifyPKCS1v15" isEqualToString:call.method]) {
       
-      [self verifyPKCS1v15:[call arguments][@"signature"] message:[call arguments][@"message"] hashName:[call arguments][@"hashName"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self verifyPKCS1v15:[call arguments][@"signature"] message:[call arguments][@"message"] hashName:[call arguments][@"hashName"] publicKey:[call arguments][@"publicKey"] result:result];
       
   } else if ([@"verifyPSS" isEqualToString:call.method]) {
       
-      [self verifyPSS:[call arguments][@"signature"] message:[call arguments][@"message"] hashName:[call arguments][@"hashName"] pkcs12:[call arguments][@"pkcs12"] passphrase:[call arguments][@"passphrase"] result:result];
+      [self verifyPSS:[call arguments][@"signature"] message:[call arguments][@"message"] hashName:[call arguments][@"hashName"] saltLengthName:[call arguments][@"saltLengthName"] publicKey:[call arguments][@"publicKey"] result:result];
       
   } else if ([@"base64" isEqualToString:call.method]) {
         [self base64:[call arguments][@"message"] result:result];
@@ -82,14 +82,13 @@
 }
 
 - (void) encryptPKCS1v15: (NSString *)message
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 publicKey: (NSString *)publicKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance encryptPKCS1v15:message pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance encryptPKCS1v15:message publicKey:publicKey  error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -107,14 +106,13 @@
 - (void) encryptOAEP: (NSString *)message
                  label: (NSString *)label
                  hashName: (NSString *)hashName
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 publicKey: (NSString *)publicKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance encryptOAEP:message label:label hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance encryptOAEP:message label:label hashName:hashName publicKey:publicKey error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -131,14 +129,13 @@
 - (void) decryptOAEP: (NSString *)message
                  label: (NSString *)label
                  hashName: (NSString *)hashName
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 privateKey: (NSString *)privateKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance decryptOAEP:message label:label hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance decryptOAEP:message label:label hashName:hashName privateKey:privateKey error:&error];
             
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -152,14 +149,13 @@
     });
 }
 - (void) decryptPKCS1v15: (NSString *)message
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 privateKey: (NSString *)privateKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance decryptPKCS1v15:message pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance decryptPKCS1v15:message privateKey:privateKey error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -175,14 +171,13 @@
 
 - (void) signPKCS1v15: (NSString *)message
                  hashName: (NSString *)hashName
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 privateKey: (NSString *)privateKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance signPKCS1v15:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance signPKCS1v15:message hashName:hashName privateKey:privateKey error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -199,14 +194,14 @@
 
 - (void) signPSS: (NSString *)message
                  hashName: (NSString *)hashName
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 saltLengthName: (NSString *)saltLengthName
+                 privateKey: (NSString *)privateKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance signPSS:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase error:&error];
+            NSString * output = [self->instance signPSS:message hashName:hashName saltLengthName:saltLengthName privateKey:privateKey error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -224,15 +219,14 @@
 - (void) verifyPKCS1v15: (NSString *)signature
                  message: (NSString *)message
                  hashName: (NSString *)hashName
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 publicKey: (NSString *)publicKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
             BOOL ret0_;
-            BOOL output = [self->instance verifyPKCS1v15:signature message:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase ret0_:&ret0_ error:&error];
+            BOOL output = [self->instance verifyPKCS1v15:signature message:message hashName:hashName publicKey:publicKey ret0_:&ret0_ error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -250,15 +244,15 @@
 - (void) verifyPSS: (NSString *)signature
                  message: (NSString *)message
                  hashName: (NSString *)hashName
-                 pkcs12: (NSString *)pkcs12
-                 passphrase: (NSString *)passphrase
+                 saltLengthName: (NSString *)saltLengthName
+                 publicKey: (NSString *)publicKey
                  result:(FlutterResult)result
 {
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
             BOOL ret0_;
-            BOOL output = [self->instance verifyPSS:signature message:message hashName:hashName pkcs12:pkcs12 passphrase:passphrase ret0_:&ret0_ error:&error];
+            BOOL output = [self->instance verifyPSS:signature message:message hashName:hashName saltLengthName:saltLengthName publicKey:publicKey ret0_:&ret0_ error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];

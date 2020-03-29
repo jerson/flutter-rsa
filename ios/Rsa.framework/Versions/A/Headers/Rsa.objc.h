@@ -13,6 +13,7 @@
 
 @class RsaFastRSA;
 @class RsaKeyPair;
+@class RsaPKCS12KeyPair;
 
 @interface RsaFastRSA : NSObject <goSeqRefInterface> {
 }
@@ -21,16 +22,29 @@
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (nullable instancetype)init;
 - (NSString* _Nonnull)base64:(NSString* _Nullable)message error:(NSError* _Nullable* _Nullable)error;
-- (NSString* _Nonnull)decryptOAEP:(NSString* _Nullable)ciphertext label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase error:(NSError* _Nullable* _Nullable)error;
-- (NSString* _Nonnull)decryptPKCS1v15:(NSString* _Nullable)ciphertext pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase error:(NSError* _Nullable* _Nullable)error;
-- (NSString* _Nonnull)encryptOAEP:(NSString* _Nullable)message label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase error:(NSError* _Nullable* _Nullable)error;
-- (NSString* _Nonnull)encryptPKCS1v15:(NSString* _Nullable)message pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertJWKToPrivateKey:(NSString* _Nullable)data keyID:(NSString* _Nullable)keyID error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertJWKToPublicKey:(NSString* _Nullable)data keyID:(NSString* _Nullable)keyID error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertKeyPairToPKCS12:(NSString* _Nullable)privateKey certificate:(NSString* _Nullable)certificate password:(NSString* _Nullable)password error:(NSError* _Nullable* _Nullable)error;
+- (RsaPKCS12KeyPair* _Nullable)convertPKCS12ToKeyPair:(NSString* _Nullable)pkcs12 password:(NSString* _Nullable)password error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertPrivateKeyToJWK:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertPrivateKeyToPKCS1:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertPrivateKeyToPKCS8:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertPrivateKeyToPublicKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertPublicKeyToJWK:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertPublicKeyToPKCS1:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)convertPublicKeyToPKIX:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)decryptOAEP:(NSString* _Nullable)ciphertext label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)decryptPKCS1v15:(NSString* _Nullable)ciphertext privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)decryptPrivateKey:(NSString* _Nullable)privateKeyEncrypted password:(NSString* _Nullable)password error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)encryptOAEP:(NSString* _Nullable)message label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName publicKey:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)encryptPKCS1v15:(NSString* _Nullable)message publicKey:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)encryptPrivateKey:(NSString* _Nullable)privateKey password:(NSString* _Nullable)password cipherName:(NSString* _Nullable)cipherName error:(NSError* _Nullable* _Nullable)error;
 - (RsaKeyPair* _Nullable)generate:(long)nBits error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)hash:(NSString* _Nullable)message name:(NSString* _Nullable)name error:(NSError* _Nullable* _Nullable)error;
-- (NSString* _Nonnull)signPKCS1v15:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase error:(NSError* _Nullable* _Nullable)error;
-- (NSString* _Nonnull)signPSS:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase error:(NSError* _Nullable* _Nullable)error;
-- (BOOL)verifyPKCS1v15:(NSString* _Nullable)signature message:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
-- (BOOL)verifyPSS:(NSString* _Nullable)signature message:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName pkcs12:(NSString* _Nullable)pkcs12 passphrase:(NSString* _Nullable)passphrase ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)signPKCS1v15:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)signPSS:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName saltLengthName:(NSString* _Nullable)saltLengthName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (BOOL)verifyPKCS1v15:(NSString* _Nullable)signature message:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName publicKey:(NSString* _Nullable)publicKey ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
+- (BOOL)verifyPSS:(NSString* _Nullable)signature message:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName saltLengthName:(NSString* _Nullable)saltLengthName publicKey:(NSString* _Nullable)publicKey ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
 @end
 
 @interface RsaKeyPair : NSObject <goSeqRefInterface> {
@@ -39,9 +53,29 @@
 
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (nonnull instancetype)init;
-@property (nonatomic) NSString* _Nonnull publicKey;
 @property (nonatomic) NSString* _Nonnull privateKey;
+@property (nonatomic) NSString* _Nonnull publicKey;
 @end
+
+@interface RsaPKCS12KeyPair : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) NSString* _Nonnull privateKey;
+@property (nonatomic) NSString* _Nonnull publicKey;
+@property (nonatomic) NSString* _Nonnull certificate;
+@end
+
+// skipped const PrivateKeyFormatTypePKCS1 with unsupported type: github.com/jerson/rsa-mobile/rsa.PrivateKeyFormatType
+
+// skipped const PrivateKeyFormatTypePKCS8 with unsupported type: github.com/jerson/rsa-mobile/rsa.PrivateKeyFormatType
+
+// skipped const PublicKeyFormatTypePKCS1 with unsupported type: github.com/jerson/rsa-mobile/rsa.PublicKeyFormatType
+
+// skipped const PublicKeyFormatTypePKIX with unsupported type: github.com/jerson/rsa-mobile/rsa.PublicKeyFormatType
+
 
 FOUNDATION_EXPORT RsaFastRSA* _Nullable RsaNewFastRSA(void);
 

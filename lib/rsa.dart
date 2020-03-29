@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:fast_rsa/key_pair.dart';
 
 enum RSAHash {
   md5,
@@ -12,88 +11,213 @@ enum RSAHash {
   sha512,
 }
 
+enum RSAPEMCipher {
+  des,
+  c3des,
+  aes128,
+  aes192,
+  aes256,
+}
+
+enum RSASaltLength {
+  auto,
+  equalsHash,
+}
+
+class KeyPair {
+  final String privateKey;
+  final String publicKey;
+
+  KeyPair({
+    this.publicKey,
+    this.privateKey,
+  });
+}
+
+class PKCS12KeyPair {
+  final String privateKey;
+  final String publicKey;
+  final String certificate;
+
+  PKCS12KeyPair({
+    this.privateKey,
+    this.publicKey,
+    this.certificate,
+  });
+}
+
 class RSA {
   static const MethodChannel _channel = const MethodChannel('rsa');
 
-  static Future<String> decryptOAEP(String message, String label,
-      RSAHash hashName, String pkcs12, String passphrase) async {
+  static Future<String> convertJWKToPrivateKey(
+      String data, String keyId) async {
+    return await _channel.invokeMethod('convertJWKToPrivateKey', {
+      "data": data,
+      "keyId": keyId,
+    });
+  }
+
+  static Future<String> convertJWKToPublicKey(String data, String keyId) async {
+    return await _channel.invokeMethod('convertJWKToPublicKey', {
+      "data": data,
+      "keyId": keyId,
+    });
+  }
+
+  static Future<String> convertKeyPairToPKCS12(
+      String privateKey, String certificate, String password) async {
+    return await _channel.invokeMethod('convertKeyPairToPKCS12', {
+      "privateKey": privateKey,
+      "certificate": certificate,
+      "password": password,
+    });
+  }
+
+  static Future<PKCS12KeyPair> convertPKCS12ToKeyPair(
+      String pkcs12, String password) async {
+    var result = await _channel.invokeMethod('convertPKCS12ToKeyPair', {
+      "pkcs12": pkcs12,
+      "password": password,
+    });
+    return PKCS12KeyPair(
+      privateKey: result["privateKey"],
+      publicKey: result["publicKey"],
+      certificate: result["certificate"],
+    );
+  }
+
+  static Future<String> convertPrivateKeyToPKCS8(String privateKey) async {
+    return await _channel.invokeMethod('convertPrivateKeyToPKCS8', {
+      "privateKey": privateKey,
+    });
+  }
+
+  static Future<String> convertPrivateKeyToPKCS1(String privateKey) async {
+    return await _channel.invokeMethod('convertPrivateKeyToPKCS1', {
+      "privateKey": privateKey,
+    });
+  }
+
+  static Future<String> convertPrivateKeyToJWK(String privateKey) async {
+    return await _channel.invokeMethod('convertPrivateKeyToJWK', {
+      "privateKey": privateKey,
+    });
+  }
+
+  static Future<String> convertPrivateKeyToPublicKey(String privateKey) async {
+    return await _channel.invokeMethod('convertPrivateKeyToPublicKey', {
+      "privateKey": privateKey,
+    });
+  }
+
+  static Future<String> convertPublicKeyToPKIX(String publicKey) async {
+    return await _channel.invokeMethod('convertPublicKeyToPKIX', {
+      "publicKey": publicKey,
+    });
+  }
+
+  static Future<String> convertPublicKeyToPKCS1(String publicKey) async {
+    return await _channel.invokeMethod('convertPublicKeyToPKCS1', {
+      "publicKey": publicKey,
+    });
+  }
+
+  static Future<String> convertPublicKeyToJWK(String publicKey) async {
+    return await _channel.invokeMethod('convertPublicKeyToJWK', {
+      "publicKey": publicKey,
+    });
+  }
+
+  static Future<String> decryptPrivateKey(
+      String privateKeyEncrypted, String password) async {
+    return await _channel.invokeMethod('decryptPrivateKey', {
+      "privateKeyEncrypted": privateKeyEncrypted,
+      "password": password,
+    });
+  }
+
+  static Future<String> encryptPrivateKey(
+      String privateKey, String password, RSAPEMCipher cipherName) async {
+    return await _channel.invokeMethod('encryptPrivateKey', {
+      "privateKey": privateKey,
+      "password": password,
+      "cipherName": _toStringRSAPEMCipher(cipherName),
+    });
+  }
+
+  static Future<String> decryptOAEP(
+      String message, String label, RSAHash hashName, String privateKey) async {
     return await _channel.invokeMethod('decryptOAEP', {
       "message": message,
       "label": label,
       "hashName": _toStringRSAHash(hashName),
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "privateKey": privateKey,
     });
   }
 
   static Future<String> decryptPKCS1v15(
-      String message, String pkcs12, String passphrase) async {
+      String message, String privateKey) async {
     return await _channel.invokeMethod('decryptPKCS1v15', {
       "message": message,
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "privateKey": privateKey,
     });
   }
 
-  static Future<String> encryptOAEP(String message, String label,
-      RSAHash hashName, String pkcs12, String passphrase) async {
+  static Future<String> encryptOAEP(
+      String message, String label, RSAHash hashName, String publicKey) async {
     return await _channel.invokeMethod('encryptOAEP', {
       "message": message,
       "label": label,
       "hashName": _toStringRSAHash(hashName),
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "publicKey": publicKey,
     });
   }
 
   static Future<String> encryptPKCS1v15(
-      String message, String pkcs12, String passphrase) async {
+      String message, String publicKey) async {
     return await _channel.invokeMethod('encryptPKCS1v15', {
       "message": message,
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "publicKey": publicKey,
     });
   }
 
-  static Future<String> signPSS(String message, RSAHash hashName, String pkcs12,
-      String passphrase) async {
+  static Future<String> signPSS(String message, RSAHash hashName,
+      RSASaltLength saltLengthName, String privateKey) async {
     return await _channel.invokeMethod('signPSS', {
       "message": message,
       "hashName": _toStringRSAHash(hashName),
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "saltLengthName": _toStringRSASaltLength(saltLengthName),
+      "privateKey": privateKey,
     });
   }
 
-  static Future<String> signPKCS1v15(String message, RSAHash hashName,
-      String pkcs12, String passphrase) async {
+  static Future<String> signPKCS1v15(
+      String message, RSAHash hashName, String privateKey) async {
     return await _channel.invokeMethod('signPKCS1v15', {
       "message": message,
       "hashName": _toStringRSAHash(hashName),
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "privateKey": privateKey,
     });
   }
 
   static Future<bool> verifyPSS(String signature, String message,
-      RSAHash hashName, String pkcs12, String passphrase) async {
+      RSAHash hashName, RSASaltLength saltLengthName, String publicKey) async {
     return await _channel.invokeMethod('verifyPSS', {
       "signature": signature,
       "message": message,
       "hashName": _toStringRSAHash(hashName),
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "saltLengthName": _toStringRSASaltLength(saltLengthName),
+      "publicKey": publicKey,
     });
   }
 
   static Future<bool> verifyPKCS1v15(String signature, String message,
-      RSAHash hashName, String pkcs12, String passphrase) async {
+      RSAHash hashName, String publicKey) async {
     return await _channel.invokeMethod('verifyPKCS1v15', {
       "signature": signature,
       "message": message,
       "hashName": _toStringRSAHash(hashName),
-      "pkcs12": pkcs12,
-      "passphrase": passphrase,
+      "publicKey": publicKey,
     });
   }
 
@@ -126,5 +250,22 @@ class RSA {
       input = RSAHash.sha512;
     }
     return input.toString().replaceFirst("RSAHash.", "");
+  }
+
+  static String _toStringRSASaltLength(RSASaltLength input) {
+    if (input == null) {
+      input = RSASaltLength.auto;
+    }
+    return input.toString().replaceFirst("RSASaltLength.", "");
+  }
+
+  static String _toStringRSAPEMCipher(RSAPEMCipher input) {
+    if (input == null) {
+      input = RSAPEMCipher.aes256;
+    }
+    return input
+        .toString()
+        .replaceFirst("RSAPEMCipher.", "")
+        .replaceFirst("c3des", "3des");
   }
 }

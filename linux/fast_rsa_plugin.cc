@@ -44,8 +44,7 @@ void decryptOAEP(
     char *message,
     char *label,
     char *hashName,
-    char *pkcs12,
-    char *passphrase,
+    char *privateKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -55,8 +54,7 @@ void decryptOAEP(
         message,
         label,
         hashName,
-        pkcs12,
-        passphrase);
+        privateKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -73,8 +71,7 @@ void decryptOAEP(
 
 void decryptPKCS1v15(
     char *message,
-    char *pkcs12,
-    char *passphrase,
+    char *privateKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -82,8 +79,7 @@ void decryptPKCS1v15(
   {
     char *output = DecryptPKCS1v15(
         message,
-        pkcs12,
-        passphrase);
+        privateKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -102,8 +98,7 @@ void encryptOAEP(
     char *message,
     char *label,
     char *hashName,
-    char *pkcs12,
-    char *passphrase,
+    char *publicKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -113,8 +108,7 @@ void encryptOAEP(
         message,
         label,
         hashName,
-        pkcs12,
-        passphrase);
+        publicKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -131,8 +125,7 @@ void encryptOAEP(
 
 void encryptPKCS1v15(
     char *message,
-    char *pkcs12,
-    char *passphrase,
+    char *publicKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -140,8 +133,7 @@ void encryptPKCS1v15(
   {
     char *output = EncryptPKCS1v15(
         message,
-        pkcs12,
-        passphrase);
+        publicKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -159,8 +151,8 @@ void encryptPKCS1v15(
 void signPSS(
     char *message,
     char *hashName,
-    char *pkcs12,
-    char *passphrase,
+    char *saltLengthName,
+    char *privateKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -169,8 +161,8 @@ void signPSS(
     char *output = SignPSS(
         message,
         hashName,
-        pkcs12,
-        passphrase);
+        saltLengthName,
+        privateKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -188,8 +180,7 @@ void signPSS(
 void signPKCS1v15(
     char *message,
     char *hashName,
-    char *pkcs12,
-    char *passphrase,
+    char *privateKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -198,8 +189,7 @@ void signPKCS1v15(
     char *output = SignPKCS1v15(
         message,
         hashName,
-        pkcs12,
-        passphrase);
+        privateKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -218,8 +208,8 @@ void verifyPSS(
     char *signature,
     char *message,
     char *hashName,
-    char *pkcs12,
-    char *passphrase,
+    char *saltLengthName,
+    char *publicKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -229,8 +219,8 @@ void verifyPSS(
         signature,
         message,
         hashName,
-        pkcs12,
-        passphrase);
+        saltLengthName,
+        publicKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -249,8 +239,7 @@ void verifyPKCS1v15(
     char *signature,
     char *message,
     char *hashName,
-    char *pkcs12,
-    char *passphrase,
+    char *publicKey,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
 
@@ -260,8 +249,7 @@ void verifyPKCS1v15(
         signature,
         message,
         hashName,
-        pkcs12,
-        passphrase);
+        publicKey);
     if (output == NULL)
     {
       result->Error("error", "null pointer");
@@ -335,12 +323,11 @@ void generate(
     KeyPair output = Generate(goBits);
     // printf("privateKey: %s\n", output.privateKey);
     // printf("publicKey: %s\n", output.publicKey);
-    
+
     flutter::EncodableValue response(flutter::EncodableMap{
-       {flutter::EncodableValue("publicKey"), flutter::EncodableValue(output.publicKey)},
-       {flutter::EncodableValue("privateKey"), flutter::EncodableValue(output.privateKey)}
-    });
-    
+        {flutter::EncodableValue("privateKey"), flutter::EncodableValue(output.privateKey)},
+        {flutter::EncodableValue("publicKey"), flutter::EncodableValue(output.publicKey)}});
+
     result->Success(&response);
   }
   catch (const std::exception &e)
@@ -398,8 +385,7 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
         WriteableChar(ValueOrNull(args, "label").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("decryptPKCS1v15") == 0)
@@ -407,8 +393,7 @@ void FastRsaPlugin::HandleMethodCall(
     const EncodableMap &args = method_call.arguments()->MapValue();
     decryptPKCS1v15(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("encryptOAEP") == 0)
@@ -418,8 +403,7 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
         WriteableChar(ValueOrNull(args, "label").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("encryptPKCS1v15") == 0)
@@ -427,8 +411,7 @@ void FastRsaPlugin::HandleMethodCall(
     const EncodableMap &args = method_call.arguments()->MapValue();
     encryptPKCS1v15(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("signPSS") == 0)
@@ -437,8 +420,8 @@ void FastRsaPlugin::HandleMethodCall(
     signPSS(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "saltLengthName").StringValue()),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("signPKCS1v15") == 0)
@@ -447,8 +430,7 @@ void FastRsaPlugin::HandleMethodCall(
     signPKCS1v15(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("verifyPSS") == 0)
@@ -458,8 +440,8 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "signature").StringValue()),
         WriteableChar(ValueOrNull(args, "message").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "saltLengthName").StringValue()),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("verifyPKCS1v15") == 0)
@@ -469,8 +451,7 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "signature").StringValue()),
         WriteableChar(ValueOrNull(args, "message").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
-        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
-        WriteableChar(ValueOrNull(args, "passphrase").StringValue()),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
         move(result));
   }
   else if (method_call.method_name().compare("hash") == 0)

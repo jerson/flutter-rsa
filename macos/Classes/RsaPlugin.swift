@@ -33,8 +33,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         case "encryptPKCS1v15":
             encryptPKCS1v15(
                     message: args["message"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    publicKey: args["publicKey"] as? String,
                     result: result
             )
         case "encryptOAEP":
@@ -42,8 +41,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     message: args["message"] as? String,
                     label: args["label"] as? String,
                     hashName: args["hashName"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    publicKey: args["publicKey"] as? String,
                     result: result
             )
         case "decryptOAEP":
@@ -51,31 +49,28 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     message: args["message"] as? String,
                     label: args["label"] as? String,
                     hashName: args["hashName"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    privateKey: args["privateKey"] as? String,
                     result: result
             )
         case "decryptPKCS1v15":
             decryptPKCS1v15(
                     message: args["message"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    privateKey: args["privateKey"] as? String,
                     result: result
             )
         case "signPKCS1v15":
             signPKCS1v15(
                     message: args["message"] as? String,
                     hashName: args["hashName"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    privateKey: args["privateKey"] as? String,
                     result: result
             )
         case "signPSS":
             signPSS(
                     message: args["message"] as? String,
                     hashName: args["hashName"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    saltLengthName: args["saltLengthName"] as? String,
+                    privateKey: args["privateKey"] as? String,
                     result: result
             )
         case "verifyPKCS1v15":
@@ -83,8 +78,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     signature: args["signature"] as? String,
                     message: args["message"] as? String,
                     hashName: args["hashName"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    publicKey: args["publicKey"] as? String,
                     result: result
             )
         case "verifyPSS":
@@ -92,8 +86,8 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     signature: args["signature"] as? String,
                     message: args["message"] as? String,
                     hashName: args["hashName"] as? String,
-                    pkcs12: args["pkcs12"] as? String,
-                    passphrase: args["passphrase"] as? String,
+                    saltLengthName: args["saltLengthName"] as? String,
+                    publicKey: args["publicKey"] as? String,
                     result: result
             )
         case "base64":
@@ -117,11 +111,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    func encryptPKCS1v15(message: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func encryptPKCS1v15(message: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.encryptPKCS1v15(message, pkcs12: pkcs12, passphrase: passphrase, error: &error)
+                let output = try self.instance?.encryptPKCS1v15(message, publicKey: publicKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -134,11 +128,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func encryptOAEP(message: String?, label: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func encryptOAEP(message: String?, label: String?, hashName: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.encryptOAEP(message, label: label, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
+                let output = try self.instance?.encryptOAEP(message, label: label, hashName: hashName, publicKey: publicKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -151,11 +145,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func decryptOAEP(message: String?, label: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func decryptOAEP(message: String?, label: String?, hashName: String?, privateKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.decryptOAEP(message, label: label, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
+                let output = try self.instance?.decryptOAEP(message, label: label, hashName: hashName, privateKey: privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -168,11 +162,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func decryptPKCS1v15(message: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func decryptPKCS1v15(message: String?, privateKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.decryptPKCS1v15(message, pkcs12: pkcs12, passphrase: passphrase, error: &error)
+                let output = try self.instance?.decryptPKCS1v15(message, privateKey: privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -185,11 +179,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func signPKCS1v15(message: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func signPKCS1v15(message: String?, hashName: String?, privateKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.signPKCS1v15(message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
+                let output = try self.instance?.signPKCS1v15(message, hashName: hashName, privateKey: privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -202,11 +196,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func signPSS(message: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func signPSS(message: String?, hashName: String?, saltLengthName: String?, privateKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.signPSS(message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, error: &error)
+                let output = try self.instance?.signPSS(message, hashName: hashName, saltLengthName: saltLengthName, privateKey: privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -219,11 +213,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func verifyPKCS1v15(signature: String?, message: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func verifyPKCS1v15(signature: String?, message: String?, hashName: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
                 var ret0_: ObjCBool = false
-                _ = try self.instance?.verifyPKCS1v15(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: &ret0_)
+                _ = try self.instance?.verifyPKCS1v15(signature, message: message, hashName: hashName, publicKey: publicKey, ret0_: &ret0_)
 
                 self.result(result, output: ret0_.boolValue as NSNumber)
             } catch {
@@ -232,12 +226,12 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func verifyPSS(signature: String?, message: String?, hashName: String?, pkcs12: String?, passphrase: String?, result: @escaping FlutterResult) {
+    func verifyPSS(signature: String?, message: String?, hashName: String?, saltLengthName: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
 
                 var ret0_: ObjCBool = false
-                _ = try self.instance?.verifyPSS(signature, message: message, hashName: hashName, pkcs12: pkcs12, passphrase: passphrase, ret0_: &ret0_)
+                _ = try self.instance?.verifyPSS(signature, message: message, hashName: hashName, saltLengthName: saltLengthName, publicKey: publicKey, ret0_: &ret0_)
 
                 self.result(result, output: ret0_.boolValue as NSNumber)
             } catch {

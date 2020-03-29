@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fast_rsa/key_pair.dart';
 import 'package:fast_rsa/rsa.dart';
 
-const passphrase = '123456789';
+const password = '123456789';
 const pkcs12 =
     '''MIIQSQIBAzCCEA8GCSqGSIb3DQEHAaCCEAAEgg/8MIIP+DCCBi8GCSqGSIb3DQEH
 BqCCBiAwggYcAgEAMIIGFQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQI/pTm
@@ -121,6 +120,12 @@ class _MyAppState extends State<MyApp> {
     publicKey: "",
   );
 
+  PKCS12KeyPair _pkcs12KeyPair = PKCS12KeyPair(
+    privateKey: "",
+    publicKey: "",
+    certificate: "",
+  );
+
   String _encryptedOAEP = "";
   String _decryptedOAEP = "";
   String _encryptedPKCS1v15 = "";
@@ -142,6 +147,15 @@ class _MyAppState extends State<MyApp> {
     signPKCS1v15Controller.text = "sample";
     base64Controller.text = "sample";
     hashController.text = "sample";
+
+    convertKey();
+  }
+
+  void convertKey() async {
+    var data = await RSA.convertPKCS12ToKeyPair(pkcs12, password);
+    setState(() {
+      _pkcs12KeyPair = data;
+    });
   }
 
   @override
@@ -182,8 +196,7 @@ class _MyAppState extends State<MyApp> {
                             encryptOAEPController.text,
                             "",
                             RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
+                            _pkcs12KeyPair.publicKey,
                           );
                           setState(() {
                             _encryptedOAEP = encrypted;
@@ -210,8 +223,7 @@ class _MyAppState extends State<MyApp> {
                             _encryptedOAEP,
                             "",
                             RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
+                            _pkcs12KeyPair.privateKey,
                           );
                           setState(() {
                             _decryptedOAEP = decrypted;
@@ -240,8 +252,7 @@ class _MyAppState extends State<MyApp> {
                         onPressed: () async {
                           var encrypted = await RSA.encryptPKCS1v15(
                             encryptKCS1v15Controller.text,
-                            pkcs12,
-                            passphrase,
+                            _pkcs12KeyPair.publicKey,
                           );
                           setState(() {
                             _encryptedPKCS1v15 = encrypted;
@@ -266,8 +277,7 @@ class _MyAppState extends State<MyApp> {
                         onPressed: () async {
                           var decrypted = await RSA.decryptPKCS1v15(
                             _encryptedPKCS1v15,
-                            pkcs12,
-                            passphrase,
+                            _pkcs12KeyPair.privateKey,
                           );
                           setState(() {
                             _decryptedPKCS1v15 = decrypted;
@@ -297,8 +307,8 @@ class _MyAppState extends State<MyApp> {
                           var signed = await RSA.signPSS(
                             signPSSController.text,
                             RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
+                            RSASaltLength.auto,
+                            _pkcs12KeyPair.privateKey,
                           );
                           setState(() {
                             _signedPSS = signed;
@@ -325,8 +335,8 @@ class _MyAppState extends State<MyApp> {
                             _signedPSS,
                             signPSSController.text,
                             RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
+                            RSASaltLength.auto,
+                            _pkcs12KeyPair.publicKey,
                           );
                           setState(() {
                             _verifiedPSS = verified;
@@ -356,8 +366,7 @@ class _MyAppState extends State<MyApp> {
                           var signed = await RSA.signPKCS1v15(
                             signPKCS1v15Controller.text,
                             RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
+                            _pkcs12KeyPair.privateKey,
                           );
                           setState(() {
                             _signedPKCS1v15 = signed;
@@ -384,8 +393,7 @@ class _MyAppState extends State<MyApp> {
                             _signedPKCS1v15,
                             signPKCS1v15Controller.text,
                             RSAHash.sha256,
-                            pkcs12,
-                            passphrase,
+                            _pkcs12KeyPair.publicKey,
                           );
                           setState(() {
                             _verifiedPKCS1v15 = verified;
