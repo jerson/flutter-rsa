@@ -244,7 +244,11 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
                 } else {
-                    self.result(result, output: output)
+                    self.result(result, output: [
+                        "privateKey": output?.privateKey,
+                        "publicKey": output?.publicKey,
+                        "certificate": output?.certificate,
+                    ])
                 }
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
@@ -575,8 +579,8 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                 let output = try self.instance?.generate(bits!)
 
                 self.result(result, output: [
-                    "publicKey": output?.publicKey,
                     "privateKey": output?.privateKey,
+                    "publicKey": output?.publicKey,
                 ])
 
             } catch {
