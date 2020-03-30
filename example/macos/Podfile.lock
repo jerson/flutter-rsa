@@ -1,5 +1,5 @@
 PODS:
-  - fast_rsa (0.1.0):
+  - fast_rsa (0.2.0):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
 
@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/flutter/darwin-x64
 
 SPEC CHECKSUMS:
-  fast_rsa: 067a21c6a8618225586e606af0ff93edb5723601
+  fast_rsa: af6ac17a34edb60a14d6c79c70d929858e75ad5a
   FlutterMacOS: 15bea8a44d2fa024068daa0140371c020b4b6ff9
 
 PODFILE CHECKSUM: a93337fa42d4627d8439fc2cef9bda80a1dd7842

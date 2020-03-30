@@ -188,7 +188,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertJWKToPrivateKey(data, keyID: keyId, error: &error)
+                let output = try self.instance?.convertJWK(toPrivateKey:data, keyID: keyId, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -205,7 +205,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertJWKToPublicKey(data, keyID: keyId, error: &error)
+                let output = try self.instance?.convertJWK(toPublicKey:data, keyID: keyId, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -222,7 +222,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertKeyPairToPKCS12(privateKey, certificate: certificate, password: password, error: &error)
+                let output = try self.instance?.convertKeyPair(toPKCS12:privateKey, certificate: certificate, password: password, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -238,18 +238,14 @@ public class RsaPlugin: NSObject, FlutterPlugin {
     func convertPKCS12ToKeyPair(pkcs12: String?, password: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
-                var error: NSError?
-                let output = try self.instance?.convertPKCS12ToKeyPair(pkcs12, password: password, error: &error)
+                let output = try self.instance?.convertPKCS12(toKeyPair:pkcs12, password: password)
 
-                if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
-                } else {
-                    self.result(result, output: [
+                self.result(result, output: [
                         "privateKey": output?.privateKey,
                         "publicKey": output?.publicKey,
                         "certificate": output?.certificate,
-                    ])
-                }
+                ])
+                
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
             }
@@ -260,7 +256,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertPrivateKeyToPKCS8(privateKey, error: &error)
+                let output = try self.instance?.convertPrivateKey(toPKCS8:privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -277,7 +273,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertPrivateKeyToPKCS1(privateKey, error: &error)
+                let output = try self.instance?.convertPrivateKey(toPKCS1:privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -294,7 +290,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertPrivateKeyToJWK(privateKey, error: &error)
+                let output = try self.instance?.convertPrivateKey(toJWK:privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -311,7 +307,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertPrivateKeyToPublicKey(privateKey, error: &error)
+                let output = try self.instance?.convertPrivateKey(toPublicKey:privateKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -328,7 +324,24 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertPublicKeyToPKIX(publicKey, error: &error)
+                let output = try self.instance?.convertPublicKey(toPKIX:publicKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPublicKeyToPKCS1(publicKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPublicKey(toPKCS1:publicKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -345,7 +358,7 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         queue?.async(execute: {
             do {
                 var error: NSError?
-                let output = try self.instance?.convertPublicKeyToJWK(publicKey, error: &error)
+                let output = try self.instance?.convertPublicKey(toJWK:publicKey, error: &error)
 
                 if error != nil {
                     self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
@@ -392,23 +405,6 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
-    func convertPrivateKeyToPublicKey(privateKey: String?, result: @escaping FlutterResult) {
-        queue?.async(execute: {
-            do {
-                var error: NSError?
-                let output = try self.instance?.convertPrivateKeyToPublicKey(privateKey, error: &error)
-
-                if error != nil {
-                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
-                } else {
-                    self.result(result, output: output)
-                }
-            } catch {
-                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
-            }
-        })
-    }
-    //fgdfgdfgfd
 
     func encryptPKCS1v15(message: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
