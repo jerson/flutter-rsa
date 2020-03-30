@@ -22,9 +22,57 @@
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
    
-  if ([@"encryptPKCS1v15" isEqualToString:call.method]) {
+  if ([@"convertJWKToPrivateKey" isEqualToString:call.method]) {
       
-      [self encryptPKCS1v15:[call arguments][@"message"] publicKey:[call arguments][@"publicKey"] result:result];
+      [self convertJWKToPrivateKey:[call arguments][@"data"] keyId:[call arguments][@"keyId"] result:result];
+      
+  } else if ([@"convertJWKToPublicKey" isEqualToString:call.method]) {
+      
+      [self convertJWKToPublicKey:[call arguments][@"data"] publicKey:[call arguments][@"keyId"] result:result];
+      
+  } else if ([@"convertKeyPairToPKCS12" isEqualToString:call.method]) {
+      
+      [self convertKeyPairToPKCS12:[call arguments][@"privateKey"] certificate:[call arguments][@"certificate"] password:[call arguments][@"password"] result:result];
+      
+  } else if ([@"convertPKCS12ToKeyPair" isEqualToString:call.method]) {
+      
+      [self convertPKCS12ToKeyPair:[call arguments][@"pkcs12"] password:[call arguments][@"password"] result:result];
+      
+  } else if ([@"convertPrivateKeyToPKCS8" isEqualToString:call.method]) {
+      
+      [self convertPrivateKeyToPKCS8:[call arguments][@"privateKey"] result:result];
+      
+  } else if ([@"convertPrivateKeyToPKCS1" isEqualToString:call.method]) {
+      
+      [self convertPrivateKeyToPKCS1:[call arguments][@"privateKey"]  result:result];
+      
+  } else if ([@"convertPrivateKeyToJWK" isEqualToString:call.method]) {
+      
+      [self convertPrivateKeyToJWK:[call arguments][@"privateKey"] result:result];
+      
+  } else if ([@"convertPrivateKeyToPublicKey" isEqualToString:call.method]) {
+      
+      [self convertPrivateKeyToPublicKey:[call arguments][@"privateKey"]  result:result];
+      
+  } else if ([@"convertPublicKeyToPKIX" isEqualToString:call.method]) {
+      
+      [self convertPublicKeyToPKIX:[call arguments][@"publicKey"]  result:result];
+      
+  } else if ([@"convertPublicKeyToPKCS1" isEqualToString:call.method]) {
+      
+      [self convertPublicKeyToPKCS1:[call arguments][@"publicKey"]  result:result];
+      
+  } else if ([@"convertPublicKeyToJWK" isEqualToString:call.method]) {
+      
+      [self convertPublicKeyToJWK:[call arguments][@"publicKey"]  result:result];
+      
+  } else if ([@"decryptPrivateKey" isEqualToString:call.method]) {
+      
+      [self decryptPrivateKey:[call arguments][@"privateKeyEncrypted"] password:[call arguments][@"password"] result:result];
+      
+  }  else if ([@"encryptPrivateKey" isEqualToString:call.method]) {
+      
+      [self encryptPrivateKey:[call arguments][@"privateKey"] password:[call arguments][@"password"] cipherName:[call arguments][@"cipherName"] result:result];
       
   } else if ([@"encryptOAEP" isEqualToString:call.method]) {
       
@@ -79,6 +127,293 @@
     dispatch_async(dispatch_get_main_queue(), ^(void){
         result(output);
     });
+}
+
+- (void) convertJWKToPrivateKey: (NSString *)data
+                 keyId: (NSString *)keyId
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertJWKToPrivateKey:data keyId:keyId  error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertJWKToPublicKey: (NSString *)data
+                 keyId: (NSString *)keyId
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertJWKToPublicKey:data keyId:keyId  error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertKeyPairToPKCS12: (NSString *)privateKey
+                 certificate: (NSString *)certificate
+                 password: (NSString *)password
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertKeyPairToPKCS12:privateKey certificate:certificate password:password  error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPKCS12ToKeyPair: (NSString *)pkcs12
+                 password: (NSString *)password
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            PKCS12KeyPair * output = [self->instance convertPKCS12ToKeyPair:pkcs12 password:password  error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:@{
+                              @"privateKey":output.privateKey,
+                              @"publicKey":output.publicKey,
+                              @"certificate":output.certificate,
+                            }];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPrivateKeyToPKCS8: (NSString *)privateKey
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertPrivateKeyToPKCS8:privateKey error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPrivateKeyToPKCS1: (NSString *)privateKey
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertPrivateKeyToPKCS1:privateKey error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPrivateKeyToJWK: (NSString *)privateKey
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertPrivateKeyToJWK:privateKey error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPrivateKeyToPublicKey: (NSString *)privateKey
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertPrivateKeyToPublicKey:privateKey error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPublicKeyToPKIX: (NSString *)publicKey
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertPublicKeyToPKIX:publicKey error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPublicKeyToPKCS1: (NSString *)publicKey
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertPublicKeyToPKCS1:publicKey error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+
+- (void) convertPublicKeyToJWK: (NSString *)publicKey
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance convertPublicKeyToJWK:publicKey error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+}
+
+- (void) decryptPrivateKey: (NSString *)privateKeyEncrypted
+                 password: (NSString *)password
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance decryptPrivateKey:privateKeyEncrypted password:password error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
+}
+}
+
+- (void) encryptPrivateKey: (NSString *)privateKey
+                 password: (NSString *)password
+                 cipherName: (NSString *)cipherName
+                 result:(FlutterResult)result
+{
+    dispatch_async(queue, ^(void){
+        @try {
+            NSError *error;
+            NSString * output = [self->instance encryptPrivateKey:privateKey password:password cipherName:cipherName error:&error];
+
+            if(error!=nil){
+                [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
+            }else{
+                [self result:result output:output];
+            }
+        }
+        @catch (NSException * e) {
+            [self result:result output:[FlutterError errorWithCode:e.name message:e.reason details:nil]];
+        }
+    });
+    
 }
 
 - (void) encryptPKCS1v15: (NSString *)message
@@ -321,8 +656,8 @@
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
             }else{
                 [self result:result output:@{
-                              @"publicKey":output.publicKey,
                               @"privateKey":output.privateKey,
+                              @"publicKey":output.publicKey,
                             }];
             }
         }
