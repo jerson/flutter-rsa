@@ -40,6 +40,321 @@ char *WriteableChar(const std::string &str)
   return writable;
 }
 
+void convertJWKToPrivateKey(
+    char *data,
+    char *keyId,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertJWKToPrivateKey(
+        data,
+        keyId);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertJWKToPublicKey(
+    char *data,
+    char *keyId,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertJWKToPublicKey(
+        data,
+        keyId);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertKeyPairToPKCS12(
+    char *privateKey,
+    char *certificate,
+    char *password,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertKeyPairToPKCS12(
+        privateKey,
+        certificate,
+        password);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPKCS12ToKeyPair(
+    char *pkcs12,
+    char *password,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    PKCS12KeyPair output = ConvertPKCS12ToKeyPair(
+        pkcs12,
+        password);
+
+    flutter::EncodableValue response(flutter::EncodableMap{
+        {flutter::EncodableValue("privateKey"), flutter::EncodableValue(output.privateKey)},
+        {flutter::EncodableValue("publicKey"), flutter::EncodableValue(output.publicKey)},
+        {flutter::EncodableValue("certificate"), flutter::EncodableValue(output.certificate)}});
+
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPrivateKeyToPKCS8(
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertPrivateKeyToPKCS8(
+        privateKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPrivateKeyToPKCS1(
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertPrivateKeyToPKCS1(
+        privateKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPrivateKeyToJWK(
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertPrivateKeyToJWK(
+        privateKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPrivateKeyToPublicKey(
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertPrivateKeyToPublicKey(
+        privateKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPublicKeyToPKIX(
+    char *publicKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertPublicKeyToPKIX(
+        publicKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPublicKeyToPKCS1(
+    char *publicKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertPublicKeyToPKCS1(
+        publicKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void convertPublicKeyToJWK(
+    char *publicKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = ConvertPublicKeyToJWK(
+        publicKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void decryptPrivateKey(
+    char *privateKeyEncrypted,
+    char *password,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = DecryptPrivateKey(
+        privateKeyEncrypted,
+        password);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void encryptPrivateKey(
+    char *privateKey,
+    char *password,
+    char *cipherName,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = EncryptPrivateKey(
+        privateKey,
+        password,
+        cipherName);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
 void decryptOAEP(
     char *message,
     char *label,
@@ -378,7 +693,106 @@ void FastRsaPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
-  if (method_call.method_name().compare("decryptOAEP") == 0)
+  if (method_call.method_name().compare("convertJWKToPrivateKey") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertJWKToPrivateKey(
+        WriteableChar(ValueOrNull(args, "data").StringValue()),
+        WriteableChar(ValueOrNull(args, "keyId").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertJWKToPublicKey") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertJWKToPublicKey(
+        WriteableChar(ValueOrNull(args, "data").StringValue()),
+        WriteableChar(ValueOrNull(args, "keyId").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertKeyPairToPKCS12") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertKeyPairToPKCS12(
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        WriteableChar(ValueOrNull(args, "certificate").StringValue()),
+        WriteableChar(ValueOrNull(args, "password").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPKCS12ToKeyPair") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPKCS12ToKeyPair(
+        WriteableChar(ValueOrNull(args, "pkcs12").StringValue()),
+        WriteableChar(ValueOrNull(args, "password").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPrivateKeyToPKCS8") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPrivateKeyToPKCS8(
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPrivateKeyToPKCS1") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPrivateKeyToPKCS1(
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPrivateKeyToJWK") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPrivateKeyToJWK(
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPrivateKeyToPublicKey") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPrivateKeyToPublicKey(
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPublicKeyToPKIX") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPublicKeyToPKIX(
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPublicKeyToPKCS1") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPublicKeyToPKCS1(
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("convertPublicKeyToJWK") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    convertPublicKeyToJWK(
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("decryptPrivateKey") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    decryptPrivateKey(
+        WriteableChar(ValueOrNull(args, "privateKeyEncrypted").StringValue()),
+        WriteableChar(ValueOrNull(args, "password").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("encryptPrivateKey") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    encryptPrivateKey(
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        WriteableChar(ValueOrNull(args, "password").StringValue()),
+        WriteableChar(ValueOrNull(args, "cipherName").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("decryptOAEP") == 0)
   {
     const EncodableMap &args = method_call.arguments()->MapValue();
     decryptOAEP(
