@@ -28,7 +28,7 @@
       
   } else if ([@"convertJWKToPublicKey" isEqualToString:call.method]) {
       
-      [self convertJWKToPublicKey:[call arguments][@"data"] publicKey:[call arguments][@"keyId"] result:result];
+      [self convertJWKToPublicKey:[call arguments][@"data"] keyId:[call arguments][@"keyId"] result:result];
       
   } else if ([@"convertKeyPairToPKCS12" isEqualToString:call.method]) {
       
@@ -82,10 +82,14 @@
       
       [self decryptOAEP:[call arguments][@"message"] label:[call arguments][@"label"] hashName:[call arguments][@"hashName"] privateKey:[call arguments][@"privateKey"] result:result];
       
+  } else if ([@"encryptPKCS1v15" isEqualToString:call.method]) {
+         
+         [self encryptPKCS1v15:[call arguments][@"message"] publicKey:[call arguments][@"publicKey"] result:result];
+          
   } else if ([@"decryptPKCS1v15" isEqualToString:call.method]) {
-      
-      [self decryptPKCS1v15:[call arguments][@"message"] privateKey:[call arguments][@"privateKey"] result:result];
        
+       [self decryptPKCS1v15:[call arguments][@"message"] privateKey:[call arguments][@"privateKey"] result:result];
+        
   } else if ([@"signPKCS1v15" isEqualToString:call.method]) {
       
       [self signPKCS1v15:[call arguments][@"message"] hashName:[call arguments][@"hashName"] privateKey:[call arguments][@"privateKey"] result:result];
@@ -136,7 +140,7 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance convertJWKToPrivateKey:data keyId:keyId  error:&error];
+            NSString * output = [self->instance convertJWKToPrivateKey:data keyID:keyId error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -158,7 +162,7 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            NSString * output = [self->instance convertJWKToPublicKey:data keyId:keyId  error:&error];
+            NSString * output = [self->instance convertJWKToPublicKey:data keyID:keyId error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -203,7 +207,7 @@
     dispatch_async(queue, ^(void){
         @try {
             NSError *error;
-            PKCS12KeyPair * output = [self->instance convertPKCS12ToKeyPair:pkcs12 password:password  error:&error];
+            RsaPKCS12KeyPair * output = [self->instance convertPKCS12ToKeyPair:pkcs12 password:password  error:&error];
 
             if(error!=nil){
                 [self result:result output:[FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", error.code] message:error.description details:nil]];
@@ -368,7 +372,7 @@
     });
     
 }
-}
+
 
 - (void) decryptPrivateKey: (NSString *)privateKeyEncrypted
                  password: (NSString *)password
@@ -390,7 +394,6 @@
         }
     });
     
-}
 }
 
 - (void) encryptPrivateKey: (NSString *)privateKey
