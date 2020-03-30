@@ -89,7 +89,7 @@ var result = await RSA.decryptPrivateKey(privateKeyEncrypted, password)
 ```dart
 import 'package:fast_rsa/rsa.dart';
 
-var result = await RSA.hash(message, name)
+var result = await RSA.hash(message, RSAHash.sha512)
 var result = await RSA.base64(message)
 
 ```
