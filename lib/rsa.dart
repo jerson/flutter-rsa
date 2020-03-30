@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
@@ -13,6 +14,7 @@ enum RSAHash {
 
 enum RSAPEMCipher {
   des,
+  // c3des is 3des
   c3des,
   aes128,
   aes192,
@@ -50,16 +52,17 @@ class RSA {
   static const MethodChannel _channel = const MethodChannel('rsa');
 
   static Future<String> convertJWKToPrivateKey(
-      String data, String keyId) async {
+      dynamic data, String keyId) async {
     return await _channel.invokeMethod('convertJWKToPrivateKey', {
-      "data": data,
+      "data": jsonEncode(data),
       "keyId": keyId,
     });
   }
 
-  static Future<String> convertJWKToPublicKey(String data, String keyId) async {
+  static Future<String> convertJWKToPublicKey(
+      dynamic data, String keyId) async {
     return await _channel.invokeMethod('convertJWKToPublicKey', {
-      "data": data,
+      "data": jsonEncode(data),
       "keyId": keyId,
     });
   }
@@ -98,10 +101,11 @@ class RSA {
     });
   }
 
-  static Future<String> convertPrivateKeyToJWK(String privateKey) async {
-    return await _channel.invokeMethod('convertPrivateKeyToJWK', {
+  static Future<dynamic> convertPrivateKeyToJWK(String privateKey) async {
+    var output = await _channel.invokeMethod('convertPrivateKeyToJWK', {
       "privateKey": privateKey,
     });
+    return jsonDecode(output);
   }
 
   static Future<String> convertPrivateKeyToPublicKey(String privateKey) async {
@@ -123,9 +127,10 @@ class RSA {
   }
 
   static Future<String> convertPublicKeyToJWK(String publicKey) async {
-    return await _channel.invokeMethod('convertPublicKeyToJWK', {
+    var output = await _channel.invokeMethod('convertPublicKeyToJWK', {
       "publicKey": publicKey,
     });
+    return jsonDecode(output);
   }
 
   static Future<String> decryptPrivateKey(

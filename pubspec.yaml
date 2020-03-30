@@ -1,6 +1,6 @@
 name: fast_rsa
 description: library for use RSA with support for android and ios, macOS, linux, web and hover
-version: 0.9.3
+version: 1.0.0
 homepage: https://github.com/jerson/flutter-rsa
 
 environment:
@@ -41,7 +41,6 @@ flutter:
         pluginClass: RsaPlugin
       linux:
         pluginClass: FastRsaPlugin
-
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

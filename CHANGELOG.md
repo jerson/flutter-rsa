@@ -1,3 +1,9 @@
+## 1.0.0
+
+- Updated Methods, now using public key and private key for methods instead of PKCS12
+- Added support for JWK
+- Added methods for convert keys
+
 ## 0.9.3
 
 - Merge conflicts

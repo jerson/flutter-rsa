@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -136,6 +137,8 @@ class _MyAppState extends State<MyApp> {
   bool _verifiedPSS = false;
   String _base64 = "";
   String _hash = "";
+  dynamic _convertedPrivateToJWK = "";
+  dynamic _convertedJWKToPrivate = "";
 
   @override
   void initState() {
@@ -479,6 +482,55 @@ class _MyAppState extends State<MyApp> {
                       ),
                       SelectableText(_keyPair.publicKey),
                       SelectableText(_keyPair.privateKey)
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text("convertPrivateKeyToJWK"),
+                        onPressed: () async {
+                          var convertedPrivateToJWK =
+                              await RSA.convertPrivateKeyToJWK(
+                            _pkcs12KeyPair.privateKey,
+                          );
+                          setState(() {
+                            _convertedPrivateToJWK = convertedPrivateToJWK;
+                          });
+                        },
+                      ),
+                      SelectableText(jsonEncode(_convertedPrivateToJWK))
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text("convertJWKToPrivateKey"),
+                        onPressed: () async {
+                          var convertedJWKToPrivate =
+                              await RSA.convertJWKToPrivateKey(
+                                  _convertedPrivateToJWK, "");
+                          setState(() {
+                            _convertedJWKToPrivate = convertedJWKToPrivate;
+                          });
+                        },
+                      ),
+                      SelectableText(_convertedJWKToPrivate)
                     ],
                   ),
                 ),

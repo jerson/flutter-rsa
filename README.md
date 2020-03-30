@@ -18,39 +18,107 @@ Library for use RSA with support for android, ios, macos, linux, web and hover
 
 ## Usage
 
+### Encrypt Methods
+
 ```dart
-import 'package:fast_rsa/key_pair.dart';
 import 'package:fast_rsa/rsa.dart';
 
 
-const password = '123456789';
-const pkcs12 = '''MIIQSQIBAzCCEA8GCSqGSIb3DQEHAaCCEAAEgg/8MIIP+DCCBi8GCSqGSIb3DQEH
-BqCCBiAwggYcAgEAMIIGFQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQI/pTm
-UKFwK/UCAggAgIIF6N5rjkv/eidrXYlkrkyl2EBNfK8hQU+cJt0lkLt6zVC+ddNW
-...MORE OF YOUR PKCS12
-...MORE OF YOUR PKCS12
-BgUrDgMCGgUABBQ9GTbjyC/z9oi+bg8R3kdod+2+XQQINXgTTMTGIPkCAggA''';
+var result = await RSA.encryptPrivateKey(
+      privateKey, password, RSAPEMCipher.aes256)
 
-var encrypted = await RSA.encryptOAEP("text", "", RSAHash.sha256, pkcs12, password);
+var result = await RSA.encryptOAEP(
+      message, label, RSAHash.sha512, publicKey)
 
-var decrypted = await RSA.decryptOAEP("text encrypted", "", RSAHash.sha256, pkcs12, password );
+var result = await RSA.encryptPKCS1v15(
+      message, publicKey)
 
-var encrypted = await RSA.encryptPKCS1v15("text", pkcs12, password);
+```
 
-var decrypted = await RSA.decryptPKCS1v15("text encrypted", pkcs12, password);
+### Decrypt Methods
 
-var signed = await RSA.signPSS("text", RSAHash.sha256, pkcs12, password);
+```dart
+import 'package:fast_rsa/rsa.dart';
 
-var verified = await RSA.verifyPSS("signed text", "text", RSAHash.sha256, pkcs12, password);
 
-var signed = await RSA.signPKCS1v15("text", RSAHash.sha256, pkcs12, password);
+var result = await RSA.decryptPrivateKey(
+      privateKeyEncrypted, password)
 
-var verified = await RSA.verifyPKCS1v15("signed text", "text", RSAHash.sha256, pkcs12, password);
+var result = await RSA.decryptOAEP(
+      message, label, RSAHash.sha512, privateKey)
 
-var keyPair = await RSA.generate(2048);
+var result = await RSA.decryptPKCS1v15(
+      message, privateKey)
 
-var hash = await RSA.hash("text here", RSAHash.sha512);
-var base64 = await RSA.base64("text here");
+```
+
+### Sign and Verify Methods
+
+```dart
+import 'package:fast_rsa/rsa.dart';
+
+var result = await RSA.signPSS(message, RSAHash.sha512,
+      RSASaltLength.auto, privateKey)
+
+var result = await RSA.signPKCS1v15(
+      message, RSAHash.sha512, privateKey)
+
+var result = await RSA.verifyPSS(signature, message,
+      RSAHash.sha512, RSASaltLength.auto, publicKey)
+
+var result = await RSA.verifyPKCS1v15(signature, message,
+      RSAHash.sha512, publicKey)
+
+
+```
+
+### Generate Methods
+
+```dart
+import 'package:fast_rsa/rsa.dart';
+
+var result = await RSA.generate(2048)
+
+```
+
+### Convert Methods
+
+```dart
+import 'package:fast_rsa/rsa.dart';
+
+var result = await RSA.convertJWKToPrivateKey(data, keyId)
+
+var result = await RSA.convertJWKToPublicKey(data, keyId)
+
+var result = await RSA.convertKeyPairToPKCS12(
+      privateKey, certificate, password)
+
+var result = await RSA.convertPKCS12ToKeyPair(
+      pkcs12, password)
+
+var result = await RSA.convertPrivateKeyToPKCS8(privateKey)
+
+var result = await RSA.convertPrivateKeyToPKCS1(privateKey)
+
+var result = await RSA.convertPrivateKeyToJWK(privateKey)
+
+var result = await RSA.convertPrivateKeyToPublicKey(privateKey)
+
+var result = await RSA.convertPublicKeyToPKIX(publicKey)
+
+var result = await RSA.convertPublicKeyToPKCS1(publicKey)
+
+var result = await RSA.convertPublicKeyToJWK(publicKey)
+```
+
+### Util Methods
+
+```dart
+import 'package:fast_rsa/rsa.dart';
+
+var result = await RSA.hash(message, name)
+
+var result = await RSA.base64(message)
 
 ```
 
