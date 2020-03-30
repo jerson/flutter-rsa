@@ -66,12 +66,16 @@ import 'package:fast_rsa/rsa.dart';
 
 var result = await RSA.convertJWKToPrivateKey(data, keyId)
 var result = await RSA.convertJWKToPublicKey(data, keyId)
+
 var result = await RSA.convertKeyPairToPKCS12(privateKey, certificate, password)
 var result = await RSA.convertPKCS12ToKeyPair(pkcs12, password)
+
 var result = await RSA.convertPrivateKeyToPKCS8(privateKey)
 var result = await RSA.convertPrivateKeyToPKCS1(privateKey)
 var result = await RSA.convertPrivateKeyToJWK(privateKey)
+
 var result = await RSA.convertPrivateKeyToPublicKey(privateKey)
+
 var result = await RSA.convertPublicKeyToPKIX(publicKey)
 var result = await RSA.convertPublicKeyToPKCS1(publicKey)
 var result = await RSA.convertPublicKeyToJWK(publicKey)
