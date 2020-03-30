@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'fast_rsa'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = 'library for use RSA.'
   s.description      = <<-DESC
   library for use RSA.

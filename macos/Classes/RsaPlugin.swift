@@ -30,6 +30,79 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         let args = call.arguments as! [String: Any]
 
         switch call.method {
+        case "convertJWKToPrivateKey":
+            convertJWKToPrivateKey(
+                    data: args["data"] as? String,
+                    keyId: args["keyId"] as? String,
+                    result: result
+            )
+        case "convertJWKToPublicKey":
+            convertJWKToPublicKey(
+                    data: args["data"] as? String,
+                    keyId: args["keyId"] as? String,
+                    result: result
+            )
+        case "convertKeyPairToPKCS12":
+            convertKeyPairToPKCS12(
+                    privateKey: args["privateKey"] as? String,
+                    certificate: args["certificate"] as? String,
+                    password: args["password"] as? String,
+                    result: result
+            )
+        case "convertPKCS12ToKeyPair":
+            convertPKCS12ToKeyPair(
+                    pkcs12: args["pkcs12"] as? String,
+                    password: args["password"] as? String,
+                    result: result
+            )
+        case "convertPrivateKeyToPKCS8":
+            convertPrivateKeyToPKCS8(
+                    privateKey: args["privateKey"] as? String,
+                    result: result
+            )
+        case "convertPrivateKeyToPKCS1":
+            convertPrivateKeyToPKCS1(
+                    privateKey: args["privateKey"] as? String,
+                    result: result
+            )
+        case "convertPrivateKeyToJWK":
+            convertPrivateKeyToJWK(
+                    privateKey: args["privateKey"] as? String,
+                    result: result
+            )
+        case "convertPrivateKeyToPublicKey":
+            convertPrivateKeyToPublicKey(
+                    privateKey: args["privateKey"] as? String,
+                    result: result
+            )
+        case "convertPublicKeyToPKIX":
+            convertPublicKeyToPKIX(
+                    publicKey: args["publicKey"] as? String,
+                    result: result
+            )
+        case "convertPublicKeyToPKCS1":
+            convertPublicKeyToPKCS1(
+                    publicKey: args["publicKey"] as? String,
+                    result: result
+            )
+        case "convertPublicKeyToJWK":
+            convertPublicKeyToJWK(
+                    publicKey: args["publicKey"] as? String,
+                    result: result
+            )
+        case "decryptPrivateKey":
+            decryptPrivateKey(
+                    privateKeyEncrypted: args["privateKeyEncrypted"] as? String,
+                    password: args["password"] as? String,
+                    result: result
+            )
+        case "encryptPrivateKey":
+            encryptPrivateKey(
+                    privateKey: args["privateKey"] as? String,
+                    password: args["password"] as? String,
+                    cipherName: args["cipherName"] as? String,
+                    result: result
+            )
         case "encryptPKCS1v15":
             encryptPKCS1v15(
                     message: args["message"] as? String,
@@ -110,6 +183,228 @@ public class RsaPlugin: NSObject, FlutterPlugin {
             result(FlutterMethodNotImplemented)
         }
     }
+
+    func convertJWKToPrivateKey(data: String?, keyId: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertJWKToPrivateKey(data, keyID: keyId, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertJWKToPublicKey(data: String?, keyId: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertJWKToPublicKey(data, keyID: keyId, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertKeyPairToPKCS12(privateKey: String?, certificate: String?, password: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertKeyPairToPKCS12(privateKey, certificate: certificate, password: password, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPKCS12ToKeyPair(pkcs12: String?, password: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPKCS12ToKeyPair(pkcs12, password: password, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPrivateKeyToPKCS8(privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPrivateKeyToPKCS8(privateKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPrivateKeyToPKCS1(privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPrivateKeyToPKCS1(privateKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPrivateKeyToJWK(privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPrivateKeyToJWK(privateKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPrivateKeyToPublicKey(privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPrivateKeyToPublicKey(privateKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPublicKeyToPKIX(publicKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPublicKeyToPKIX(publicKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPublicKeyToJWK(publicKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPublicKeyToJWK(publicKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func decryptPrivateKey(privateKeyEncrypted: String?, password: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.decryptPrivateKey(privateKeyEncrypted, password: password,  error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func encryptPrivateKey(privateKey: String?, password: String?, cipherName: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.encryptPrivateKey(privateKey, password: password, cipherName: cipherName, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func convertPrivateKeyToPublicKey(privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var error: NSError?
+                let output = try self.instance?.convertPrivateKeyToPublicKey(privateKey, error: &error)
+
+                if error != nil {
+                    self.result(result, output: FlutterError(code: String(format: "%ld", error?.code ?? 0), message: error?.description, details: nil))
+                } else {
+                    self.result(result, output: output)
+                }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+    //fgdfgdfgfd
 
     func encryptPKCS1v15(message: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
