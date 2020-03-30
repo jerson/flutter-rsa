@@ -36,13 +36,6 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
         return plugin;
     }
 
-    @Override
-    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        initialize();
-        channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "rsa");
-        channel.setMethodCallHandler(this);
-    }
-
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
     // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
     // plugin registration via this function while apps migrate to use the new Android APIs
@@ -57,7 +50,14 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
         channel.setMethodCallHandler(pluginFactory());
     }
 
-    private void initialize(){
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        initialize();
+        channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "rsa");
+        channel.setMethodCallHandler(this);
+    }
+
+    private void initialize() {
         instance = Rsa.newFastRSA();
         handler = new Handler(Looper.getMainLooper());
     }
@@ -66,6 +66,92 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
 
         switch (call.method) {
+            case "convertJWKToPrivateKey":
+                convertJWKToPrivateKey(
+                        (String) call.argument("data"),
+                        (String) call.argument("keyId"),
+                        result
+                );
+                break;
+            case "convertJWKToPublicKey":
+                convertJWKToPublicKey(
+                        (String) call.argument("data"),
+                        (String) call.argument("keyId"),
+                        result
+                );
+                break;
+            case "convertKeyPairToPKCS12":
+                convertKeyPairToPKCS12(
+                        (String) call.argument("privateKey"),
+                        (String) call.argument("certificate"),
+                        (String) call.argument("password"),
+                        result
+                );
+                break;
+            case "convertPKCS12ToKeyPair":
+                convertPKCS12ToKeyPair(
+                        (String) call.argument("pkcs12"),
+                        (String) call.argument("password"),
+                        result
+                );
+                break;
+            case "convertPrivateKeyToPKCS8":
+                convertPrivateKeyToPKCS8(
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
+            case "convertPrivateKeyToPKCS1":
+                convertPrivateKeyToPKCS1(
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
+            case "convertPrivateKeyToJWK":
+                convertPrivateKeyToJWK(
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
+            case "convertPrivateKeyToPublicKey":
+                convertPrivateKeyToPublicKey(
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
+            case "convertPublicKeyToPKIX":
+                convertPublicKeyToPKIX(
+                        (String) call.argument("publicKey"),
+                        result
+                );
+                break;
+            case "convertPublicKeyToPKCS1":
+                convertPublicKeyToPKCS1(
+                        (String) call.argument("publicKey"),
+                        result
+                );
+                break;
+            case "convertPublicKeyToJWK":
+                convertPublicKeyToJWK(
+                        (String) call.argument("publicKey"),
+                        result
+                );
+                break;
+            case "decryptPrivateKey":
+                decryptPrivateKey(
+                        (String) call.argument("privateKeyEncrypted"),
+                        (String) call.argument("password"),
+                        result
+                );
+                break;
+            case "encryptPrivateKey":
+                encryptPrivateKey(
+                        (String) call.argument("privateKey"),
+                        (String) call.argument("password"),
+                        (String) call.argument("cipherName"),
+                        result
+                );
+                break;
             case "decryptOAEP":
                 decryptOAEP(
                         (String) call.argument("message"),
@@ -187,15 +273,214 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
         handler.post(local);
     }
 
+    private void convertJWKToPrivateKey(final String data, final String keyId, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertJWKToPrivateKey(data, keyId);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertJWKToPublicKey(final String data, final String keyId, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertJWKToPublicKey(data, keyId);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertKeyPairToPKCS12(final String privateKey, final String certificate, final String password, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertKeyPairToPKCS12(privateKey, certificate, password);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPKCS12ToKeyPair(final String pkcs12, final String password, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    PKCS12KeyPair keyPair = instance.convertPKCS12ToKeyPair(pkcs12, password);
+                    HashMap<String, Object> result = new HashMap<>();
+                    result.put("privateKey", keyPair.getPrivateKey());
+                    result.put("publicKey", keyPair.getPublicKey());
+                    result.put("certificate", keyPair.getCertificate());
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPrivateKeyToPKCS8(final String privateKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertPrivateKeyToPKCS8(privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPrivateKeyToPKCS1(final String privateKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertPrivateKeyToPKCS1(privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPrivateKeyToJWK(final String privateKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertPrivateKeyToJWK(privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPrivateKeyToPublicKey(final String privateKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertPrivateKeyToPublicKey(privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPublicKeyToPKIX(final String publicKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertPublicKeyToPKIX(publicKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPublicKeyToPKCS1(final String publicKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertPublicKeyToPKCS1(publicKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void convertPublicKeyToJWK(final String publicKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.convertPublicKeyToPKCS1(publicKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void decryptPrivateKey(final String privateKeyEncrypted, final String password, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.decryptPrivateKey(privateKeyEncrypted, password);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
+    private void encryptPrivateKey(final String privateKey, final String password, final String cipherName, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String result = instance.encryptPrivateKey(privateKey, password, cipherName);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
     private void decryptOAEP(final String message, final String label, final String hashName, final String privateKey, final Result promise) {
 
         new Thread(new Runnable() {
             public void run() {
                 try {
                     String result = instance.decryptOAEP(message, label, hashName, privateKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -208,9 +493,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     String result = instance.decryptPKCS1v15(message, privateKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -222,9 +507,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     String result = instance.encryptOAEP(message, label, hashName, publicKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -236,9 +521,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     String result = instance.encryptPKCS1v15(message, publicKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -250,9 +535,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     String result = instance.signPSS(message, hashName, saltLengthName, privateKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -264,9 +549,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     String result = instance.signPKCS1v15(message, hashName, privateKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -278,9 +563,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     Boolean result = instance.verifyPSS(signature, message, hashName, saltLengthName, publicKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -292,9 +577,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     Boolean result = instance.verifyPKCS1v15(signature, message, hashName, publicKey);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -306,9 +591,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     String result = instance.hash(message, name);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -320,9 +605,9 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
             public void run() {
                 try {
                     String result = instance.base64(message);
-                    success(promise,result);
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
@@ -335,11 +620,11 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                 try {
                     KeyPair keyPair = instance.generate(bits);
                     HashMap<String, Object> result = new HashMap<>();
-                    result.put("publicKey", keyPair.getPublicKey());
                     result.put("privateKey", keyPair.getPrivateKey());
-                    success(promise,result);
+                    result.put("publicKey", keyPair.getPublicKey());
+                    success(promise, result);
                 } catch (Exception e) {
-                    error(promise,"error", e.getMessage(), null);
+                    error(promise, "error", e.getMessage(), null);
                 }
             }
         }).start();
