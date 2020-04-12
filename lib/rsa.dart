@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 
@@ -160,9 +161,27 @@ class RSA {
     });
   }
 
+  static Future<String> decryptOAEPBytes(
+      Uint8List message, String label, RSAHash hashName, String privateKey) async {
+    return await _channel.invokeMethod('decryptOAEPBytes', {
+      "message": message,
+      "label": label,
+      "hashName": _toStringRSAHash(hashName),
+      "privateKey": privateKey,
+    });
+  }
+
   static Future<String> decryptPKCS1v15(
       String message, String privateKey) async {
     return await _channel.invokeMethod('decryptPKCS1v15', {
+      "message": message,
+      "privateKey": privateKey,
+    });
+  }
+
+  static Future<String> decryptPKCS1v15Bytes(
+      Uint8List message, String privateKey) async {
+    return await _channel.invokeMethod('decryptPKCS1v15Bytes', {
       "message": message,
       "privateKey": privateKey,
     });
@@ -178,9 +197,27 @@ class RSA {
     });
   }
 
+  static Future<String> encryptOAEPBytes(
+      Uint8List message, String label, RSAHash hashName, String publicKey) async {
+    return await _channel.invokeMethod('encryptOAEPBytes', {
+      "message": message,
+      "label": label,
+      "hashName": _toStringRSAHash(hashName),
+      "publicKey": publicKey,
+    });
+  }
+
   static Future<String> encryptPKCS1v15(
       String message, String publicKey) async {
     return await _channel.invokeMethod('encryptPKCS1v15', {
+      "message": message,
+      "publicKey": publicKey,
+    });
+  }
+
+  static Future<String> encryptPKCS1v15Bytes(
+      Uint8List message, String publicKey) async {
+    return await _channel.invokeMethod('encryptPKCS1v15Bytes', {
       "message": message,
       "publicKey": publicKey,
     });
@@ -196,9 +233,28 @@ class RSA {
     });
   }
 
+  static Future<String> signPSSBytes(Uint8List message, RSAHash hashName,
+      RSASaltLength saltLengthName, String privateKey) async {
+    return await _channel.invokeMethod('signPSSBytes', {
+      "message": message,
+      "hashName": _toStringRSAHash(hashName),
+      "saltLengthName": _toStringRSASaltLength(saltLengthName),
+      "privateKey": privateKey,
+    });
+  }
+
   static Future<String> signPKCS1v15(
       String message, RSAHash hashName, String privateKey) async {
     return await _channel.invokeMethod('signPKCS1v15', {
+      "message": message,
+      "hashName": _toStringRSAHash(hashName),
+      "privateKey": privateKey,
+    });
+  }
+
+  static Future<String> signPKCS1v15Bytes(
+      Uint8List message, RSAHash hashName, String privateKey) async {
+    return await _channel.invokeMethod('signPKCS1v15Bytes', {
       "message": message,
       "hashName": _toStringRSAHash(hashName),
       "privateKey": privateKey,
@@ -216,9 +272,30 @@ class RSA {
     });
   }
 
+  static Future<bool> verifyPSSBytes(Uint8List signature, Uint8List message,
+      RSAHash hashName, RSASaltLength saltLengthName, String publicKey) async {
+    return await _channel.invokeMethod('verifyPSSBytes', {
+      "signature": signature,
+      "message": message,
+      "hashName": _toStringRSAHash(hashName),
+      "saltLengthName": _toStringRSASaltLength(saltLengthName),
+      "publicKey": publicKey,
+    });
+  }
+
   static Future<bool> verifyPKCS1v15(String signature, String message,
       RSAHash hashName, String publicKey) async {
     return await _channel.invokeMethod('verifyPKCS1v15', {
+      "signature": signature,
+      "message": message,
+      "hashName": _toStringRSAHash(hashName),
+      "publicKey": publicKey,
+    });
+  }
+
+  static Future<bool> verifyPKCS1v15Bytes(Uint8List signature, Uint8List message,
+      RSAHash hashName, String publicKey) async {
+    return await _channel.invokeMethod('verifyPKCS1v15Bytes', {
       "signature": signature,
       "message": message,
       "hashName": _toStringRSAHash(hashName),
