@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -366,13 +367,13 @@ class _MyAppState extends State<MyApp> {
                       RaisedButton(
                         child: Text("signPKCS1v15"),
                         onPressed: () async {
-                          var signed = await RSA.signPKCS1v15(
-                            signPKCS1v15Controller.text,
+                          var signed = await RSA.signPKCS1v15Bytes(
+                            Uint8List.fromList(signPKCS1v15Controller.text.codeUnits),
                             RSAHash.sha256,
                             _pkcs12KeyPair.privateKey,
                           );
                           setState(() {
-                            _signedPKCS1v15 = signed;
+                            _signedPKCS1v15 = base64Encode(signed);
                           });
                         },
                       ),
