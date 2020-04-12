@@ -161,8 +161,8 @@ class RSA {
     });
   }
 
-  static Future<String> decryptOAEPBytes(
-      Uint8List message, String label, RSAHash hashName, String privateKey) async {
+  static Future<Uint8List> decryptOAEPBytes(Uint8List message, String label,
+      RSAHash hashName, String privateKey) async {
     return await _channel.invokeMethod('decryptOAEPBytes', {
       "message": message,
       "label": label,
@@ -179,7 +179,7 @@ class RSA {
     });
   }
 
-  static Future<String> decryptPKCS1v15Bytes(
+  static Future<Uint8List> decryptPKCS1v15Bytes(
       Uint8List message, String privateKey) async {
     return await _channel.invokeMethod('decryptPKCS1v15Bytes', {
       "message": message,
@@ -197,8 +197,8 @@ class RSA {
     });
   }
 
-  static Future<String> encryptOAEPBytes(
-      Uint8List message, String label, RSAHash hashName, String publicKey) async {
+  static Future<Uint8List> encryptOAEPBytes(Uint8List message, String label,
+      RSAHash hashName, String publicKey) async {
     return await _channel.invokeMethod('encryptOAEPBytes', {
       "message": message,
       "label": label,
@@ -215,7 +215,7 @@ class RSA {
     });
   }
 
-  static Future<String> encryptPKCS1v15Bytes(
+  static Future<Uint8List> encryptPKCS1v15Bytes(
       Uint8List message, String publicKey) async {
     return await _channel.invokeMethod('encryptPKCS1v15Bytes', {
       "message": message,
@@ -233,7 +233,7 @@ class RSA {
     });
   }
 
-  static Future<String> signPSSBytes(Uint8List message, RSAHash hashName,
+  static Future<Uint8List> signPSSBytes(Uint8List message, RSAHash hashName,
       RSASaltLength saltLengthName, String privateKey) async {
     return await _channel.invokeMethod('signPSSBytes', {
       "message": message,
@@ -252,7 +252,7 @@ class RSA {
     });
   }
 
-  static Future<String> signPKCS1v15Bytes(
+  static Future<Uint8List> signPKCS1v15Bytes(
       Uint8List message, RSAHash hashName, String privateKey) async {
     return await _channel.invokeMethod('signPKCS1v15Bytes', {
       "message": message,
@@ -293,8 +293,8 @@ class RSA {
     });
   }
 
-  static Future<bool> verifyPKCS1v15Bytes(Uint8List signature, Uint8List message,
-      RSAHash hashName, String publicKey) async {
+  static Future<bool> verifyPKCS1v15Bytes(Uint8List signature,
+      Uint8List message, RSAHash hashName, String publicKey) async {
     return await _channel.invokeMethod('verifyPKCS1v15Bytes', {
       "signature": signature,
       "message": message,

@@ -161,9 +161,25 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                         result
                 );
                 break;
+            case "decryptOAEPBytes":
+                decryptOAEPBytes(
+                        (byte[]) call.argument("message"),
+                        (String) call.argument("label"),
+                        (String) call.argument("hashName"),
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
             case "decryptPKCS1v15":
                 decryptPKCS1v15(
                         (String) call.argument("message"),
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
+            case "decryptPKCS1v15Bytes":
+                decryptPKCS1v15Bytes(
+                        (byte[]) call.argument("message"),
                         (String) call.argument("privateKey"),
                         result
                 );
@@ -177,9 +193,25 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                         result
                 );
                 break;
+            case "encryptOAEPBytes":
+                encryptOAEPBytes(
+                        (byte[]) call.argument("message"),
+                        (String) call.argument("label"),
+                        (String) call.argument("hashName"),
+                        (String) call.argument("publicKey"),
+                        result
+                );
+                break;
             case "encryptPKCS1v15":
                 encryptPKCS1v15(
                         (String) call.argument("message"),
+                        (String) call.argument("publicKey"),
+                        result
+                );
+                break;
+            case "encryptPKCS1v15Bytes":
+                encryptPKCS1v15Bytes(
+                        (byte[]) call.argument("message"),
                         (String) call.argument("publicKey"),
                         result
                 );
@@ -193,9 +225,26 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                         result
                 );
                 break;
+            case "signPSSBytes":
+                signPSSBytes(
+                        (byte[]) call.argument("message"),
+                        (String) call.argument("hashName"),
+                        (String) call.argument("saltLengthName"),
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
             case "signPKCS1v15":
                 signPKCS1v15(
                         (String) call.argument("message"),
+                        (String) call.argument("hashName"),
+                        (String) call.argument("privateKey"),
+                        result
+                );
+                break;
+            case "signPKCS1v15Bytes":
+                signPKCS1v15Bytes(
+                        (byte[]) call.argument("message"),
                         (String) call.argument("hashName"),
                         (String) call.argument("privateKey"),
                         result
@@ -211,10 +260,29 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
                         result
                 );
                 break;
+            case "verifyPSSBytes":
+                verifyPSSBytes(
+                        (byte[]) call.argument("signature"),
+                        (byte[]) call.argument("message"),
+                        (String) call.argument("hashName"),
+                        (String) call.argument("saltLengthName"),
+                        (String) call.argument("publicKey"),
+                        result
+                );
+                break;
             case "verifyPKCS1v15":
                 verifyPKCS1v15(
                         (String) call.argument("signature"),
                         (String) call.argument("message"),
+                        (String) call.argument("hashName"),
+                        (String) call.argument("publicKey"),
+                        result
+                );
+                break;
+            case "verifyPKCS1v15Bytes":
+                verifyPKCS1v15Bytes(
+                        (byte[]) call.argument("signature"),
+                        (byte[]) call.argument("message"),
                         (String) call.argument("hashName"),
                         (String) call.argument("publicKey"),
                         result
@@ -487,12 +555,41 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
 
     }
 
+    private void decryptOAEPBytes(final byte[] message, final String label, final String hashName, final String privateKey, final Result promise) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    byte[] result = instance.decryptOAEPBytes(message, label, hashName, privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+
+    }
+
 
     private void decryptPKCS1v15(final String message, final String privateKey, final Result promise) {
         new Thread(new Runnable() {
             public void run() {
                 try {
                     String result = instance.decryptPKCS1v15(message, privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+    }
+
+
+    private void decryptPKCS1v15Bytes(final byte[] message, final String privateKey, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    byte[] result = instance.decryptPKCS1v15Bytes(message, privateKey);
                     success(promise, result);
                 } catch (Exception e) {
                     error(promise, "error", e.getMessage(), null);
@@ -516,11 +613,39 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
 
+    private void encryptOAEPBytes(final byte[] message, final String label, final String hashName, final String publicKey, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    byte[] result = instance.encryptOAEPBytes(message, label, hashName, publicKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+    }
+
+
     private void encryptPKCS1v15(final String message, final String publicKey, final Result promise) {
         new Thread(new Runnable() {
             public void run() {
                 try {
                     String result = instance.encryptPKCS1v15(message, publicKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+    }
+
+
+    private void encryptPKCS1v15Bytes(final byte[] message, final String publicKey, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    byte[] result = instance.encryptPKCS1v15Bytes(message, publicKey);
                     success(promise, result);
                 } catch (Exception e) {
                     error(promise, "error", e.getMessage(), null);
@@ -544,11 +669,39 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
 
+    private void signPSSBytes(final byte[] message, final String hashName, final String saltLengthName, final String privateKey, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    byte[] result = instance.signPSSBytes(message, hashName, saltLengthName, privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+    }
+
+
     private void signPKCS1v15(final String message, final String hashName, final String privateKey, final Result promise) {
         new Thread(new Runnable() {
             public void run() {
                 try {
                     String result = instance.signPKCS1v15(message, hashName, privateKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+    }
+
+
+    private void signPKCS1v15Bytes(final byte[] message, final String hashName, final String privateKey, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    byte[] result = instance.signPKCS1v15Bytes(message, hashName, privateKey);
                     success(promise, result);
                 } catch (Exception e) {
                     error(promise, "error", e.getMessage(), null);
@@ -572,11 +725,39 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
 
+    private void verifyPSSBytes(final byte[] signature, final byte[] message, final String hashName, final String saltLengthName, final String publicKey, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Boolean result = instance.verifyPSSBytes(signature, message, hashName, saltLengthName, publicKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+    }
+
+
     private void verifyPKCS1v15(final String signature, final String message, final String hashName, final String publicKey, final Result promise) {
         new Thread(new Runnable() {
             public void run() {
                 try {
                     Boolean result = instance.verifyPKCS1v15(signature, message, hashName, publicKey);
+                    success(promise, result);
+                } catch (Exception e) {
+                    error(promise, "error", e.getMessage(), null);
+                }
+            }
+        }).start();
+    }
+
+
+    private void verifyPKCS1v15Bytes(final byte[] signature, final byte[] message, final String hashName, final String publicKey, final Result promise) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Boolean result = instance.verifyPKCS1v15Bytes(signature, message, hashName, publicKey);
                     success(promise, result);
                 } catch (Exception e) {
                     error(promise, "error", e.getMessage(), null);
