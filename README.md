@@ -18,7 +18,7 @@ Library for use RSA with support for android, ios, macos, linux, web and hover
 
 ## Usage
 
-### Encrypt Methods
+### Encrypt methods
 
 ```dart
 import 'package:fast_rsa/rsa.dart';
@@ -26,9 +26,13 @@ import 'package:fast_rsa/rsa.dart';
 var result = await RSA.encryptOAEP(message, label, RSAHash.sha512, publicKey)
 var result = await RSA.encryptPKCS1v15(message, publicKey)
 
+// Bytes methods at this moment only are available for Android and iOS
+var result = await RSA.encryptOAEPBytes(messageBytes, label, RSAHash.sha512, publicKey)
+var result = await RSA.encryptPKCS1v15Bytes(messageBytes, publicKey)
+
 ```
 
-### Decrypt Methods
+### Decrypt methods
 
 ```dart
 import 'package:fast_rsa/rsa.dart';
@@ -36,17 +40,37 @@ import 'package:fast_rsa/rsa.dart';
 var result = await RSA.decryptOAEP(message, label, RSAHash.sha512, privateKey)
 var result = await RSA.decryptPKCS1v15(message, privateKey)
 
+// Bytes methods at this moment only are available for Android and iOS
+var result = await RSA.decryptOAEPBytes(messageBytes, label, RSAHash.sha512, privateKey)
+var result = await RSA.decryptPKCS1v15Bytes(messageBytes, privateKey)
+
 ```
 
-### Sign and Verify Methods
+### Sign methods
 
 ```dart
 import 'package:fast_rsa/rsa.dart';
 
 var result = await RSA.signPSS(message, RSAHash.sha512, RSASaltLength.auto, privateKey)
 var result = await RSA.signPKCS1v15(message, RSAHash.sha512, privateKey)
+
+// Bytes methods at this moment only are available for Android and iOS
+var result = await RSA.signPSSBytes(messageBytes, RSAHash.sha512, RSASaltLength.auto, privateKey)
+var result = await RSA.signPKCS1v15Bytes(messageBytes, RSAHash.sha512, privateKey)
+
+```
+
+### Verify methods
+
+```dart
+import 'package:fast_rsa/rsa.dart';
+
 var result = await RSA.verifyPSS(signature, message, RSAHash.sha512, RSASaltLength.auto, publicKey)
 var result = await RSA.verifyPKCS1v15(signature, message, RSAHash.sha512, publicKey)
+
+// Bytes methods at this moment only are available for Android and iOS
+var result = await RSA.verifyPSSBytes(signatureBytes, messageBytes, RSAHash.sha512, RSASaltLength.auto, publicKey)
+var result = await RSA.verifyPKCS1v15Bytes(signatureBytes, messageBytes, RSAHash.sha512, publicKey)
 
 ```
 

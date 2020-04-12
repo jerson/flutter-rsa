@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Added bytes methods for encrypt, decrypt and sign
+
 ## 1.0.0
 
 - Updated Methods, now using public key and private key for methods instead of PKCS12
