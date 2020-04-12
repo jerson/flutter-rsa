@@ -1,5 +1,5 @@
 PODS:
-  - fast_rsa (0.0.1):
+  - fast_rsa (0.2.0):
     - Flutter
   - Flutter (1.0.0)
 
@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  fast_rsa: f865d0532664627daea8dbfe195959ef1cd67720
+  fast_rsa: 54f63d880791665452491cd6ea4ba2d12e9bdf2a
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
 
 PODFILE CHECKSUM: 3dbe063e9c90a5d7c9e4e76e70a821b9e2c1d271
