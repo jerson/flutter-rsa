@@ -384,6 +384,41 @@ void decryptOAEP(
   }
 }
 
+void decryptOAEPBytes(
+    const std::vector<uint8_t>& message,
+    char *label,
+    char *hashName,
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    DecryptOAEPBytes_return output = DecryptOAEPBytes(
+        (void*)&message[0],
+        message.size(),
+        label,
+        hashName,
+        privateKey);
+    
+    if (output.r0 == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+
+    const uint8_t *charBuffer = (uint8_t *) output.r0;
+    std::vector<uint8_t> vectorBuffer(charBuffer, charBuffer + output.r1);
+
+    flutter::EncodableValue response(vectorBuffer);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
 void decryptPKCS1v15(
     char *message,
     char *privateKey,
@@ -430,6 +465,41 @@ void encryptOAEP(
       return;
     }
     flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+
+void encryptOAEPBytes(
+    const std::vector<uint8_t>& message,
+    char *label,
+    char *hashName,
+    char *publicKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    EncryptOAEPBytes_return output = EncryptOAEPBytes(
+        (void*)&message[0],
+        message.size(),
+        label,
+        hashName,
+        publicKey);
+    if (output.r0 == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+
+    const uint8_t *charBuffer = (uint8_t *) output.r0;
+    std::vector<uint8_t> vectorBuffer(charBuffer, charBuffer + output.r1);
+
+    flutter::EncodableValue response(vectorBuffer);
     result->Success(&response);
   }
   catch (const std::exception &e)
@@ -802,6 +872,16 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
   }
+  else if (method_call.method_name().compare("decryptOAEPBytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    decryptOAEPBytes(
+        ValueOrNull(args, "message").ByteListValue(),
+        WriteableChar(ValueOrNull(args, "label").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
   else if (method_call.method_name().compare("decryptPKCS1v15") == 0)
   {
     const EncodableMap &args = method_call.arguments()->MapValue();
@@ -815,6 +895,16 @@ void FastRsaPlugin::HandleMethodCall(
     const EncodableMap &args = method_call.arguments()->MapValue();
     encryptOAEP(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "label").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("encryptOAEPBytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    encryptOAEPBytes(
+        ValueOrNull(args, "message").ByteListValue(),
         WriteableChar(ValueOrNull(args, "label").StringValue()),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
         WriteableChar(ValueOrNull(args, "publicKey").StringValue()),

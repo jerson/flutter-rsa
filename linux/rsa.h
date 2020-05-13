@@ -103,9 +103,25 @@ extern char* EncryptPrivateKey(char* p0, char* p1, char* p2);
 
 extern char* DecryptOAEP(char* p0, char* p1, char* p2, char* p3);
 
+/* Return type for DecryptOAEPBytes */
+struct DecryptOAEPBytes_return {
+	void* r0;
+	int r1;
+};
+
+extern struct DecryptOAEPBytes_return DecryptOAEPBytes(void* p0, int p1, char* p2, char* p3, char* p4);
+
 extern char* DecryptPKCS1v15(char* p0, char* p1);
 
 extern char* EncryptOAEP(char* p0, char* p1, char* p2, char* p3);
+
+/* Return type for EncryptOAEPBytes */
+struct EncryptOAEPBytes_return {
+	void* r0;
+	int r1;
+};
+
+extern struct EncryptOAEPBytes_return EncryptOAEPBytes(void* p0, int p1, char* p2, char* p3, char* p4);
 
 extern char* EncryptPKCS1v15(char* p0, char* p1);
 
