@@ -113,6 +113,14 @@ extern struct DecryptOAEPBytes_return DecryptOAEPBytes(void* p0, int p1, char* p
 
 extern char* DecryptPKCS1v15(char* p0, char* p1);
 
+/* Return type for DecryptPKCS1v15Bytes */
+struct DecryptPKCS1v15Bytes_return {
+	void* r0;
+	int r1;
+};
+
+extern struct DecryptPKCS1v15Bytes_return DecryptPKCS1v15Bytes(void* p0, int p1, char* p2);
+
 extern char* EncryptOAEP(char* p0, char* p1, char* p2, char* p3);
 
 /* Return type for EncryptOAEPBytes */
@@ -125,6 +133,14 @@ extern struct EncryptOAEPBytes_return EncryptOAEPBytes(void* p0, int p1, char* p
 
 extern char* EncryptPKCS1v15(char* p0, char* p1);
 
+/* Return type for EncryptPKCS1v15Bytes */
+struct EncryptPKCS1v15Bytes_return {
+	void* r0;
+	int r1;
+};
+
+extern struct EncryptPKCS1v15Bytes_return EncryptPKCS1v15Bytes(void* p0, int p1, char* p2);
+
 extern KeyPair Generate(GoInt p0);
 
 extern char* Hash(char* p0, char* p1);
@@ -133,11 +149,31 @@ extern char* Base64(char* p0);
 
 extern char* SignPKCS1v15(char* p0, char* p1, char* p2);
 
+/* Return type for SignPKCS1v15Bytes */
+struct SignPKCS1v15Bytes_return {
+	void* r0;
+	int r1;
+};
+
+extern struct SignPKCS1v15Bytes_return SignPKCS1v15Bytes(void* p0, int p1, char* p2, char* p3);
+
 extern char* SignPSS(char* p0, char* p1, char* p2, char* p3);
+
+/* Return type for SignPSSBytes */
+struct SignPSSBytes_return {
+	void* r0;
+	int r1;
+};
+
+extern struct SignPSSBytes_return SignPSSBytes(void* p0, int p1, char* p2, char* p3, char* p4);
 
 extern char* VerifyPKCS1v15(char* p0, char* p1, char* p2, char* p3);
 
+extern char* VerifyPKCS1v15Bytes(void* p0, int p1, void* p2, int p3, char* p4, char* p5);
+
 extern char* VerifyPSS(char* p0, char* p1, char* p2, char* p3, char* p4);
+
+extern char* VerifyPSSBytes(void* p0, int p1, void* p2, int p3, char* p4, char* p5, char* p6);
 
 #ifdef __cplusplus
 }

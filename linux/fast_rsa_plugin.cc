@@ -444,6 +444,36 @@ void decryptPKCS1v15(
   }
 }
 
+void decryptPKCS1v15Bytes(
+    const std::vector<uint8_t>& message,
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    DecryptPKCS1v15Bytes_return output = DecryptPKCS1v15Bytes(
+        (void*)&message[0],
+        message.size(),
+        privateKey);
+    if (output.r0 == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+
+    const uint8_t *charBuffer = (uint8_t *) output.r0;
+    std::vector<uint8_t> vectorBuffer(charBuffer, charBuffer + output.r1);
+
+    flutter::EncodableValue response(vectorBuffer);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
 void encryptOAEP(
     char *message,
     char *label,
@@ -533,6 +563,36 @@ void encryptPKCS1v15(
   }
 }
 
+void encryptPKCS1v15Bytes(
+    const std::vector<uint8_t>& message,
+    char *publicKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    EncryptPKCS1v15Bytes_return output = EncryptPKCS1v15Bytes(
+        (void*)&message[0],
+        message.size(),
+        publicKey);
+    if (output.r0 == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+
+    const uint8_t *charBuffer = (uint8_t *) output.r0;
+    std::vector<uint8_t> vectorBuffer(charBuffer, charBuffer + output.r1);
+
+    flutter::EncodableValue response(vectorBuffer);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
 void signPSS(
     char *message,
     char *hashName,
@@ -562,6 +622,40 @@ void signPSS(
   }
 }
 
+void signPSSBytes(
+    const std::vector<uint8_t>& message,
+    char *hashName,
+    char *saltLengthName,
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    SignPSSBytes_return output = SignPSSBytes(
+        (void*)&message[0],
+        message.size(),
+        hashName,
+        saltLengthName,
+        privateKey);
+    if (output.r0 == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+
+    const uint8_t *charBuffer = (uint8_t *) output.r0;
+    std::vector<uint8_t> vectorBuffer(charBuffer, charBuffer + output.r1);
+
+    flutter::EncodableValue response(vectorBuffer);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
 void signPKCS1v15(
     char *message,
     char *hashName,
@@ -581,6 +675,39 @@ void signPKCS1v15(
       return;
     }
     flutter::EncodableValue response(output);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void signPKCS1v15Bytes(
+    const std::vector<uint8_t>& message,
+    char *hashName,
+    char *privateKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    SignPKCS1v15Bytes_return output = SignPKCS1v15Bytes(
+        (void*)&message[0],
+        message.size(),
+        hashName,
+        privateKey);
+    if (output.r0 == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+
+    const uint8_t *charBuffer = (uint8_t *) output.r0;
+    std::vector<uint8_t> vectorBuffer(charBuffer, charBuffer + output.r1);
+
+    flutter::EncodableValue response(vectorBuffer);
+
     result->Success(&response);
   }
   catch (const std::exception &e)
@@ -620,6 +747,39 @@ void verifyPSS(
   }
 }
 
+void verifyPSSBytes(
+    const std::vector<uint8_t>& signature,
+    const std::vector<uint8_t>& message,
+    char *hashName,
+    char *saltLengthName,
+    char *publicKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = VerifyPSSBytes(
+        (void*)&signature[0],
+        signature.size(),
+        (void*)&message[0],
+        message.size(),
+        hashName,
+        saltLengthName,
+        publicKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(strcmp(output, "1") == 0);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
 void verifyPKCS1v15(
     char *signature,
     char *message,
@@ -633,6 +793,37 @@ void verifyPKCS1v15(
     char *output = VerifyPKCS1v15(
         signature,
         message,
+        hashName,
+        publicKey);
+    if (output == NULL)
+    {
+      result->Error("error", "null pointer");
+      return;
+    }
+    flutter::EncodableValue response(strcmp(output, "1") == 0);
+    result->Success(&response);
+  }
+  catch (const std::exception &e)
+  {
+    result->Error("error", e.what());
+  }
+}
+
+void verifyPKCS1v15Bytes(
+    const std::vector<uint8_t>& signature,
+    const std::vector<uint8_t>& message,
+    char *hashName,
+    char *publicKey,
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
+
+  try
+  {
+    char *output = VerifyPKCS1v15Bytes(
+        (void*)&signature[0],
+        signature.size(),
+        (void*)&message[0],
+        message.size(),
         hashName,
         publicKey);
     if (output == NULL)
@@ -890,6 +1081,14 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
   }
+  else if (method_call.method_name().compare("decryptPKCS1v15Bytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    decryptPKCS1v15Bytes(
+        ValueOrNull(args, "message").ByteListValue(),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
   else if (method_call.method_name().compare("encryptOAEP") == 0)
   {
     const EncodableMap &args = method_call.arguments()->MapValue();
@@ -918,6 +1117,14 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
         move(result));
   }
+  else if (method_call.method_name().compare("encryptPKCS1v15Bytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    encryptPKCS1v15Bytes(
+        ValueOrNull(args, "message").ByteListValue(),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
+        move(result));
+  }
   else if (method_call.method_name().compare("signPSS") == 0)
   {
     const EncodableMap &args = method_call.arguments()->MapValue();
@@ -928,11 +1135,30 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
   }
+  else if (method_call.method_name().compare("signPSSBytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    signPSSBytes(
+        ValueOrNull(args, "message").ByteListValue(),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "saltLengthName").StringValue()),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
   else if (method_call.method_name().compare("signPKCS1v15") == 0)
   {
     const EncodableMap &args = method_call.arguments()->MapValue();
     signPKCS1v15(
         WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("signPKCS1v15Bytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    signPKCS1v15Bytes(
+        ValueOrNull(args, "message").ByteListValue(),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
         WriteableChar(ValueOrNull(args, "privateKey").StringValue()),
         move(result));
@@ -948,12 +1174,33 @@ void FastRsaPlugin::HandleMethodCall(
         WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
         move(result));
   }
+  else if (method_call.method_name().compare("verifyPSSBytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    verifyPSSBytes(
+        ValueOrNull(args, "signature").ByteListValue(),
+        ValueOrNull(args, "message").ByteListValue(),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "saltLengthName").StringValue()),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
+        move(result));
+  }
   else if (method_call.method_name().compare("verifyPKCS1v15") == 0)
   {
     const EncodableMap &args = method_call.arguments()->MapValue();
     verifyPKCS1v15(
         WriteableChar(ValueOrNull(args, "signature").StringValue()),
         WriteableChar(ValueOrNull(args, "message").StringValue()),
+        WriteableChar(ValueOrNull(args, "hashName").StringValue()),
+        WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
+        move(result));
+  }
+  else if (method_call.method_name().compare("verifyPKCS1v15Bytes") == 0)
+  {
+    const EncodableMap &args = method_call.arguments()->MapValue();
+    verifyPKCS1v15Bytes(
+        ValueOrNull(args, "signature").ByteListValue(),
+        ValueOrNull(args, "message").ByteListValue(),
         WriteableChar(ValueOrNull(args, "hashName").StringValue()),
         WriteableChar(ValueOrNull(args, "publicKey").StringValue()),
         move(result));
