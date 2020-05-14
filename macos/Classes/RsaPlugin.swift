@@ -109,6 +109,12 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     publicKey: args["publicKey"] as? String,
                     result: result
             )
+        case "encryptPKCS1v15Bytes":
+            encryptPKCS1v15Bytes(
+                        message: args["message"] as? FlutterStandardTypedData,
+                        publicKey: args["publicKey"] as? String,
+                        result: result
+            )
         case "encryptOAEP":
             encryptOAEP(
                     message: args["message"] as? String,
@@ -116,6 +122,14 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     hashName: args["hashName"] as? String,
                     publicKey: args["publicKey"] as? String,
                     result: result
+            )
+        case "encryptOAEPBytes":
+            encryptOAEPBytes(
+                        message: args["message"] as? FlutterStandardTypedData,
+                        label: args["label"] as? String,
+                        hashName: args["hashName"] as? String,
+                        publicKey: args["publicKey"] as? String,
+                        result: result
             )
         case "decryptOAEP":
             decryptOAEP(
@@ -125,11 +139,25 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     privateKey: args["privateKey"] as? String,
                     result: result
             )
+        case "decryptOAEPBytes":
+            decryptOAEPBytes(
+                        message: args["message"] as? FlutterStandardTypedData,
+                        label: args["label"] as? String,
+                        hashName: args["hashName"] as? String,
+                        privateKey: args["privateKey"] as? String,
+                        result: result
+            )
         case "decryptPKCS1v15":
             decryptPKCS1v15(
                     message: args["message"] as? String,
                     privateKey: args["privateKey"] as? String,
                     result: result
+            )
+        case "decryptPKCS1v15Bytes":
+            decryptPKCS1v15Bytes(
+                        message: args["message"] as? FlutterStandardTypedData,
+                        privateKey: args["privateKey"] as? String,
+                        result: result
             )
         case "signPKCS1v15":
             signPKCS1v15(
@@ -138,6 +166,13 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     privateKey: args["privateKey"] as? String,
                     result: result
             )
+        case "signPKCS1v15Bytes":
+            signPKCS1v15Bytes(
+                        message: args["message"] as? FlutterStandardTypedData,
+                        hashName: args["hashName"] as? String,
+                        privateKey: args["privateKey"] as? String,
+                        result: result
+                )
         case "signPSS":
             signPSS(
                     message: args["message"] as? String,
@@ -146,6 +181,14 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     privateKey: args["privateKey"] as? String,
                     result: result
             )
+        case "signPSSBytes":
+            signPSSBytes(
+                        message: args["message"] as? FlutterStandardTypedData,
+                        hashName: args["hashName"] as? String,
+                        saltLengthName: args["saltLengthName"] as? String,
+                        privateKey: args["privateKey"] as? String,
+                        result: result
+                )
         case "verifyPKCS1v15":
             verifyPKCS1v15(
                     signature: args["signature"] as? String,
@@ -154,6 +197,14 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     publicKey: args["publicKey"] as? String,
                     result: result
             )
+        case "verifyPKCS1v15Bytes":
+            verifyPKCS1v15Bytes(
+                        signature: args["signature"] as? FlutterStandardTypedData,
+                        message: args["message"] as? FlutterStandardTypedData,
+                        hashName: args["hashName"] as? String,
+                        publicKey: args["publicKey"] as? String,
+                        result: result
+                )
         case "verifyPSS":
             verifyPSS(
                     signature: args["signature"] as? String,
@@ -163,6 +214,15 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                     publicKey: args["publicKey"] as? String,
                     result: result
             )
+        case "verifyPSSBytes":
+            verifyPSSBytes(
+                        signature: args["signature"] as? FlutterStandardTypedData,
+                        message: args["message"] as? FlutterStandardTypedData,
+                        hashName: args["hashName"] as? String,
+                        saltLengthName: args["saltLengthName"] as? String,
+                        publicKey: args["publicKey"] as? String,
+                        result: result
+                )
         case "base64":
             base64(
                     message: args["message"] as? String,
@@ -423,6 +483,18 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
+
+    func encryptPKCS1v15Bytes(message: FlutterStandardTypedData?, publicKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                let output = try self.instance?.encryptPKCS1v15Bytes(message?.data, publicKey: publicKey)
+                self.result(result, output: output)
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
     func encryptOAEP(message: String?, label: String?, hashName: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
@@ -434,6 +506,17 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                 } else {
                     self.result(result, output: output)
                 }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func encryptOAEPBytes(message: FlutterStandardTypedData?, label: String?, hashName: String?, publicKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                let output = try self.instance?.encryptOAEPBytes(message?.data, label: label, hashName: hashName, publicKey: publicKey)
+                self.result(result, output: output)
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
             }
@@ -456,7 +539,18 @@ public class RsaPlugin: NSObject, FlutterPlugin {
             }
         })
     }
-
+    
+    func decryptOAEPBytes(message: FlutterStandardTypedData?, label: String?, hashName: String?, privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                let output = try self.instance?.decryptOAEPBytes(message?.data, label: label, hashName: hashName, privateKey: privateKey)
+                self.result(result, output: output)
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+    
     func decryptPKCS1v15(message: String?, privateKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
@@ -468,6 +562,17 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                 } else {
                     self.result(result, output: output)
                 }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+    
+    func decryptPKCS1v15Bytes(message: FlutterStandardTypedData?, privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                let output = try self.instance?.decryptPKCS1v15Bytes(message?.data, privateKey: privateKey)
+                self.result(result, output: output)
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
             }
@@ -491,6 +596,17 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
+    func signPKCS1v15Bytes(message: FlutterStandardTypedData?, hashName: String?, privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                let output = try self.instance?.signPKCS1v15Bytes(message?.data, hashName: hashName, privateKey: privateKey)
+                self.result(result, output: output)
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
     func signPSS(message: String?, hashName: String?, saltLengthName: String?, privateKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
@@ -502,6 +618,17 @@ public class RsaPlugin: NSObject, FlutterPlugin {
                 } else {
                     self.result(result, output: output)
                 }
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func signPSSBytes(message: FlutterStandardTypedData?, hashName: String?, saltLengthName: String?, privateKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                let output = try self.instance?.signPSSBytes(message?.data, hashName: hashName, saltLengthName: saltLengthName, privateKey: privateKey)
+                self.result(result, output: output)
             } catch {
                 self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
             }
@@ -521,12 +648,39 @@ public class RsaPlugin: NSObject, FlutterPlugin {
         })
     }
 
+    func verifyPKCS1v15Bytes(signature: FlutterStandardTypedData?, message: FlutterStandardTypedData?, hashName: String?, publicKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+                var ret0_: ObjCBool = false
+                _ = try self.instance?.verifyPKCS1v15Bytes(signature?.data, message: message?.data, hashName: hashName, publicKey: publicKey, ret0_: &ret0_)
+
+                self.result(result, output: ret0_.boolValue as NSNumber)
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
     func verifyPSS(signature: String?, message: String?, hashName: String?, saltLengthName: String?, publicKey: String?, result: @escaping FlutterResult) {
         queue?.async(execute: {
             do {
 
                 var ret0_: ObjCBool = false
                 _ = try self.instance?.verifyPSS(signature, message: message, hashName: hashName, saltLengthName: saltLengthName, publicKey: publicKey, ret0_: &ret0_)
+
+                self.result(result, output: ret0_.boolValue as NSNumber)
+            } catch {
+                self.result(result, output: FlutterError(code: "error", message: error.localizedDescription, details: nil))
+            }
+        })
+    }
+
+    func verifyPSSBytes(signature: FlutterStandardTypedData?, message: FlutterStandardTypedData?, hashName: String?, saltLengthName: String?, publicKey: String?, result: @escaping FlutterResult) {
+        queue?.async(execute: {
+            do {
+
+                var ret0_: ObjCBool = false
+                _ = try self.instance?.verifyPSSBytes(signature?.data, message: message?.data, hashName: hashName, saltLengthName: saltLengthName, publicKey: publicKey, ret0_: &ret0_)
 
                 self.result(result, output: ret0_.boolValue as NSNumber)
             } catch {
