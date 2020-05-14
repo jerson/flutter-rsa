@@ -34,17 +34,25 @@
 - (NSString* _Nonnull)convertPublicKeyToPKCS1:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)convertPublicKeyToPKIX:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)decryptOAEP:(NSString* _Nullable)ciphertext label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSData* _Nullable)decryptOAEPBytes:(NSData* _Nullable)ciphertext label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)decryptPKCS1v15:(NSString* _Nullable)ciphertext privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSData* _Nullable)decryptPKCS1v15Bytes:(NSData* _Nullable)ciphertext privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)decryptPrivateKey:(NSString* _Nullable)privateKeyEncrypted password:(NSString* _Nullable)password error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)encryptOAEP:(NSString* _Nullable)message label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName publicKey:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
+- (NSData* _Nullable)encryptOAEPBytes:(NSData* _Nullable)message label:(NSString* _Nullable)label hashName:(NSString* _Nullable)hashName publicKey:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)encryptPKCS1v15:(NSString* _Nullable)message publicKey:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
+- (NSData* _Nullable)encryptPKCS1v15Bytes:(NSData* _Nullable)message publicKey:(NSString* _Nullable)publicKey error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)encryptPrivateKey:(NSString* _Nullable)privateKey password:(NSString* _Nullable)password cipherName:(NSString* _Nullable)cipherName error:(NSError* _Nullable* _Nullable)error;
 - (RsaKeyPair* _Nullable)generate:(long)nBits error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)hash:(NSString* _Nullable)message name:(NSString* _Nullable)name error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)signPKCS1v15:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSData* _Nullable)signPKCS1v15Bytes:(NSData* _Nullable)message hashName:(NSString* _Nullable)hashName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)signPSS:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName saltLengthName:(NSString* _Nullable)saltLengthName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
+- (NSData* _Nullable)signPSSBytes:(NSData* _Nullable)message hashName:(NSString* _Nullable)hashName saltLengthName:(NSString* _Nullable)saltLengthName privateKey:(NSString* _Nullable)privateKey error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)verifyPKCS1v15:(NSString* _Nullable)signature message:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName publicKey:(NSString* _Nullable)publicKey ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
+- (BOOL)verifyPKCS1v15Bytes:(NSData* _Nullable)signature message:(NSData* _Nullable)message hashName:(NSString* _Nullable)hashName publicKey:(NSString* _Nullable)publicKey ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)verifyPSS:(NSString* _Nullable)signature message:(NSString* _Nullable)message hashName:(NSString* _Nullable)hashName saltLengthName:(NSString* _Nullable)saltLengthName publicKey:(NSString* _Nullable)publicKey ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
+- (BOOL)verifyPSSBytes:(NSData* _Nullable)signature message:(NSData* _Nullable)message hashName:(NSString* _Nullable)hashName saltLengthName:(NSString* _Nullable)saltLengthName publicKey:(NSString* _Nullable)publicKey ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
 @end
 
 @interface RsaKeyPair : NSObject <goSeqRefInterface> {
