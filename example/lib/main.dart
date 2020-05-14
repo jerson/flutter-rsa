@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
   String _encryptedOAEP = "";
   String _decryptedOAEP = "";
   Uint8List _encryptedOAEPBytes = Uint8List.fromList("".codeUnits);
-  Uint8List _decryptedOAEPBytes =  Uint8List.fromList("".codeUnits) ;
+  Uint8List _decryptedOAEPBytes = Uint8List.fromList("".codeUnits);
   String _encryptedPKCS1v15 = "";
   String _decryptedPKCS1v15 = "";
   String _signedPKCS1v15 = "";
@@ -199,7 +199,8 @@ class _MyAppState extends State<MyApp> {
                         child: Text("encryptOAEPBytes"),
                         onPressed: () async {
                           var encrypted = await RSA.encryptOAEPBytes(
-                            Uint8List.fromList(encryptOAEPController.text.codeUnits),
+                            Uint8List.fromList(
+                                encryptOAEPController.text.codeUnits),
                             "",
                             RSAHash.sha256,
                             _pkcs12KeyPair.publicKey,

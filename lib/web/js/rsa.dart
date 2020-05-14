@@ -99,7 +99,23 @@ external RSADecryptOAEP(
 );
 
 @JS()
+external RSADecryptOAEPBytes(
+  String message,
+  String label,
+  String hashName,
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
 external RSADecryptPKCS1v15(
+  String message,
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSADecryptPKCS1v15Bytes(
   String message,
   String privateKey,
   Function(String error, String result) callback,
@@ -115,7 +131,23 @@ external RSAEncryptOAEP(
 );
 
 @JS()
+external RSAEncryptOAEPBytes(
+  String message,
+  String label,
+  String hashName,
+  String publicKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
 external RSAEncryptPKCS1v15(
+  String message,
+  String publicKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSAEncryptPKCS1v15Bytes(
   String message,
   String publicKey,
   Function(String error, String result) callback,
@@ -131,7 +163,24 @@ external RSASignPSS(
 );
 
 @JS()
+external RSASignPSSBytes(
+  String message,
+  String hashName,
+  String saltLengthName,
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
 external RSASignPKCS1v15(
+  String message,
+  String hashName,
+  String privateKey,
+  Function(String error, String result) callback,
+);
+
+@JS()
+external RSASignPKCS1v15Bytes(
   String message,
   String hashName,
   String privateKey,
@@ -149,7 +198,26 @@ external RSAVerifyPSS(
 );
 
 @JS()
+external RSAVerifyPSSBytes(
+  String signature,
+  String message,
+  String hashName,
+  String saltLengthName,
+  String publicKey,
+  Function(String error, bool result) callback,
+);
+
+@JS()
 external RSAVerifyPKCS1v15(
+  String signature,
+  String message,
+  String hashName,
+  String publicKey,
+  Function(String error, bool result) callback,
+);
+
+@JS()
+external RSAVerifyPKCS1v15Bytes(
   String signature,
   String message,
   String hashName,

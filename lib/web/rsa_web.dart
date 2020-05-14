@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:fast_rsa/web/js/go.dart';
 import 'package:fast_rsa/web/js/promise.dart';
@@ -107,9 +109,15 @@ class RsaPlugin {
           call.arguments['password'],
           call.arguments['cipherName'],
         );
-
       case 'decryptOAEP':
         return await decryptOAEP(
+          call.arguments['message'],
+          call.arguments['label'],
+          call.arguments['hashName'],
+          call.arguments['privateKey'],
+        );
+      case 'decryptOAEPBytes':
+        return await decryptOAEPBytes(
           call.arguments['message'],
           call.arguments['label'],
           call.arguments['hashName'],
@@ -120,8 +128,20 @@ class RsaPlugin {
           call.arguments['message'],
           call.arguments['privateKey'],
         );
+      case 'decryptPKCS1v15Bytes':
+        return await decryptPKCS1v15Bytes(
+          call.arguments['message'],
+          call.arguments['privateKey'],
+        );
       case 'encryptOAEP':
         return await encryptOAEP(
+          call.arguments['message'],
+          call.arguments['label'],
+          call.arguments['hashName'],
+          call.arguments['publicKey'],
+        );
+      case 'encryptOAEPBytes':
+        return await encryptOAEPBytes(
           call.arguments['message'],
           call.arguments['label'],
           call.arguments['hashName'],
@@ -132,6 +152,11 @@ class RsaPlugin {
           call.arguments['message'],
           call.arguments['publicKey'],
         );
+      case 'encryptPKCS1v15Bytes':
+        return await encryptPKCS1v15Bytes(
+          call.arguments['message'],
+          call.arguments['publicKey'],
+        );
       case 'signPSS':
         return await signPSS(
           call.arguments['message'],
@@ -139,8 +164,21 @@ class RsaPlugin {
           call.arguments['saltLengthName'],
           call.arguments['privateKey'],
         );
+      case 'signPSSBytes':
+        return await signPSSBytes(
+          call.arguments['message'],
+          call.arguments['hashName'],
+          call.arguments['saltLengthName'],
+          call.arguments['privateKey'],
+        );
       case 'signPKCS1v15':
         return await signPKCS1v15(
+          call.arguments['message'],
+          call.arguments['hashName'],
+          call.arguments['privateKey'],
+        );
+      case 'signPKCS1v15Bytes':
+        return await signPKCS1v15Bytes(
           call.arguments['message'],
           call.arguments['hashName'],
           call.arguments['privateKey'],
@@ -153,8 +191,23 @@ class RsaPlugin {
           call.arguments['saltLengthName'],
           call.arguments['publicKey'],
         );
+      case 'verifyPSSBytes':
+        return await verifyPSSBytes(
+          call.arguments['signature'],
+          call.arguments['message'],
+          call.arguments['hashName'],
+          call.arguments['saltLengthName'],
+          call.arguments['publicKey'],
+        );
       case 'verifyPKCS1v15':
         return await verifyPKCS1v15(
+          call.arguments['signature'],
+          call.arguments['message'],
+          call.arguments['hashName'],
+          call.arguments['publicKey'],
+        );
+      case 'verifyPKCS1v15Bytes':
+        return await verifyPKCS1v15Bytes(
           call.arguments['signature'],
           call.arguments['message'],
           call.arguments['hashName'],
@@ -371,6 +424,20 @@ class RsaPlugin {
     return completer.future;
   }
 
+  Future<Uint8List> decryptOAEPBytes(Uint8List message, String label,
+      String hashName, String privateKey) async {
+    var completer = new Completer<Uint8List>();
+    RSADecryptOAEPBytes(base64Encode(message), label, hashName, privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(base64Decode(result));
+    }));
+    return completer.future;
+  }
+
   Future<String> decryptPKCS1v15(String message, String privateKey) async {
     var completer = new Completer<String>();
     RSADecryptPKCS1v15(message, privateKey,
@@ -380,6 +447,20 @@ class RsaPlugin {
         return;
       }
       completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<Uint8List> decryptPKCS1v15Bytes(
+      Uint8List message, String privateKey) async {
+    var completer = new Completer<Uint8List>();
+    RSADecryptPKCS1v15Bytes(base64Encode(message), privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(base64Decode(result));
     }));
     return completer.future;
   }
@@ -398,6 +479,20 @@ class RsaPlugin {
     return completer.future;
   }
 
+  Future<Uint8List> encryptOAEPBytes(Uint8List message, String label,
+      String hashName, String publicKey) async {
+    var completer = new Completer<Uint8List>();
+    RSAEncryptOAEPBytes(base64Encode(message), label, hashName, publicKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(base64Decode(result));
+    }));
+    return completer.future;
+  }
+
   Future<String> encryptPKCS1v15(String message, String publicKey) async {
     var completer = new Completer<String>();
     RSAEncryptPKCS1v15(message, publicKey,
@@ -407,6 +502,20 @@ class RsaPlugin {
         return;
       }
       completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<Uint8List> encryptPKCS1v15Bytes(
+      Uint8List message, String publicKey) async {
+    var completer = new Completer<Uint8List>();
+    RSAEncryptPKCS1v15Bytes(base64Encode(message), publicKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(base64Decode(result));
     }));
     return completer.future;
   }
@@ -425,6 +534,20 @@ class RsaPlugin {
     return completer.future;
   }
 
+  Future<Uint8List> signPSSBytes(Uint8List message, String hashName,
+      String saltLengthName, String privateKey) async {
+    var completer = new Completer<Uint8List>();
+    RSASignPSSBytes(base64Encode(message), hashName, saltLengthName, privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(base64Decode(result));
+    }));
+    return completer.future;
+  }
+
   Future<String> signPKCS1v15(
       String message, String hashName, String privateKey) async {
     var completer = new Completer<String>();
@@ -435,6 +558,20 @@ class RsaPlugin {
         return;
       }
       completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<Uint8List> signPKCS1v15Bytes(
+      Uint8List message, String hashName, String privateKey) async {
+    var completer = new Completer<Uint8List>();
+    RSASignPKCS1v15Bytes(base64Encode(message), hashName, privateKey,
+        allowInterop((String error, String result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(base64Decode(result));
     }));
     return completer.future;
   }
@@ -453,10 +590,39 @@ class RsaPlugin {
     return completer.future;
   }
 
+  Future<bool> verifyPSSBytes(Uint8List signature, Uint8List message,
+      String hashName, String saltLengthName, String publicKey) async {
+    var completer = new Completer<bool>();
+    RSAVerifyPSSBytes(base64Encode(signature), base64Encode(message), hashName,
+        saltLengthName, publicKey, allowInterop((String error, bool result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
   Future<bool> verifyPKCS1v15(String signature, String message, String hashName,
       String publicKey) async {
     var completer = new Completer<bool>();
     RSAVerifyPKCS1v15(signature, message, hashName, publicKey,
+        allowInterop((String error, bool result) {
+      if (error != null && error != "") {
+        completer.completeError(error);
+        return;
+      }
+      completer.complete(result);
+    }));
+    return completer.future;
+  }
+
+  Future<bool> verifyPKCS1v15Bytes(Uint8List signature, Uint8List message,
+      String hashName, String publicKey) async {
+    var completer = new Completer<bool>();
+    RSAVerifyPKCS1v15Bytes(
+        base64Encode(signature), base64Encode(message), hashName, publicKey,
         allowInterop((String error, bool result) {
       if (error != null && error != "") {
         completer.completeError(error);
