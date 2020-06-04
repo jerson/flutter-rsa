@@ -36,13 +36,21 @@ func (p *Plugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 	p.channel.HandleFunc("decryptPrivateKey", p.decryptPrivateKey)
 	p.channel.HandleFunc("encryptPrivateKey", p.encryptPrivateKey)
 	p.channel.HandleFunc("decryptOAEP", p.decryptOAEP)
+	p.channel.HandleFunc("decryptOAEPBytes", p.decryptOAEPBytes)
 	p.channel.HandleFunc("decryptPKCS1v15", p.decryptPKCS1v15)
+	p.channel.HandleFunc("decryptPKCS1v15Bytes", p.decryptPKCS1v15Bytes)
 	p.channel.HandleFunc("encryptOAEP", p.encryptOAEP)
+	p.channel.HandleFunc("encryptOAEPBytes", p.encryptOAEPBytes)
 	p.channel.HandleFunc("encryptPKCS1v15", p.encryptPKCS1v15)
+	p.channel.HandleFunc("encryptPKCS1v15Bytes", p.encryptPKCS1v15Bytes)
 	p.channel.HandleFunc("signPSS", p.signPSS)
+	p.channel.HandleFunc("signPSSBytes", p.signPSSBytes)
 	p.channel.HandleFunc("signPKCS1v15", p.signPKCS1v15)
+	p.channel.HandleFunc("signPKCS1v15Bytes", p.signPKCS1v15Bytes)
 	p.channel.HandleFunc("verifyPSS", p.verifyPSS)
+	p.channel.HandleFunc("verifyPSSBytes", p.verifyPSSBytes)
 	p.channel.HandleFunc("verifyPKCS1v15", p.verifyPKCS1v15)
+	p.channel.HandleFunc("verifyPKCS1v15Bytes", p.verifyPKCS1v15Bytes)
 	p.channel.HandleFunc("hash", p.hash)
 	p.channel.HandleFunc("base64", p.base64)
 	p.channel.HandleFunc("generate", p.generate)
@@ -234,11 +242,39 @@ func (p *Plugin) decryptOAEP(arguments interface{}) (reply interface{}, err erro
 	return result, nil
 }
 
+func (p *Plugin) decryptOAEPBytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.DecryptOAEPBytes(
+		args["message"].([]byte),
+		args["label"].(string),
+		args["hashName"].(string),
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
 func (p *Plugin) decryptPKCS1v15(arguments interface{}) (reply interface{}, err error) {
 	args := arguments.(map[interface{}]interface{})
 
 	result, err := p.instance.DecryptPKCS1v15(
 		args["message"].(string),
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) decryptPKCS1v15Bytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.DecryptPKCS1v15Bytes(
+		args["message"].([]byte),
 		args["privateKey"].(string),
 	)
 	if err != nil {
@@ -262,11 +298,39 @@ func (p *Plugin) encryptOAEP(arguments interface{}) (reply interface{}, err erro
 	return result, nil
 }
 
+func (p *Plugin) encryptOAEPBytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.EncryptOAEPBytes(
+		args["message"].([]byte),
+		args["label"].(string),
+		args["hashName"].(string),
+		args["publicKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
 func (p *Plugin) encryptPKCS1v15(arguments interface{}) (reply interface{}, err error) {
 	args := arguments.(map[interface{}]interface{})
 
 	result, err := p.instance.EncryptPKCS1v15(
 		args["message"].(string),
+		args["publicKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) encryptPKCS1v15Bytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.EncryptPKCS1v15Bytes(
+		args["message"].([]byte),
 		args["publicKey"].(string),
 	)
 	if err != nil {
@@ -290,11 +354,40 @@ func (p *Plugin) signPSS(arguments interface{}) (reply interface{}, err error) {
 	return result, nil
 }
 
+func (p *Plugin) signPSSBytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.SignPSSBytes(
+		args["message"].([]byte),
+		args["hashName"].(string),
+		args["saltLengthName"].(string),
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
 func (p *Plugin) signPKCS1v15(arguments interface{}) (reply interface{}, err error) {
 	args := arguments.(map[interface{}]interface{})
 
 	result, err := p.instance.SignPKCS1v15(
 		args["message"].(string),
+		args["hashName"].(string),
+		args["privateKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) signPKCS1v15Bytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.SignPKCS1v15Bytes(
+		args["message"].([]byte),
 		args["hashName"].(string),
 		args["privateKey"].(string),
 	)
@@ -320,12 +413,43 @@ func (p *Plugin) verifyPSS(arguments interface{}) (reply interface{}, err error)
 	return result, nil
 }
 
+func (p *Plugin) verifyPSSBytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.VerifyPSSBytes(
+		args["signature"].([]byte),
+		args["message"].([]byte),
+		args["hashName"].(string),
+		args["saltLengthName"].(string),
+		args["publicKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
 func (p *Plugin) verifyPKCS1v15(arguments interface{}) (reply interface{}, err error) {
 	args := arguments.(map[interface{}]interface{})
 
 	result, err := p.instance.VerifyPKCS1v15(
 		args["signature"].(string),
 		args["message"].(string),
+		args["hashName"].(string),
+		args["publicKey"].(string),
+	)
+	if err != nil {
+		return nil, plugin.NewError("error", err)
+	}
+	return result, nil
+}
+
+func (p *Plugin) verifyPKCS1v15Bytes(arguments interface{}) (reply interface{}, err error) {
+	args := arguments.(map[interface{}]interface{})
+
+	result, err := p.instance.VerifyPKCS1v15Bytes(
+		args["signature"].([]byte),
+		args["message"].([]byte),
 		args["hashName"].(string),
 		args["publicKey"].(string),
 	)

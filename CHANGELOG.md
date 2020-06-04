@@ -1,3 +1,11 @@
+## 1.1.1
+
+- Fixed publish notes
+
+## 1.1.0
+
+- Added bytes methods for encrypt, decrypt and sign to web, macos, linux and hover
+
 ## 1.0.1
 
 - Added bytes methods for encrypt, decrypt and sign
