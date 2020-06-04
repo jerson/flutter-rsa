@@ -1,3 +1,7 @@
+## 1.1.2
+
+- Fixed macos bytes methods
+
 ## 1.1.1
 
 - Fixed publish notes
