@@ -127,7 +127,7 @@ class RSA {
     });
   }
 
-  static Future<String> convertPublicKeyToJWK(String publicKey) async {
+  static Future<dynamic> convertPublicKeyToJWK(String publicKey) async {
     var output = await _channel.invokeMethod('convertPublicKeyToJWK', {
       "publicKey": publicKey,
     });

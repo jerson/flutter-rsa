@@ -485,8 +485,7 @@ void main() {
           find.descendant(of: container, matching: find.byValueKey("result")),
         );
 
-        // FIXME looks like the method is not working
-        //  expect(result != "", true);
+        expect(result != "", true);
       });
 
       test('PKCS8', () async {
@@ -526,8 +525,7 @@ void main() {
         var result = await driver.getText(
           find.descendant(of: container, matching: find.byValueKey("result")),
         );
-        // FIXME looks like the method is not working
-        // expect(result != "", true);
+        expect(result != "", true);
       });
 
       test('PKCS1', () async {
@@ -604,8 +602,7 @@ void main() {
           find.descendant(of: container, matching: find.byValueKey("result")),
         );
 
-        // FIXME looks like the method is not working
-        // expect(result != "", true);
+        expect(result != "", true);
       });
     });
 

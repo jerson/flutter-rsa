@@ -500,7 +500,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    String result = instance.convertPublicKeyToPKCS1(publicKey);
+                    String result = instance.convertPublicKeyToJWK(publicKey);
                     success(promise, result);
                 } catch (Exception e) {
                     error(promise, "error", e.getMessage(), null);
