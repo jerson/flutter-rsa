@@ -5,6 +5,21 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_rsa/rsa.dart';
+import 'package:rsa_example/base64.dart';
+import 'package:rsa_example/convert_jwt.dart';
+import 'package:rsa_example/convert_keypair.dart';
+import 'package:rsa_example/convert_private.dart';
+import 'package:rsa_example/convert_public.dart';
+import 'package:rsa_example/encrypt_decrypt_oaep.dart';
+import 'package:rsa_example/encrypt_decrypt_oaep_bytes.dart';
+import 'package:rsa_example/encrypt_decrypt_pkcs.dart';
+import 'package:rsa_example/encrypt_decrypt_pkcs_bytes.dart';
+import 'package:rsa_example/encrypt_sign_pkcs.dart';
+import 'package:rsa_example/encrypt_sign_pkcs_bytes.dart';
+import 'package:rsa_example/encrypt_sign_pss.dart';
+import 'package:rsa_example/encrypt_sign_pss_bytes.dart';
+import 'package:rsa_example/generate.dart';
+import 'package:rsa_example/hash.dart';
 
 const password = '123456789';
 const pkcs12 =
@@ -110,50 +125,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final encryptOAEPController = TextEditingController();
-  final encryptKCS1v15Controller = TextEditingController();
-  final signPSSController = TextEditingController();
-  final signPKCS1v15Controller = TextEditingController();
-  final base64Controller = TextEditingController();
-  final hashController = TextEditingController();
-
-  KeyPair _keyPair = KeyPair(
-    privateKey: "",
-    publicKey: "",
-  );
-
   PKCS12KeyPair _pkcs12KeyPair = PKCS12KeyPair(
     privateKey: "",
     publicKey: "",
     certificate: "",
   );
 
-  String _encryptedOAEP = "";
-  String _decryptedOAEP = "";
-  Uint8List _encryptedOAEPBytes = Uint8List.fromList("".codeUnits);
-  Uint8List _decryptedOAEPBytes = Uint8List.fromList("".codeUnits);
-  String _encryptedPKCS1v15 = "";
-  String _decryptedPKCS1v15 = "";
-  String _signedPKCS1v15 = "";
-  bool _verifiedPKCS1v15 = false;
-  String _signedPSS = "";
-  bool _verifiedPSS = false;
-  String _base64 = "";
-  String _hash = "";
-  dynamic _convertedPrivateToJWK = "";
-  dynamic _convertedJWKToPrivate = "";
-
   @override
   void initState() {
     super.initState();
-
-    encryptOAEPController.text = "sample";
-    encryptKCS1v15Controller.text = "sample";
-    signPSSController.text = "sample";
-    signPKCS1v15Controller.text = "sample";
-    base64Controller.text = "sample";
-    hashController.text = "sample";
-
     convertKey();
   }
 
@@ -166,12 +146,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    encryptOAEPController.dispose();
-    encryptKCS1v15Controller.dispose();
-    signPSSController.dispose();
-    signPKCS1v15Controller.dispose();
-    base64Controller.dispose();
-    hashController.dispose();
     super.dispose();
   }
 
@@ -184,419 +158,80 @@ class _MyAppState extends State<MyApp> {
         ),
         body: ListView(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Message"),
-                        controller: encryptOAEPController,
-                      ),
-                      RaisedButton(
-                        child: Text("encryptOAEPBytes"),
-                        onPressed: () async {
-                          var encrypted = await RSA.encryptOAEPBytes(
-                            Uint8List.fromList(
-                                encryptOAEPController.text.codeUnits),
-                            "",
-                            RSAHash.sha256,
-                            _pkcs12KeyPair.publicKey,
-                          );
-                          setState(() {
-                            _encryptedOAEPBytes = encrypted;
-                          });
-                        },
-                      ),
-                      SelectableText(base64Encode(_encryptedOAEPBytes))
-                    ],
-                  ),
-                ),
-              ),
+            EncryptAndDecryptOAEP(
+              title: "Encrypt and Decrypt OAEP",
+              keyPair: _pkcs12KeyPair,
+              key: Key("encrypt-oaep"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("decryptOAEPBytes"),
-                        onPressed: () async {
-                          var decrypted = await RSA.decryptOAEPBytes(
-                            _encryptedOAEPBytes,
-                            "",
-                            RSAHash.sha256,
-                            _pkcs12KeyPair.privateKey,
-                          );
-                          setState(() {
-                            _decryptedOAEPBytes = decrypted;
-                          });
-                        },
-                      ),
-                      SelectableText(String.fromCharCodes(_decryptedOAEPBytes))
-                    ],
-                  ),
-                ),
-              ),
+            EncryptAndDecryptOAEPBytes(
+              title: "Encrypt and Decrypt OAEP Bytes",
+              keyPair: _pkcs12KeyPair,
+              key: Key("encrypt-oaep-bytes"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Message"),
-                        controller: encryptOAEPController,
-                      ),
-                      RaisedButton(
-                        child: Text("encryptOAEP"),
-                        onPressed: () async {
-                          var encrypted = await RSA.encryptOAEP(
-                            encryptOAEPController.text,
-                            "",
-                            RSAHash.sha256,
-                            _pkcs12KeyPair.publicKey,
-                          );
-                          setState(() {
-                            _encryptedOAEP = encrypted;
-                          });
-                        },
-                      ),
-                      SelectableText(_encryptedOAEP)
-                    ],
-                  ),
-                ),
-              ),
+            EncryptAndDecryptPKCS(
+              title: "Encrypt and Decrypt PKCS1v15",
+              keyPair: _pkcs12KeyPair,
+              key: Key("encrypt-pkcs"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("decryptOAEP"),
-                        onPressed: () async {
-                          var decrypted = await RSA.decryptOAEP(
-                            _encryptedOAEP,
-                            "",
-                            RSAHash.sha256,
-                            _pkcs12KeyPair.privateKey,
-                          );
-                          setState(() {
-                            _decryptedOAEP = decrypted;
-                          });
-                        },
-                      ),
-                      SelectableText(_decryptedOAEP)
-                    ],
-                  ),
-                ),
-              ),
+            EncryptAndDecryptPKCSBytes(
+              title: "Encrypt and Decrypt PKCS1v15 Bytes",
+              keyPair: _pkcs12KeyPair,
+              key: Key("encrypt-pkcs-bytes"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Message"),
-                        controller: encryptKCS1v15Controller,
-                      ),
-                      RaisedButton(
-                        child: Text("encryptPKCS1v15"),
-                        onPressed: () async {
-                          var encrypted = await RSA.encryptPKCS1v15(
-                            encryptKCS1v15Controller.text,
-                            _pkcs12KeyPair.publicKey,
-                          );
-                          setState(() {
-                            _encryptedPKCS1v15 = encrypted;
-                          });
-                        },
-                      ),
-                      SelectableText(_encryptedPKCS1v15)
-                    ],
-                  ),
-                ),
-              ),
+            SignAndVerifyPSS(
+              title: "Sign and Verify PSS",
+              keyPair: _pkcs12KeyPair,
+              key: Key("sign-pss"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("decryptPKCS1v15"),
-                        onPressed: () async {
-                          var decrypted = await RSA.decryptPKCS1v15(
-                            _encryptedPKCS1v15,
-                            _pkcs12KeyPair.privateKey,
-                          );
-                          setState(() {
-                            _decryptedPKCS1v15 = decrypted;
-                          });
-                        },
-                      ),
-                      SelectableText(_decryptedPKCS1v15)
-                    ],
-                  ),
-                ),
-              ),
+            SignAndVerifyPSSBytes(
+              title: "Sign and Verify PSS Bytes",
+              keyPair: _pkcs12KeyPair,
+              key: Key("sign-pss-bytes"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Message"),
-                        controller: signPSSController,
-                      ),
-                      RaisedButton(
-                        child: Text("signPSS"),
-                        onPressed: () async {
-                          var signed = await RSA.signPSS(
-                            signPSSController.text,
-                            RSAHash.sha256,
-                            RSASaltLength.auto,
-                            _pkcs12KeyPair.privateKey,
-                          );
-                          setState(() {
-                            _signedPSS = signed;
-                          });
-                        },
-                      ),
-                      SelectableText(_signedPSS)
-                    ],
-                  ),
-                ),
-              ),
+            SignAndVerifyPKCS(
+              title: "Sign and Verify PKCS",
+              keyPair: _pkcs12KeyPair,
+              key: Key("sign-pkcs"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("verifyPSS"),
-                        onPressed: () async {
-                          var verified = await RSA.verifyPSS(
-                            _signedPSS,
-                            signPSSController.text,
-                            RSAHash.sha256,
-                            RSASaltLength.auto,
-                            _pkcs12KeyPair.publicKey,
-                          );
-                          setState(() {
-                            _verifiedPSS = verified;
-                          });
-                        },
-                      ),
-                      SelectableText(_verifiedPSS ? "VALID" : "INVALID")
-                    ],
-                  ),
-                ),
-              ),
+            SignAndVerifyPKCSBytes(
+              title: "Sign and Verify PKCS Bytes",
+              keyPair: _pkcs12KeyPair,
+              key: Key("sign-pkcs-bytes"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Message"),
-                        controller: signPKCS1v15Controller,
-                      ),
-                      RaisedButton(
-                        child: Text("signPKCS1v15"),
-                        onPressed: () async {
-                          var signed = await RSA.signPKCS1v15(
-                            signPKCS1v15Controller.text,
-                            RSAHash.sha256,
-                            _pkcs12KeyPair.privateKey,
-                          );
-                          setState(() {
-                            _signedPKCS1v15 = signed;
-                          });
-                        },
-                      ),
-                      SelectableText(_signedPKCS1v15)
-                    ],
-                  ),
-                ),
-              ),
+            Base64(
+              title: "Base64",
+              keyPair: _pkcs12KeyPair,
+              key: Key("base64"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("verifyPKCS1v15"),
-                        onPressed: () async {
-                          var verified = await RSA.verifyPKCS1v15(
-                            _signedPKCS1v15,
-                            signPKCS1v15Controller.text,
-                            RSAHash.sha256,
-                            _pkcs12KeyPair.publicKey,
-                          );
-                          setState(() {
-                            _verifiedPKCS1v15 = verified;
-                          });
-                        },
-                      ),
-                      SelectableText(_verifiedPKCS1v15 ? "VALID" : "INVALID")
-                    ],
-                  ),
-                ),
-              ),
+            Hash(
+              title: "Hash",
+              keyPair: _pkcs12KeyPair,
+              key: Key("hash"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Message"),
-                        controller: base64Controller,
-                      ),
-                      RaisedButton(
-                        child: Text("base64"),
-                        onPressed: () async {
-                          var base64 = await RSA.base64(
-                            base64Controller.text,
-                          );
-                          setState(() {
-                            _base64 = base64;
-                          });
-                        },
-                      ),
-                      SelectableText(_base64)
-                    ],
-                  ),
-                ),
-              ),
+            Generate(
+              title: "Generate",
+              keyPair: _pkcs12KeyPair,
+              key: Key("generate"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Message"),
-                        controller: hashController,
-                      ),
-                      RaisedButton(
-                        child: Text("hash"),
-                        onPressed: () async {
-                          var hash = await RSA.hash(
-                              hashController.text, RSAHash.sha512);
-                          setState(() {
-                            _hash = hash;
-                          });
-                        },
-                      ),
-                      SelectableText(_hash)
-                    ],
-                  ),
-                ),
-              ),
+            ConvertPrivate(
+              title: "Convert PrivateKey",
+              keyPair: _pkcs12KeyPair,
+              key: Key("convert-private"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("Generate"),
-                        onPressed: () async {
-                          var keyPair = await RSA.generate(2048);
-                          setState(() {
-                            _keyPair = keyPair;
-                          });
-                        },
-                      ),
-                      SelectableText(_keyPair.publicKey),
-                      SelectableText(_keyPair.privateKey)
-                    ],
-                  ),
-                ),
-              ),
+            ConvertPublic(
+              title: "Convert PublicKey",
+              keyPair: _pkcs12KeyPair,
+              key: Key("convert-public"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("convertPrivateKeyToJWK"),
-                        onPressed: () async {
-                          var convertedPrivateToJWK =
-                              await RSA.convertPrivateKeyToJWK(
-                            _pkcs12KeyPair.privateKey,
-                          );
-                          setState(() {
-                            _convertedPrivateToJWK = convertedPrivateToJWK;
-                          });
-                        },
-                      ),
-                      SelectableText(jsonEncode(_convertedPrivateToJWK))
-                    ],
-                  ),
-                ),
-              ),
+            ConvertJWT(
+              title: "Convert JWT",
+              keyPair: _pkcs12KeyPair,
+              key: Key("convert-jwt"),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("convertJWKToPrivateKey"),
-                        onPressed: () async {
-                          var convertedJWKToPrivate =
-                              await RSA.convertJWKToPrivateKey(
-                                  _convertedPrivateToJWK, "");
-                          setState(() {
-                            _convertedJWKToPrivate = convertedJWKToPrivate;
-                          });
-                        },
-                      ),
-                      SelectableText(_convertedJWKToPrivate)
-                    ],
-                  ),
-                ),
-              ),
+            ConvertKeyPair(
+              title: "Convert KeyPair",
+              keyPair: _pkcs12KeyPair,
+              key: Key("convert-keypair"),
             ),
           ],
         ),
