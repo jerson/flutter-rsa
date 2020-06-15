@@ -317,8 +317,8 @@ class RsaPlugin {
     return completer.future;
   }
 
-  Future<String> convertPrivateKeyToJWK(String privateKey) async {
-    var completer = new Completer<String>();
+  Future<dynamic> convertPrivateKeyToJWK(String privateKey) async {
+    var completer = new Completer<dynamic>();
     RSAConvertPrivateKeyToJWK(privateKey,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
@@ -369,8 +369,8 @@ class RsaPlugin {
     return completer.future;
   }
 
-  Future<String> convertPublicKeyToJWK(String publicKey) async {
-    var completer = new Completer<String>();
+  Future<dynamic> convertPublicKeyToJWK(String publicKey) async {
+    var completer = new Completer<dynamic>();
     RSAConvertPublicKeyToJWK(publicKey,
         allowInterop((String error, String result) {
       if (error != null && error != "") {
