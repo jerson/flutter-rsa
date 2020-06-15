@@ -1,3 +1,7 @@
+## 1.1.3
+
+- Added integration test and fixed some broken methods
+
 ## 1.1.2
 
 - Fixed macos bytes methods
