@@ -22,6 +22,7 @@ class InputWidget extends StatefulWidget {
 class _InputWidgetState extends State<InputWidget> {
   final _controller = TextEditingController();
   FocusNode _focusNode;
+  bool _loading = true;
 
   @override
   void initState() {
@@ -52,13 +53,16 @@ class _InputWidgetState extends State<InputWidget> {
           ),
           RaisedButton(
             child: Text(widget.title),
-            onPressed: () {
+            onPressed: () async {
               _focusNode.unfocus();
-              widget.onPressed(_controller);
+              await widget.onPressed(_controller);
+              setState(() {
+                _loading = false;
+              });
             },
             key: Key("button"),
           ),
-          (widget.result == null || widget.result == "")
+          (_loading)
               ? Text(
             widget.result,
             key: Key("loading"),
