@@ -7,6 +7,7 @@ void main() {
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      await driver.waitFor(find.byValueKey("list"));
     });
 
     tearDownAll(() async {
