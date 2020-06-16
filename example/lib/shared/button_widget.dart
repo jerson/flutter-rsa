@@ -26,10 +26,15 @@ class ButtonWidget extends StatelessWidget {
             onPressed: onPressed,
             key: Key("button"),
           ),
-          Text(
-            result,
-            key: Key("result"),
-          )
+          (result == null || result == "")
+              ? Text(
+                  result,
+                  key: Key("loading"),
+                )
+              : Text(
+                  result,
+                  key: Key("result"),
+                )
         ],
       ),
     );

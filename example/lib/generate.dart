@@ -36,7 +36,7 @@ class _GenerateState extends State<Generate> {
             TitleWidget(widget.title),
             ButtonWidget(
               title: "Generate",
-              key: Key("generate"),
+              key: Key("action"),
               result: _keyPair.privateKey + _keyPair.publicKey,
               onPressed: () async {
                 var keyPair = await RSA.generate(2048);

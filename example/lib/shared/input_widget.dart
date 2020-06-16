@@ -52,10 +52,15 @@ class _InputWidgetState extends State<InputWidget> {
             },
             key: Key("button"),
           ),
-          Text(
-            widget.result,
-            key: Key("result"),
-          )
+          (widget.result == null || widget.result == "")
+              ? Text(
+                  widget.result,
+                  key: Key("loading"),
+                )
+              : Text(
+                  widget.result,
+                  key: Key("result"),
+                )
         ],
       ),
     );

@@ -15,7 +15,11 @@ void main() {
       }
     });
 
-    var input = "some day";
+    var input =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci ex, pellentesque quis lobortis in";
+
+    var dyScroll = -300.0;
+    final list = find.byValueKey("list");
 
     group('Encrypt and Decrypt OAEP', () {
       final parent = find.byValueKey("encrypt-oaep");
@@ -25,8 +29,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("encrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -36,30 +39,29 @@ void main() {
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
 
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Decrypt', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("decrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, input);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Encrypt and Decrypt OAEP Bytes', () {
@@ -70,8 +72,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("encrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -80,30 +81,29 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Decrypt', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("decrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, input);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Encrypt and Decrypt PKCS1v15', () {
@@ -114,8 +114,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("encrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -125,30 +124,29 @@ void main() {
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
 
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Decrypt', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("decrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, input);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Encrypt and Decrypt PKCS1v15 Bytes', () {
@@ -159,8 +157,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("encrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -169,30 +166,29 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Decrypt', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("decrypt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, input);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Sign And Verify PSS', () {
@@ -203,8 +199,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("sign"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -213,30 +208,29 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Verify', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("verify"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, "VALID");
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Sign And Verify PSS Bytes', () {
@@ -247,8 +241,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("sign"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -257,30 +250,29 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Verify', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("verify"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, "VALID");
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Sign And Verify PKCS', () {
@@ -291,8 +283,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("sign"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -301,30 +292,29 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Verify', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("verify"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, "VALID");
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Sign And Verify PKCS Bytes', () {
@@ -335,8 +325,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("sign"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -345,30 +334,29 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('Verify', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("verify"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result, "VALID");
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Base64', () {
@@ -379,8 +367,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("encode"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -390,12 +377,12 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Hash', () {
@@ -406,8 +393,7 @@ void main() {
           of: parent,
           matching: find.byValueKey("encode"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("message")),
@@ -417,12 +403,12 @@ void main() {
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Generate', () {
@@ -431,21 +417,19 @@ void main() {
       test('Default', () async {
         final container = find.descendant(
           of: parent,
-          matching: find.byValueKey("generate"),
+          matching: find.byValueKey("action"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        // maybe use a better delay or wait for condition
-        await Future.delayed(Duration(seconds: 6));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(minutes: 5));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      }, retry: 3, timeout: Timeout(Duration(minutes: 5)));
+      }, timeout: Timeout(Duration(minutes: 5)));
     });
 
     group('Convert PrivateKey', () {
@@ -456,55 +440,51 @@ void main() {
           of: parent,
           matching: find.byValueKey("jwt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('PKCS1', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("pkcs1"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
-
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('PKCS8', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("pkcs8"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Convert PublicKey', () {
@@ -515,54 +495,51 @@ void main() {
           of: parent,
           matching: find.byValueKey("jwt"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('PKCS1', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("pkcs1"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('PKIX', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("pkix"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Convert JWT', () {
@@ -573,37 +550,35 @@ void main() {
           of: parent,
           matching: find.byValueKey("private"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
 
       test('PublicKey', () async {
         final container = find.descendant(
           of: parent,
           matching: find.byValueKey("public"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
 
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
 
     group('Convert KeyPair', () {
@@ -614,18 +589,17 @@ void main() {
           of: parent,
           matching: find.byValueKey("pkcs12"),
         );
-        await driver.waitFor(container);
-        await driver.scrollIntoView(container);
+        await driver.scrollUntilVisible(list, container, dyScroll: dyScroll);
 
         await driver.tap(
           find.descendant(of: container, matching: find.byValueKey("button")),
         );
-        await Future.delayed(Duration(seconds: 1));
-        var result = await driver.getText(
-          find.descendant(of: container, matching: find.byValueKey("result")),
-        );
+        var resultSelector =
+            find.descendant(of: container, matching: find.byValueKey("result"));
+        await driver.waitFor(resultSelector, timeout: Duration(seconds: 60));
+        var result = await driver.getText(resultSelector);
         expect(result != "", true);
-      });
+      }, timeout: Timeout(Duration(seconds: 60)));
     });
   });
 }

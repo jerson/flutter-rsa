@@ -157,6 +157,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('RSA example app'),
         ),
         body: ListView(
+          key: Key("list"),
           children: <Widget>[
             EncryptAndDecryptOAEP(
               title: "Encrypt and Decrypt OAEP",
