@@ -53,7 +53,7 @@ public class RsaPlugin implements FlutterPlugin, MethodCallHandler {
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         initialize();
-        channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "rsa");
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "rsa");
         channel.setMethodCallHandler(this);
     }
 

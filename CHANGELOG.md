@@ -1,3 +1,7 @@
+## 1.1.4
+
+- Updated onAttachedToEngine now using getBinaryMessenger
+
 ## 1.1.3
 
 - Added integration test and fixed some broken methods
