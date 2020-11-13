@@ -1,3 +1,10 @@
+## 1.2.0-rc1
+
+- Replaced GoMobile with binding for mostly platforms, now should be more easier add new methods and support platforms
+- Platforms supported right now: macOS, iOS, Android, Hover, Windows and Linux
+- Platforms partial supported: Web (need web workers)
+- Added `upgrade_lib_bridge.sh` in order to update from go repo
+
 ## 1.1.4
 
 - Updated onAttachedToEngine now using getBinaryMessenger

@@ -1,6 +1,6 @@
 # Fast RSA
 
-Library for use RSA with support for android, ios, macos, linux, web and hover
+Library for use RSA with support for android, ios, macos, windows, linux, web and hover
 
 ## Contents
 
@@ -10,9 +10,10 @@ Library for use RSA with support for android, ios, macos, linux, web and hover
     - [ProGuard](#proguard)
   - [iOS](#ios)
   - [Web](#web)
-  - [Linux](#linux)
   - [MacOS](#macos)
   - [Hover](#hover)
+  - [Linux](#linux)
+  - [Windows](#windows)
 - [Example](#example)
 - [Native Code](#native-code)
 
@@ -23,10 +24,10 @@ Library for use RSA with support for android, ios, macos, linux, web and hover
 ```dart
 import 'package:fast_rsa/rsa.dart';
 
-var result = await RSA.encryptOAEP(message, label, RSAHash.sha512, publicKey)
+var result = await RSA.encryptOAEP(message, label, Hash.HASH_SHA256, publicKey)
 var result = await RSA.encryptPKCS1v15(message, publicKey)
 
-var result = await RSA.encryptOAEPBytes(messageBytes, label, RSAHash.sha512, publicKey)
+var result = await RSA.encryptOAEPBytes(messageBytes, label, Hash.HASH_SHA256, publicKey)
 var result = await RSA.encryptPKCS1v15Bytes(messageBytes, publicKey)
 
 ```
@@ -36,10 +37,10 @@ var result = await RSA.encryptPKCS1v15Bytes(messageBytes, publicKey)
 ```dart
 import 'package:fast_rsa/rsa.dart';
 
-var result = await RSA.decryptOAEP(message, label, RSAHash.sha512, privateKey)
+var result = await RSA.decryptOAEP(message, label, Hash.HASH_SHA256, privateKey)
 var result = await RSA.decryptPKCS1v15(message, privateKey)
 
-var result = await RSA.decryptOAEPBytes(messageBytes, label, RSAHash.sha512, privateKey)
+var result = await RSA.decryptOAEPBytes(messageBytes, label, Hash.HASH_SHA256, privateKey)
 var result = await RSA.decryptPKCS1v15Bytes(messageBytes, privateKey)
 
 ```
@@ -49,11 +50,11 @@ var result = await RSA.decryptPKCS1v15Bytes(messageBytes, privateKey)
 ```dart
 import 'package:fast_rsa/rsa.dart';
 
-var result = await RSA.signPSS(message, RSAHash.sha512, RSASaltLength.auto, privateKey)
-var result = await RSA.signPKCS1v15(message, RSAHash.sha512, privateKey)
+var result = await RSA.signPSS(message, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, privateKey)
+var result = await RSA.signPKCS1v15(message, Hash.HASH_SHA256, privateKey)
 
-var result = await RSA.signPSSBytes(messageBytes, RSAHash.sha512, RSASaltLength.auto, privateKey)
-var result = await RSA.signPKCS1v15Bytes(messageBytes, RSAHash.sha512, privateKey)
+var result = await RSA.signPSSBytes(messageBytes, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, privateKey)
+var result = await RSA.signPKCS1v15Bytes(messageBytes, Hash.HASH_SHA256, privateKey)
 
 ```
 
@@ -62,11 +63,11 @@ var result = await RSA.signPKCS1v15Bytes(messageBytes, RSAHash.sha512, privateKe
 ```dart
 import 'package:fast_rsa/rsa.dart';
 
-var result = await RSA.verifyPSS(signature, message, RSAHash.sha512, RSASaltLength.auto, publicKey)
-var result = await RSA.verifyPKCS1v15(signature, message, RSAHash.sha512, publicKey)
+var result = await RSA.verifyPSS(signature, message, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, publicKey)
+var result = await RSA.verifyPKCS1v15(signature, message, Hash.HASH_SHA256, publicKey)
 
-var result = await RSA.verifyPSSBytes(signatureBytes, messageBytes, RSAHash.sha512, RSASaltLength.auto, publicKey)
-var result = await RSA.verifyPKCS1v15Bytes(signatureBytes, messageBytes, RSAHash.sha512, publicKey)
+var result = await RSA.verifyPSSBytes(signatureBytes, messageBytes, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, publicKey)
+var result = await RSA.verifyPKCS1v15Bytes(signatureBytes, messageBytes, Hash.HASH_SHA256, publicKey)
 
 ```
 
@@ -100,7 +101,7 @@ var result = await RSA.convertPublicKeyToPKIX(publicKey)
 var result = await RSA.convertPublicKeyToPKCS1(publicKey)
 var result = await RSA.convertPublicKeyToJWK(publicKey)
 
-var result = await RSA.encryptPrivateKey(privateKey, password, RSAPEMCipher.aes256)
+var result = await RSA.encryptPrivateKey(privateKey, password, PEMCipher.PEMCIPHER_AES256)
 var result = await RSA.decryptPrivateKey(privateKeyEncrypted, password)
 ```
 
@@ -109,7 +110,7 @@ var result = await RSA.decryptPrivateKey(privateKeyEncrypted, password)
 ```dart
 import 'package:fast_rsa/rsa.dart';
 
-var result = await RSA.hash(message, RSAHash.sha512)
+var result = await RSA.hash(message, Hash.HASH_SHA256)
 var result = await RSA.base64(message)
 
 ```
@@ -129,7 +130,7 @@ Add this lines to `android/app/proguard-rules.pro` for proguard support
 
 ### iOS
 
-no additional setup required
+No additional setup required.
 
 ### Web
 
@@ -154,27 +155,38 @@ and in you `web/index.html`
 
 ref: https://github.com/jerson/flutter-rsa/blob/master/example/web/index.html
 
-### Linux
-
-add to you `linux/app_configuration.mk`
-
-```make
-EXTRA_LDFLAGS=-lrsa
-```
-
-ref: https://github.com/jerson/flutter-rsa/blob/master/example/linux/app_configuration.mk
-
 ### MacOS
 
 no additional setup required
 
 ### Hover
 
-just update your plugins
+Update your plugins.
 
 ```bash
 hover plugins get
 ```
+
+In you `main_desktop.dart` by now you need to add `RSA.bindingEnabled = false` in order to use channels instead of shared objects
+
+```dart
+import 'main.dart' as original_main;
+import 'package:fast_rsa/rsa.dart';
+
+void main() {
+  RSA.bindingEnabled = false;
+  original_main.main();
+}
+
+```
+
+### Linux
+
+No additional setup required.
+
+### Windows
+
+No additional setup required.
 
 ## Example
 
