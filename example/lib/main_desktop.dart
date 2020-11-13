@@ -1,10 +1,7 @@
-import 'package:flutter/foundation.dart'
-    show debugDefaultTargetPlatformOverride;
-import 'package:flutter/material.dart';
-
 import 'main.dart' as original_main;
+import 'package:fast_rsa/rsa.dart';
 
 void main() {
-  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  RSA.bindingEnabled = false;
   original_main.main();
 }
