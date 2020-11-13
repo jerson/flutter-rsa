@@ -11,13 +11,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:js/js.dart';
 
-class RsaPlugin {
+class FastRsaPlugin {
   bool _ready = false;
 
   static void registerWith(Registrar registrar) {
     final MethodChannel channel = MethodChannel(
         'fast_rsa', const StandardMethodCodec(), registrar.messenger);
-    final RsaPlugin instance = RsaPlugin();
+    final FastRsaPlugin instance = FastRsaPlugin();
     channel.setMethodCallHandler(instance.handleMethodCall);
   }
 
