@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/rsa.dart';
+import 'package:fast_rsa/model/bridge.pb.dart';
 import 'package:rsa_example/main.dart';
 import 'package:rsa_example/shared/button_widget.dart';
 import 'package:rsa_example/shared/input_widget.dart';
@@ -44,7 +45,7 @@ class _EncryptAndDecryptOAEPState extends State<EncryptAndDecryptOAEP> {
                 var encrypted = await RSA.encryptOAEP(
                   controller.text,
                   "",
-                  RSAHash.sha256,
+                  Hash.HASH_SHA256,
                   widget.keyPair.publicKey,
                 );
                 setState(() {
@@ -60,7 +61,7 @@ class _EncryptAndDecryptOAEPState extends State<EncryptAndDecryptOAEP> {
                 var decrypted = await RSA.decryptOAEP(
                   _encrypted,
                   "",
-                  RSAHash.sha256,
+                  Hash.HASH_SHA256,
                   widget.keyPair.privateKey,
                 );
                 setState(() {

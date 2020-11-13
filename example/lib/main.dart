@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_rsa/rsa.dart';
+import 'package:fast_rsa/model/bridge.pb.dart' as pb;
 import 'package:rsa_example/base64.dart';
 import 'package:rsa_example/convert_jwt.dart';
 import 'package:rsa_example/convert_keypair.dart';
@@ -125,11 +126,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  PKCS12KeyPair _pkcs12KeyPair = PKCS12KeyPair(
-    privateKey: "",
-    publicKey: "",
-    certificate: "",
-  );
+  pb.PKCS12KeyPair _pkcs12KeyPair = pb.PKCS12KeyPair()
+    ..privateKey = ""
+    ..publicKey = ""
+    ..certificate = "";
 
   @override
   void initState() {

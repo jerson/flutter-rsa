@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/rsa.dart';
+import 'package:fast_rsa/model/bridge.pb.dart' as pb;
 import 'package:rsa_example/main.dart';
 import 'package:rsa_example/shared/button_widget.dart';
 import 'package:rsa_example/shared/input_widget.dart';
@@ -13,11 +14,11 @@ class Hash extends StatefulWidget {
   const Hash({
     Key key,
     @required this.title,
-    @required PKCS12KeyPair keyPair,
+    @required pb.PKCS12KeyPair keyPair,
   })  : keyPair = keyPair,
         super(key: key);
 
-  final PKCS12KeyPair keyPair;
+  final pb.PKCS12KeyPair keyPair;
   final String title;
 
   @override
@@ -40,7 +41,7 @@ class _HashState extends State<Hash> {
               key: Key("encode"),
               result: _encrypted,
               onPressed: (controller) async {
-                var encrypted = await RSA.hash(controller.text, RSAHash.sha512);
+                var encrypted = await RSA.hash(controller.text, pb.Hash.HASH_SHA512);
                 setState(() {
                   _encrypted = encrypted;
                 });

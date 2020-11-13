@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/rsa.dart';
+import 'package:fast_rsa/model/bridge.pb.dart';
 import 'package:rsa_example/shared/button_widget.dart';
 import 'package:rsa_example/shared/input_widget.dart';
 import 'package:rsa_example/shared/title_widget.dart';
@@ -24,7 +25,9 @@ class Generate extends StatefulWidget {
 }
 
 class _GenerateState extends State<Generate> {
-  KeyPair _keyPair = KeyPair(privateKey: "", publicKey: "");
+  KeyPair _keyPair = KeyPair()
+    ..privateKey = ""
+    ..publicKey = "";
 
   @override
   Widget build(BuildContext context) {

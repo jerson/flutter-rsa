@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/rsa.dart';
+import 'package:fast_rsa/model/bridge.pb.dart';
 import 'package:rsa_example/main.dart';
 import 'package:rsa_example/shared/button_widget.dart';
 import 'package:rsa_example/shared/input_widget.dart';
@@ -44,8 +45,8 @@ class _SignAndVerifyPSSState extends State<SignAndVerifyPSS> {
               onPressed: (controller) async {
                 var result = await RSA.signPSS(
                   controller.text,
-                  RSAHash.sha256,
-                  RSASaltLength.auto,
+                  Hash.HASH_SHA256,
+                  SaltLength.SALTLENGTH_AUTO,
                   widget.keyPair.privateKey,
                 );
                 setState(() {
@@ -62,8 +63,8 @@ class _SignAndVerifyPSSState extends State<SignAndVerifyPSS> {
                 var result = await RSA.verifyPSS(
                   _signed,
                   _text,
-                  RSAHash.sha256,
-                  RSASaltLength.auto,
+                  Hash.HASH_SHA256,
+                  SaltLength.SALTLENGTH_AUTO,
                   widget.keyPair.publicKey,
                 );
                 setState(() {

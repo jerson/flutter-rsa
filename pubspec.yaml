@@ -32,16 +32,18 @@ flutter:
   plugin:
     platforms:
       android:
-        package: dev.jerson.rsa
-        pluginClass: RsaPlugin
+        package: dev.jerson.fast_rsa
+        pluginClass: FastRsaPlugin
       ios:
-        pluginClass: RsaPlugin
+        pluginClass: FastRsaPlugin
       web:
-        pluginClass: RsaPlugin
+        pluginClass: FastRsaPlugin
         fileName: web/rsa_web.dart
       macos:
-        pluginClass: RsaPlugin
+        pluginClass: FastRsaPlugin
       linux:
+        pluginClass: FastRsaPlugin
+      windows:
         pluginClass: FastRsaPlugin
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

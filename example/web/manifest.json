@@ -1,11 +1,11 @@
 {
-    "name": "rsa_example",
-    "short_name": "rsa_example",
+    "name": "fast_rsa_example",
+    "short_name": "fast_rsa_example",
     "start_url": ".",
-    "display": "minimal-ui",
+    "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Demonstrates how to use the rsa plugin.",
+    "description": "Demonstrates how to use the fast_rsa plugin.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

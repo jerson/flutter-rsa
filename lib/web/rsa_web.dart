@@ -16,7 +16,7 @@ class RsaPlugin {
 
   static void registerWith(Registrar registrar) {
     final MethodChannel channel = MethodChannel(
-        'rsa', const StandardMethodCodec(), registrar.messenger);
+        'fast_rsa', const StandardMethodCodec(), registrar.messenger);
     final RsaPlugin instance = RsaPlugin();
     channel.setMethodCallHandler(instance.handleMethodCall);
   }

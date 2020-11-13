@@ -8,5 +8,5 @@ import Foundation
 import fast_rsa
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  RsaPlugin.register(with: registry.registrar(forPlugin: "RsaPlugin"))
+  FastRsaPlugin.register(with: registry.registrar(forPlugin: "FastRsaPlugin"))
 }

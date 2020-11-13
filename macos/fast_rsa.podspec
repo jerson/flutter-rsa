@@ -1,10 +1,10 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint rsa.podspec' to validate before publishing.
+# Run `pod lib lint fast_rsa.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
   s.name             = 'fast_rsa'
-  s.version          = '0.2.0'
+  s.version          = '0.6.0'
   s.summary          = 'library for use RSA.'
   s.description      = <<-DESC
   library for use RSA.
@@ -15,8 +15,9 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files     = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
-  s.vendored_frameworks = 'Rsa.framework'
   s.platform = :osx, '10.11'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
+  s.vendored_libraries  = '*.a'
+  s.xcconfig = { 'OTHER_LDFLAGS' => '-force_load "${PODS_ROOT}/../Flutter/ephemeral/.symlinks/plugins/fast_rsa/macos/librsa_bridge.a"'}
 end
