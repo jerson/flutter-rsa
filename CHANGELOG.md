@@ -1,3 +1,7 @@
+## 1.2.0
+
+- just creating this version to replace old version
+
 ## 1.2.0-rc1
 
 - Replaced GoMobile with binding for mostly platforms, now should be more easier add new methods and support platforms
