@@ -35,7 +35,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - packages/fast_rsa/web/assets/
+    - packages/fast_rsa/web/assets/worker.js
+    - packages/fast_rsa/web/assets/wasm_exec.js
+    - packages/fast_rsa/web/assets/rsa.wasm
 
   # See https://github.com/flutter/flutter/wiki/Desktop-shells#fonts
   fonts:

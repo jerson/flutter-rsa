@@ -138,7 +138,9 @@ add to you `pubspec.yaml`
 
 ```yaml
 assets:
-  - packages/fast_rsa/web/assets/
+  - packages/fast_rsa/web/assets/worker.js
+  - packages/fast_rsa/web/assets/wasm_exec.js
+  - packages/fast_rsa/web/assets/rsa.wasm
 ```
 
 ref: https://github.com/jerson/flutter-rsa/blob/master/example/pubspec.yaml
