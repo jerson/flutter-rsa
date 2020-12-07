@@ -1,3 +1,6 @@
+## 1.3.1
+
+- Fixed web messenger
 ## 1.3.0
 
 - Added wasm + web worker support

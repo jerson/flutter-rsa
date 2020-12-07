@@ -12,8 +12,8 @@ class FastRsaPlugin {
   Map<String, Completer<Uint8List>> completers = {};
 
   static void registerWith(Registrar registrar) {
-    final MethodChannel channel =
-        MethodChannel('fast_rsa', const StandardMethodCodec(), registrar);
+    final MethodChannel channel = MethodChannel(
+        'fast_rsa', const StandardMethodCodec(), registrar.messenger);
     final FastRsaPlugin instance = FastRsaPlugin();
     instance.listen();
     channel.setMethodCallHandler(instance.handleMethodCall);
