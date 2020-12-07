@@ -15,6 +15,7 @@ class FastRsaPlugin {
     final MethodChannel channel =
         MethodChannel('fast_rsa', const StandardMethodCodec(), registrar);
     final FastRsaPlugin instance = FastRsaPlugin();
+    instance.listen();
     channel.setMethodCallHandler(instance.handleMethodCall);
   }
 
