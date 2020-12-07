@@ -138,10 +138,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   void convertKey() async {
-    var data = await RSA.convertPKCS12ToKeyPair(pkcs12, password);
-    setState(() {
-      _pkcs12KeyPair = data;
-    });
+    try {
+      var data = await RSA.convertPKCS12ToKeyPair(pkcs12, password);
+      setState(() {
+        _pkcs12KeyPair = data;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override

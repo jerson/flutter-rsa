@@ -138,22 +138,10 @@ add to you `pubspec.yaml`
 
 ```yaml
 assets:
-  - packages/fast_rsa/web/assets/wasm_exec.js
-  - packages/fast_rsa/web/assets/rsa.wasm
+  - packages/fast_rsa/web/assets/
 ```
 
 ref: https://github.com/jerson/flutter-rsa/blob/master/example/pubspec.yaml
-
-and in you `web/index.html`
-
-```html
-<script
-  src="assets/packages/fast_rsa/web/assets/wasm_exec.js"
-  type="application/javascript"
-></script>
-```
-
-ref: https://github.com/jerson/flutter-rsa/blob/master/example/web/index.html
 
 ### MacOS
 
