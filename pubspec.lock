@@ -80,7 +80,7 @@ packages:
     source: sdk
     version: "0.0.0"
   js:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: js
       url: "https://pub.dartlang.org"
