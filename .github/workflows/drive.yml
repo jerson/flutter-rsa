@@ -1,0 +1,34 @@
+name: Flutter drive
+
+on:
+  pull_request:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  drive:
+    strategy:
+      matrix:
+        device:
+          - "iPhone 12 mini (14.2)"
+      fail-fast: false
+    runs-on: macos-10.15
+    steps:
+      - name: "List all simulators"
+        run: "xcrun instruments -s"
+      - name: "Start Simulator"
+        run: |
+          UDID=$(
+            xcrun instruments -s |
+            awk \
+              -F ' *[][]' \
+              -v 'device=${{ matrix.device }}' \
+              '$1 == device { print $2 }'
+          )
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'dev'
+      - run: "cd example && flutter drive --target=test_driver/app.dart"
