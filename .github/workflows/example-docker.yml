@@ -2,8 +2,6 @@ name: Build Example Docker images
 
 on:
   push:
-    tags:
-      - 'v*'
 
 jobs:
   web:
