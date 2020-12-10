@@ -10,3 +10,6 @@ upgrade-libs:
 
 upgrade-protobuf:
 	./scripts/upgrade_bridge_protobuf.sh
+
+example-web:
+	docker build -t flutter-rsa-web -f example/Dockerfile .
