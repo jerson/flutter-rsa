@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         device:
-          - "iPhone 12 mini (14.2)"
+          - "iPhone 12 mini (14.3)"
       fail-fast: false
     runs-on: macos-10.15
     steps:
