@@ -11,21 +11,15 @@ jobs:
     strategy:
       matrix:
         device:
-          - "iPhone 12 mini (14.3)"
+          - "iPhone 12 mini"
       fail-fast: false
     runs-on: macos-10.15
     steps:
       - name: "List all simulators"
-        run: "xcrun instruments -s"
+        run: "xcrun xctrace list devices"
       - name: "Start Simulator"
         run: |
-          UDID=$(
-            xcrun instruments -s |
-            awk \
-              -F ' *[][]' \
-              -v 'device=${{ matrix.device }}' \
-              '$1 == device { print $2 }'
-          )
+          UDID=$(xcrun instruments -s | awk -F ' *[][]' '/${{ matrix.device }}/ { print $2; exit }')
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
