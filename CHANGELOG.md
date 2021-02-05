@@ -1,3 +1,7 @@
+## 1.3.3
+
+- Fixed panic when invalid keys are used https://github.com/jerson/flutter-rsa/issues/13
+
 ## 1.3.2
 
 - Tests CI and github actions for drive

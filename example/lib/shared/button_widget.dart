@@ -40,13 +40,13 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           ),
           (_loading)
               ? Text(
-            widget.result,
-            key: Key("loading"),
-          )
+                  widget.result,
+                  key: Key("loading"),
+                )
               : Text(
-            widget.result,
-            key: Key("result"),
-          )
+                  widget.result,
+                  key: Key("result"),
+                )
         ],
       ),
     );

@@ -41,7 +41,8 @@ class _HashState extends State<Hash> {
               key: Key("encode"),
               result: _encrypted,
               onPressed: (controller) async {
-                var encrypted = await RSA.hash(controller.text, pb.Hash.HASH_SHA512);
+                var encrypted =
+                    await RSA.hash(controller.text, pb.Hash.HASH_SHA512);
                 setState(() {
                   _encrypted = encrypted;
                 });

@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: bridge.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 const SaltLength$json = const {
@@ -83,7 +83,14 @@ const DecryptOAEPRequest$json = const {
   '2': const [
     const {'1': 'ciphertext', '3': 1, '4': 1, '5': 9, '10': 'ciphertext'},
     const {'1': 'label', '3': 3, '4': 1, '5': 9, '10': 'label'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'privateKey', '3': 7, '4': 1, '5': 9, '10': 'privateKey'},
   ],
 };
@@ -93,7 +100,14 @@ const DecryptOAEPBytesRequest$json = const {
   '2': const [
     const {'1': 'ciphertext', '3': 1, '4': 1, '5': 12, '10': 'ciphertext'},
     const {'1': 'label', '3': 3, '4': 1, '5': 9, '10': 'label'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'privateKey', '3': 7, '4': 1, '5': 9, '10': 'privateKey'},
   ],
 };
@@ -117,7 +131,13 @@ const DecryptPKCS1v15BytesRequest$json = const {
 const DecryptPrivateKeyRequest$json = const {
   '1': 'DecryptPrivateKeyRequest',
   '2': const [
-    const {'1': 'privateKeyEncrypted', '3': 1, '4': 1, '5': 9, '10': 'privateKeyEncrypted'},
+    const {
+      '1': 'privateKeyEncrypted',
+      '3': 1,
+      '4': 1,
+      '5': 9,
+      '10': 'privateKeyEncrypted'
+    },
     const {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
   ],
 };
@@ -127,7 +147,14 @@ const EncryptOAEPRequest$json = const {
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
     const {'1': 'label', '3': 3, '4': 1, '5': 9, '10': 'label'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'publicKey', '3': 7, '4': 1, '5': 9, '10': 'publicKey'},
   ],
 };
@@ -137,7 +164,14 @@ const EncryptOAEPBytesRequest$json = const {
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 12, '10': 'message'},
     const {'1': 'label', '3': 3, '4': 1, '5': 9, '10': 'label'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'publicKey', '3': 7, '4': 1, '5': 9, '10': 'publicKey'},
   ],
 };
@@ -163,7 +197,14 @@ const EncryptPrivateKeyRequest$json = const {
   '2': const [
     const {'1': 'privateKey', '3': 1, '4': 1, '5': 9, '10': 'privateKey'},
     const {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
-    const {'1': 'cipher', '3': 5, '4': 1, '5': 14, '6': '.model.PEMCipher', '10': 'cipher'},
+    const {
+      '1': 'cipher',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.PEMCipher',
+      '10': 'cipher'
+    },
   ],
 };
 
@@ -178,7 +219,14 @@ const HashRequest$json = const {
   '1': 'HashRequest',
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
-    const {'1': 'hash', '3': 3, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
   ],
 };
 
@@ -207,7 +255,14 @@ const SignPKCS1v15Request$json = const {
   '1': 'SignPKCS1v15Request',
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
-    const {'1': 'hash', '3': 3, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'privateKey', '3': 5, '4': 1, '5': 9, '10': 'privateKey'},
   ],
 };
@@ -216,7 +271,14 @@ const SignPKCS1v15BytesRequest$json = const {
   '1': 'SignPKCS1v15BytesRequest',
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 12, '10': 'message'},
-    const {'1': 'hash', '3': 3, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'privateKey', '3': 5, '4': 1, '5': 9, '10': 'privateKey'},
   ],
 };
@@ -225,8 +287,22 @@ const SignPSSRequest$json = const {
   '1': 'SignPSSRequest',
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
-    const {'1': 'hash', '3': 3, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
-    const {'1': 'saltLength', '3': 5, '4': 1, '5': 14, '6': '.model.SaltLength', '10': 'saltLength'},
+    const {
+      '1': 'hash',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
+    const {
+      '1': 'saltLength',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.SaltLength',
+      '10': 'saltLength'
+    },
     const {'1': 'privateKey', '3': 7, '4': 1, '5': 9, '10': 'privateKey'},
   ],
 };
@@ -235,8 +311,22 @@ const SignPSSBytesRequest$json = const {
   '1': 'SignPSSBytesRequest',
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 12, '10': 'message'},
-    const {'1': 'hash', '3': 3, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
-    const {'1': 'saltLength', '3': 5, '4': 1, '5': 14, '6': '.model.SaltLength', '10': 'saltLength'},
+    const {
+      '1': 'hash',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
+    const {
+      '1': 'saltLength',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.SaltLength',
+      '10': 'saltLength'
+    },
     const {'1': 'privateKey', '3': 7, '4': 1, '5': 9, '10': 'privateKey'},
   ],
 };
@@ -246,7 +336,14 @@ const VerifyPKCS1v15Request$json = const {
   '2': const [
     const {'1': 'signature', '3': 1, '4': 1, '5': 9, '10': 'signature'},
     const {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'publicKey', '3': 7, '4': 1, '5': 9, '10': 'publicKey'},
   ],
 };
@@ -256,7 +353,14 @@ const VerifyPKCS1v15BytesRequest$json = const {
   '2': const [
     const {'1': 'signature', '3': 1, '4': 1, '5': 12, '10': 'signature'},
     const {'1': 'message', '3': 3, '4': 1, '5': 12, '10': 'message'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
     const {'1': 'publicKey', '3': 7, '4': 1, '5': 9, '10': 'publicKey'},
   ],
 };
@@ -266,8 +370,22 @@ const VerifyPSSRequest$json = const {
   '2': const [
     const {'1': 'signature', '3': 1, '4': 1, '5': 9, '10': 'signature'},
     const {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
-    const {'1': 'saltLength', '3': 7, '4': 1, '5': 14, '6': '.model.SaltLength', '10': 'saltLength'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
+    const {
+      '1': 'saltLength',
+      '3': 7,
+      '4': 1,
+      '5': 14,
+      '6': '.model.SaltLength',
+      '10': 'saltLength'
+    },
     const {'1': 'publicKey', '3': 9, '4': 1, '5': 9, '10': 'publicKey'},
   ],
 };
@@ -277,8 +395,22 @@ const VerifyPSSBytesRequest$json = const {
   '2': const [
     const {'1': 'signature', '3': 1, '4': 1, '5': 12, '10': 'signature'},
     const {'1': 'message', '3': 3, '4': 1, '5': 12, '10': 'message'},
-    const {'1': 'hash', '3': 5, '4': 1, '5': 14, '6': '.model.Hash', '10': 'hash'},
-    const {'1': 'saltLength', '3': 7, '4': 1, '5': 14, '6': '.model.SaltLength', '10': 'saltLength'},
+    const {
+      '1': 'hash',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.model.Hash',
+      '10': 'hash'
+    },
+    const {
+      '1': 'saltLength',
+      '3': 7,
+      '4': 1,
+      '5': 14,
+      '6': '.model.SaltLength',
+      '10': 'saltLength'
+    },
     const {'1': 'publicKey', '3': 9, '4': 1, '5': 9, '10': 'publicKey'},
   ],
 };
@@ -310,7 +442,14 @@ const BoolResponse$json = const {
 const PKCS12KeyPairResponse$json = const {
   '1': 'PKCS12KeyPairResponse',
   '2': const [
-    const {'1': 'output', '3': 1, '4': 1, '5': 11, '6': '.model.PKCS12KeyPair', '10': 'output'},
+    const {
+      '1': 'output',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.model.PKCS12KeyPair',
+      '10': 'output'
+    },
     const {'1': 'error', '3': 3, '4': 1, '5': 9, '10': 'error'},
   ],
 };
@@ -327,7 +466,14 @@ const PKCS12KeyPair$json = const {
 const KeyPairResponse$json = const {
   '1': 'KeyPairResponse',
   '2': const [
-    const {'1': 'output', '3': 1, '4': 1, '5': 11, '6': '.model.KeyPair', '10': 'output'},
+    const {
+      '1': 'output',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.model.KeyPair',
+      '10': 'output'
+    },
     const {'1': 'error', '3': 3, '4': 1, '5': 9, '10': 'error'},
   ],
 };
@@ -343,7 +489,14 @@ const KeyPair$json = const {
 const PrivateKeyInfoResponse$json = const {
   '1': 'PrivateKeyInfoResponse',
   '2': const [
-    const {'1': 'output', '3': 1, '4': 1, '5': 11, '6': '.model.PrivateKeyInfo', '10': 'output'},
+    const {
+      '1': 'output',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.model.PrivateKeyInfo',
+      '10': 'output'
+    },
     const {'1': 'error', '3': 3, '4': 1, '5': 9, '10': 'error'},
   ],
 };
@@ -360,7 +513,14 @@ const PrivateKeyInfo$json = const {
 const PublicKeyInfoResponse$json = const {
   '1': 'PublicKeyInfoResponse',
   '2': const [
-    const {'1': 'output', '3': 1, '4': 1, '5': 11, '6': '.model.PublicKeyInfo', '10': 'output'},
+    const {
+      '1': 'output',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.model.PublicKeyInfo',
+      '10': 'output'
+    },
     const {'1': 'error', '3': 3, '4': 1, '5': 9, '10': 'error'},
   ],
 };
@@ -373,4 +533,3 @@ const PublicKeyInfo$json = const {
     const {'1': 'e', '3': 5, '4': 1, '5': 3, '10': 'e'},
   ],
 };
-

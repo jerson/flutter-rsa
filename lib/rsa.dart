@@ -355,15 +355,13 @@ class RSA {
   }
 
   static Future<String> base64(String message) async {
-    var request = Base64Request()
-      ..message = message;
+    var request = Base64Request()..message = message;
 
     return await _stringResponse("base64", request.writeToBuffer());
   }
 
   static Future<KeyPair> generate(int bits) async {
-    var request = GenerateRequest()
-      ..nBits = bits;
+    var request = GenerateRequest()..nBits = bits;
 
     return await _keyPairResponse("generate", request.writeToBuffer());
   }

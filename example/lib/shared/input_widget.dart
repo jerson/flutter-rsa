@@ -64,13 +64,13 @@ class _InputWidgetState extends State<InputWidget> {
           ),
           (_loading)
               ? Text(
-            widget.result,
-            key: Key("loading"),
-          )
+                  widget.result,
+                  key: Key("loading"),
+                )
               : Text(
-            widget.result,
-            key: Key("result"),
-          )
+                  widget.result,
+                  key: Key("result"),
+                )
         ],
       ),
     );
