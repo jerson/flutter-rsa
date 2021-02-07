@@ -20,7 +20,8 @@ dev_dependencies:
     sdk: flutter
   test: any
 
-  fast_rsa: 1.4.0-nullsafety.1
+  fast_rsa: 
+    path: ../
     
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

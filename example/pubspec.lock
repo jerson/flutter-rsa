@@ -116,10 +116,10 @@ packages:
   fast_rsa:
     dependency: "direct dev"
     description:
-      name: fast_rsa
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.0-nullsafety.1"
+      path: ".."
+      relative: true
+    source: path
+    version: "1.4.0-nullsafety.2"
   ffi:
     dependency: transitive
     description:
