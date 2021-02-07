@@ -8,6 +8,11 @@ import 'package:fast_rsa/bridge/binding_stub.dart'
     if (dart.library.js) 'package:fast_rsa/bridge/binding_stub.dart';
 import 'package:fast_rsa/model/bridge.pb.dart';
 
+class RSAException implements Exception {
+  String cause;
+  RSAException(this.cause);
+}
+
 class RSA {
   static const MethodChannel _channel = const MethodChannel('fast_rsa');
   static bool bindingEnabled = Binding().isSupported();

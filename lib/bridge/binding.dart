@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
+import 'package:fast_rsa/rsa.dart';
 import 'package:ffi/ffi.dart';
 import 'package:fast_rsa/bridge/ffi.dart';
 import 'package:fast_rsa/bridge/isolate.dart';
@@ -82,7 +83,7 @@ class Binding {
     if (error.address != ffi.nullptr.address) {
       var message = fromUtf8(error);
       freeHere(pointer);
-      throw message;
+      throw new RSAException(message);
     }
   }
 

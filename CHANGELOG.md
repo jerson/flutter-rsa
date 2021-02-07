@@ -1,3 +1,6 @@
+## 1.3.4
+
+- Added RSAException
 ## 1.3.3
 
 - Fixed panic when invalid keys are used https://github.com/jerson/flutter-rsa/issues/13
