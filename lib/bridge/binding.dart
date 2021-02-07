@@ -55,7 +55,7 @@ class Binding {
         .lookup<ffi.NativeFunction<call_func>>(_callFuncName)
         .asFunction<Call>();
 
-    final pointer = allocate<ffi.Uint8>(count: payload.length);
+    final pointer = malloc<ffi.Uint8>(payload.length);
 
     // https://github.com/dart-lang/ffi/issues/27
     // https://github.com/objectbox/objectbox-dart/issues/69
@@ -97,7 +97,7 @@ class Binding {
   void freeHere(ffi.Pointer pointer) {
     // FIXME by now i realize that free on windows is not working as expected
     if (!Platform.isWindows) {
-      free(pointer);
+      malloc.free(pointer);
     }
   }
 
