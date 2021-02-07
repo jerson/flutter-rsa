@@ -12,10 +12,10 @@ import 'package:rsa_example/shared/title_widget.dart';
 
 class Hash extends StatefulWidget {
   const Hash({
-    Key key,
-    @required this.title,
-    @required pb.PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair,
+    Key? key,
+    required this.title,
+    required pb.PKCS12KeyPair keyPair,
+  })   : keyPair = keyPair,
         super(key: key);
 
   final pb.PKCS12KeyPair keyPair;

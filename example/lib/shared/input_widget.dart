@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class InputWidget extends StatefulWidget {
   const InputWidget({
-    Key key,
-    @required this.result,
-    @required String title,
-    @required Function(TextEditingController) onPressed,
-  })  : onPressed = onPressed,
+    Key? key,
+    required this.result,
+    required String title,
+    required Function(TextEditingController) onPressed,
+  })   : onPressed = onPressed,
         title = title,
         super(key: key);
 
@@ -21,7 +21,7 @@ class InputWidget extends StatefulWidget {
 
 class _InputWidgetState extends State<InputWidget> {
   final _controller = TextEditingController();
-  FocusNode _focusNode;
+  FocusNode? _focusNode;
   bool _loading = true;
 
   @override
@@ -33,7 +33,7 @@ class _InputWidgetState extends State<InputWidget> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    _focusNode!.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -54,7 +54,7 @@ class _InputWidgetState extends State<InputWidget> {
           RaisedButton(
             child: Text(widget.title),
             onPressed: () async {
-              _focusNode.unfocus();
+              _focusNode!.unfocus();
               await widget.onPressed(_controller);
               setState(() {
                 _loading = false;

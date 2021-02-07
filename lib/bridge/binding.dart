@@ -14,7 +14,7 @@ class Binding {
   static final String _libraryName = 'librsa_bridge';
   static final Binding _singleton = Binding._internal();
 
-  ffi.DynamicLibrary _library;
+  late ffi.DynamicLibrary _library;
 
   factory Binding() {
     return _singleton;
@@ -42,7 +42,7 @@ class Binding {
 
     Completer<Uint8List> completer = new Completer();
 
-    StreamSubscription subscription;
+    StreamSubscription? /*!*/ subscription;
     subscription = port.listen((message) async {
       await subscription?.cancel();
       completer.complete(message);

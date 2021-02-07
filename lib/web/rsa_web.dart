@@ -39,7 +39,7 @@ class FastRsaPlugin {
     });
   }
 
-  Future<Uint8List> bridgeCall(String name, Uint8List request) async {
+  Future<Uint8List> bridgeCall(String name, Uint8List? /*!*/ request) async {
     _counter++;
     var id = _counter.toString();
     var completer = new Completer<Uint8List>();

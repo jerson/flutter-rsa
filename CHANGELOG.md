@@ -1,3 +1,7 @@
+## 1.4.0-nullsafety.1
+
+- First version with initial support working
+
 ## 1.4.0-nullsafety.0
 
 - Initial support for null safety

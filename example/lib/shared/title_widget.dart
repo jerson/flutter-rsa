@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class TitleWidget extends StatelessWidget {
   const TitleWidget(
     this.title, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final String title;

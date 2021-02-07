@@ -12,10 +12,10 @@ import 'package:rsa_example/shared/title_widget.dart';
 
 class EncryptAndDecryptPKCS extends StatefulWidget {
   const EncryptAndDecryptPKCS({
-    Key key,
-    @required this.title,
-    @required PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair,
+    Key? key,
+    required this.title,
+    required PKCS12KeyPair keyPair,
+  })   : keyPair = keyPair,
         super(key: key);
 
   final PKCS12KeyPair keyPair;
