@@ -1,3 +1,7 @@
+## 1.4.0-nullsafety.2
+
+- Using stable version
+
 ## 1.4.0-nullsafety.1
 
 - First version with initial support working

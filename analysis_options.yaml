@@ -1,0 +1,5 @@
+analyzer:
+  exclude: 
+    - example/**
+    - lib/model/**
+    - lib/bridge/**

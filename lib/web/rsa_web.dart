@@ -13,7 +13,10 @@ class FastRsaPlugin {
 
   static void registerWith(Registrar registrar) {
     final MethodChannel channel = MethodChannel(
-        'fast_rsa', const StandardMethodCodec(), registrar.messenger);
+        'fast_rsa',
+        const StandardMethodCodec(),
+        // ignore: deprecated_member_use
+        registrar.messenger);
     final FastRsaPlugin instance = FastRsaPlugin();
     instance.listen();
     channel.setMethodCallHandler(instance.handleMethodCall);
