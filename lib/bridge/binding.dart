@@ -68,10 +68,8 @@ class Binding {
 
     final result = callable(namePointer, payloadPointer, payload.length);
 
-    if (!Platform.isWindows) {
-      malloc.free(namePointer);
-      malloc.free(payloadPointer);
-    }
+    malloc.free(namePointer);
+    malloc.free(payloadPointer);
 
     handleError(result.ref.error, result);
 
