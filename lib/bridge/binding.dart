@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
+import 'package:fast_rsa/rsa.dart';
 import 'package:ffi/ffi.dart';
 import 'package:fast_rsa/bridge/ffi.dart';
 import 'package:fast_rsa/bridge/isolate.dart';
@@ -74,16 +75,18 @@ class Binding {
 
     handleError(result.ref.error, result);
 
-    final output = result.ref.message.cast<ffi.Uint8>().asTypedList(result.ref.size);
+    final output =
+        result.ref.message.cast<ffi.Uint8>().asTypedList(result.ref.size);
     freeResult(result);
     return output;
   }
 
-  void handleError(ffi.Pointer<Utf8> error, ffi.Pointer<FFIBytesReturn> result) {
+  void handleError(
+      ffi.Pointer<Utf8> error, ffi.Pointer<FFIBytesReturn> result) {
     if (error.address != ffi.nullptr.address) {
       var message = fromUtf8(error);
       freeResult(result);
-      throw message;
+      throw new RSAException(message);
     }
   }
 

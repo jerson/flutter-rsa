@@ -8,6 +8,11 @@ import 'package:fast_rsa/bridge/binding_stub.dart'
     if (dart.library.js) 'package:fast_rsa/bridge/binding_stub.dart';
 import 'package:fast_rsa/model/bridge.pb.dart';
 
+class RSAException implements Exception {
+  String cause;
+  RSAException(this.cause);
+}
+
 class RSA {
   static const MethodChannel _channel = const MethodChannel('fast_rsa');
   static bool bindingEnabled = Binding().isSupported();
@@ -24,7 +29,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = BytesResponse()..mergeFromBuffer(data);
     if (response.hasError()) {
-      throw response.error;
+      throw new RSAException(response.error);
     }
     return Uint8List.fromList(response.output);
   }
@@ -33,7 +38,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = StringResponse()..mergeFromBuffer(data);
     if (response.hasError()) {
-      throw response.error;
+      throw new RSAException(response.error);
     }
     return response.output;
   }
@@ -42,7 +47,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = BoolResponse()..mergeFromBuffer(data);
     if (response.hasError()) {
-      throw response.error;
+      throw new RSAException(response.error);
     }
     return response.output;
   }
@@ -52,7 +57,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = KeyPairResponse()..mergeFromBuffer(data);
     if (response.hasError()) {
-      throw response.error;
+      throw new RSAException(response.error);
     }
     return response.output;
   }
@@ -62,7 +67,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = PKCS12KeyPairResponse()..mergeFromBuffer(data);
     if (response.hasError()) {
-      throw response.error;
+      throw new RSAException(response.error);
     }
     return response.output;
   }

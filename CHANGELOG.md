@@ -9,6 +9,13 @@
 ## 1.4.0-nullsafety.0
 
 - Initial support for null safety
+## 1.3.5
+
+- Added RSAException to `rsa.dart`
+
+## 1.3.4
+
+- Added RSAException
 
 ## 1.3.3
 
