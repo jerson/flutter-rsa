@@ -42,7 +42,7 @@ class Binding {
 
     Completer<Uint8List> completer = new Completer();
 
-    StreamSubscription? /*!*/ subscription;
+    StreamSubscription? subscription;
     subscription = port.listen((message) async {
       await subscription?.cancel();
       completer.complete(message);
@@ -62,42 +62,42 @@ class Binding {
     for (var i = 0; i < payload.length; i++) {
       pointer[i] = payload[i];
     }
-    final voidStar = pointer.cast<ffi.Void>();
-    final nameRef = toUtf8(name);
+    final payloadPointer = pointer.cast<ffi.Void>();
+    final namePointer = toUtf8(name);
 
-    final result =
-        callable(nameRef, voidStar, payload.length).cast<FFIBytesReturn>().ref;
+    final result = callable(namePointer, payloadPointer, payload.length);
 
-    freeHere(nameRef);
-    freeHere(voidStar);
+    if (!Platform.isWindows) {
+      malloc.free(namePointer);
+      malloc.free(payloadPointer);
+    }
 
-    handleError(result.error, result.addressOf);
+    handleError(result.ref.error, result);
 
-    final output = result.message.cast<ffi.Uint8>().asTypedList(result.size);
-    freeHere(result.addressOf);
+    final output = result.ref.message.cast<ffi.Uint8>().asTypedList(result.ref.size);
+    freeResult(result);
     return output;
   }
 
-  void handleError(ffi.Pointer<Utf8> error, ffi.Pointer pointer) {
+  void handleError(ffi.Pointer<Utf8> error, ffi.Pointer<FFIBytesReturn> result) {
     if (error.address != ffi.nullptr.address) {
       var message = fromUtf8(error);
-      freeHere(pointer);
+      freeResult(result);
       throw message;
     }
   }
 
   ffi.Pointer<Utf8> toUtf8(String? text) {
-    return text == null ? Utf8.toUtf8("") : Utf8.toUtf8(text);
+    return text == null ? "".toNativeUtf8() : text.toNativeUtf8();
   }
 
   String fromUtf8(ffi.Pointer<Utf8>? text) {
-    return text == null ? "" : Utf8.fromUtf8(text);
+    return text == null ? "" : text.toDartString();
   }
 
-  void freeHere(ffi.Pointer pointer) {
-    // FIXME by now i realize that free on windows is not working as expected
+  void freeResult(ffi.Pointer<FFIBytesReturn> result) {
     if (!Platform.isWindows) {
-      malloc.free(pointer);
+      malloc.free(result);
     }
   }
 
