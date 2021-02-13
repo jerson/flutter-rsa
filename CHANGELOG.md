@@ -1,3 +1,7 @@
+## 1.4.0-nullsafety.3
+
+- Updated FFI to latest and removed deprecated methods
+
 ## 1.4.0-nullsafety.2
 
 - Using stable version
@@ -9,6 +13,7 @@
 ## 1.4.0-nullsafety.0
 
 - Initial support for null safety
+
 ## 1.3.5
 
 - Added RSAException to `rsa.dart`
