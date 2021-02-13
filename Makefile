@@ -1,7 +1,7 @@
 default: test
 
 test:
-	flutter drive --target=test_driver/app.dart
+	cd example && flutter drive --target=test_driver/app.dart
 
 upgrade: upgrade-libs upgrade-protobuf
 
