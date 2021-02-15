@@ -1,3 +1,7 @@
+## 1.3.6
+
+- macOS now use dylib instead of .a 
+
 ## 1.3.5
 
 - Added RSAException to `rsa.dart`
