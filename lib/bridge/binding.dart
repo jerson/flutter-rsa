@@ -113,18 +113,16 @@ class Binding {
 
   ffi.DynamicLibrary openLib() {
     if (Platform.isMacOS) {
-      return ffi.DynamicLibrary.process();
+      return ffi.DynamicLibrary.open("$_libraryName.dylib");
     }
     if (Platform.isWindows) {
-      var baseDir = Directory(Platform.resolvedExecutable).parent.path;
-      return ffi.DynamicLibrary.open("$baseDir\\$_libraryName.dll");
+      return ffi.DynamicLibrary.open("$_libraryName.dll");
     }
     if (Platform.isIOS) {
       return ffi.DynamicLibrary.process();
     }
     if (Platform.isLinux) {
-      var baseDir = Directory(Platform.resolvedExecutable).parent.path;
-      return ffi.DynamicLibrary.open("$baseDir/lib/$_libraryName.so");
+      return ffi.DynamicLibrary.open("$_libraryName.so");
     }
     return ffi.DynamicLibrary.open("$_libraryName.so");
   }
