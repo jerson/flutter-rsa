@@ -119,7 +119,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.4.0-nullsafety.4"
+    version: "2.0.0"
   ffi:
     dependency: transitive
     description:
