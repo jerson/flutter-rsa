@@ -8,7 +8,7 @@ on:
 
 jobs:
   web:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-qemu-action@v1
@@ -25,4 +25,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:example-web-${{ github.ref }}
+            ghcr.io/${{ github.repository }}:example-web

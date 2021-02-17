@@ -1,4 +1,4 @@
-## 2.0.0
+## 2.0.0-nullsafety.0
 
 - bump version to stable null_safety
 

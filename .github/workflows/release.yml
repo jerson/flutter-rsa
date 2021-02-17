@@ -1,12 +1,13 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
         with:
@@ -24,4 +25,4 @@ jobs:
           body: |
             ${{ steps.Changelog.outputs.changelog }}
           draft: false
-          prerelease: true
+          prerelease: false
