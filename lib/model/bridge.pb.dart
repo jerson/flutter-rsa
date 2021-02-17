@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: bridge.proto
 //
-// @dart = 2.7
+
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -39,8 +39,8 @@ class ConvertJWTRequest extends $pb.GeneratedMessage {
 
   ConvertJWTRequest._() : super();
   factory ConvertJWTRequest({
-    $core.String data,
-    $core.String keyId,
+    $core.String? data,
+    $core.String? keyId,
   }) {
     final _result = create();
     if (data != null) {
@@ -65,8 +65,8 @@ class ConvertJWTRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ConvertJWTRequest copyWith(void Function(ConvertJWTRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as ConvertJWTRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ConvertJWTRequest))
+          as ConvertJWTRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ConvertJWTRequest create() => ConvertJWTRequest._();
@@ -76,7 +76,7 @@ class ConvertJWTRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ConvertJWTRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ConvertJWTRequest>(create);
-  static ConvertJWTRequest _defaultInstance;
+  static ConvertJWTRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get data => $_getSZ(0);
@@ -129,9 +129,9 @@ class ConvertKeyPairRequest extends $pb.GeneratedMessage {
 
   ConvertKeyPairRequest._() : super();
   factory ConvertKeyPairRequest({
-    $core.String privateKey,
-    $core.String certificate,
-    $core.String password,
+    $core.String? privateKey,
+    $core.String? certificate,
+    $core.String? password,
   }) {
     final _result = create();
     if (privateKey != null) {
@@ -161,8 +161,8 @@ class ConvertKeyPairRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   ConvertKeyPairRequest copyWith(
           void Function(ConvertKeyPairRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as ConvertKeyPairRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ConvertKeyPairRequest))
+          as ConvertKeyPairRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ConvertKeyPairRequest create() => ConvertKeyPairRequest._();
@@ -172,7 +172,7 @@ class ConvertKeyPairRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ConvertKeyPairRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ConvertKeyPairRequest>(create);
-  static ConvertKeyPairRequest _defaultInstance;
+  static ConvertKeyPairRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get privateKey => $_getSZ(0);
@@ -235,8 +235,8 @@ class ConvertPKCS12Request extends $pb.GeneratedMessage {
 
   ConvertPKCS12Request._() : super();
   factory ConvertPKCS12Request({
-    $core.String pkcs12,
-    $core.String password,
+    $core.String? pkcs12,
+    $core.String? password,
   }) {
     final _result = create();
     if (pkcs12 != null) {
@@ -262,8 +262,8 @@ class ConvertPKCS12Request extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ConvertPKCS12Request copyWith(void Function(ConvertPKCS12Request) updates) =>
-      super.copyWith((message) => updates(
-          message as ConvertPKCS12Request)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ConvertPKCS12Request))
+          as ConvertPKCS12Request; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ConvertPKCS12Request create() => ConvertPKCS12Request._();
@@ -273,7 +273,7 @@ class ConvertPKCS12Request extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ConvertPKCS12Request getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ConvertPKCS12Request>(create);
-  static ConvertPKCS12Request _defaultInstance;
+  static ConvertPKCS12Request? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get pkcs12 => $_getSZ(0);
@@ -320,7 +320,7 @@ class ConvertPrivateKeyRequest extends $pb.GeneratedMessage {
 
   ConvertPrivateKeyRequest._() : super();
   factory ConvertPrivateKeyRequest({
-    $core.String privateKey,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (privateKey != null) {
@@ -344,8 +344,8 @@ class ConvertPrivateKeyRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   ConvertPrivateKeyRequest copyWith(
           void Function(ConvertPrivateKeyRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as ConvertPrivateKeyRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ConvertPrivateKeyRequest))
+          as ConvertPrivateKeyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ConvertPrivateKeyRequest create() => ConvertPrivateKeyRequest._();
@@ -355,7 +355,7 @@ class ConvertPrivateKeyRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ConvertPrivateKeyRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ConvertPrivateKeyRequest>(create);
-  static ConvertPrivateKeyRequest _defaultInstance;
+  static ConvertPrivateKeyRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get privateKey => $_getSZ(0);
@@ -390,7 +390,7 @@ class ConvertPublicKeyRequest extends $pb.GeneratedMessage {
 
   ConvertPublicKeyRequest._() : super();
   factory ConvertPublicKeyRequest({
-    $core.String publicKey,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (publicKey != null) {
@@ -414,8 +414,8 @@ class ConvertPublicKeyRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   ConvertPublicKeyRequest copyWith(
           void Function(ConvertPublicKeyRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as ConvertPublicKeyRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ConvertPublicKeyRequest))
+          as ConvertPublicKeyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ConvertPublicKeyRequest create() => ConvertPublicKeyRequest._();
@@ -425,7 +425,7 @@ class ConvertPublicKeyRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ConvertPublicKeyRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ConvertPublicKeyRequest>(create);
-  static ConvertPublicKeyRequest _defaultInstance;
+  static ConvertPublicKeyRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get publicKey => $_getSZ(0);
@@ -471,10 +471,10 @@ class DecryptOAEPRequest extends $pb.GeneratedMessage {
 
   DecryptOAEPRequest._() : super();
   factory DecryptOAEPRequest({
-    $core.String ciphertext,
-    $core.String label,
-    Hash hash,
-    $core.String privateKey,
+    $core.String? ciphertext,
+    $core.String? label,
+    Hash? hash,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (ciphertext != null) {
@@ -505,8 +505,8 @@ class DecryptOAEPRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DecryptOAEPRequest copyWith(void Function(DecryptOAEPRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as DecryptOAEPRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DecryptOAEPRequest))
+          as DecryptOAEPRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DecryptOAEPRequest create() => DecryptOAEPRequest._();
@@ -516,7 +516,7 @@ class DecryptOAEPRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DecryptOAEPRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DecryptOAEPRequest>(create);
-  static DecryptOAEPRequest _defaultInstance;
+  static DecryptOAEPRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get ciphertext => $_getSZ(0);
@@ -598,10 +598,10 @@ class DecryptOAEPBytesRequest extends $pb.GeneratedMessage {
 
   DecryptOAEPBytesRequest._() : super();
   factory DecryptOAEPBytesRequest({
-    $core.List<$core.int> ciphertext,
-    $core.String label,
-    Hash hash,
-    $core.String privateKey,
+    $core.List<$core.int>? ciphertext,
+    $core.String? label,
+    Hash? hash,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (ciphertext != null) {
@@ -634,8 +634,8 @@ class DecryptOAEPBytesRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   DecryptOAEPBytesRequest copyWith(
           void Function(DecryptOAEPBytesRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as DecryptOAEPBytesRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DecryptOAEPBytesRequest))
+          as DecryptOAEPBytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DecryptOAEPBytesRequest create() => DecryptOAEPBytesRequest._();
@@ -645,7 +645,7 @@ class DecryptOAEPBytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DecryptOAEPBytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DecryptOAEPBytesRequest>(create);
-  static DecryptOAEPBytesRequest _defaultInstance;
+  static DecryptOAEPBytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get ciphertext => $_getN(0);
@@ -721,8 +721,8 @@ class DecryptPKCS1v15Request extends $pb.GeneratedMessage {
 
   DecryptPKCS1v15Request._() : super();
   factory DecryptPKCS1v15Request({
-    $core.String ciphertext,
-    $core.String privateKey,
+    $core.String? ciphertext,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (ciphertext != null) {
@@ -749,8 +749,8 @@ class DecryptPKCS1v15Request extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   DecryptPKCS1v15Request copyWith(
           void Function(DecryptPKCS1v15Request) updates) =>
-      super.copyWith((message) => updates(
-          message as DecryptPKCS1v15Request)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DecryptPKCS1v15Request))
+          as DecryptPKCS1v15Request; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DecryptPKCS1v15Request create() => DecryptPKCS1v15Request._();
@@ -760,7 +760,7 @@ class DecryptPKCS1v15Request extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DecryptPKCS1v15Request getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DecryptPKCS1v15Request>(create);
-  static DecryptPKCS1v15Request _defaultInstance;
+  static DecryptPKCS1v15Request? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get ciphertext => $_getSZ(0);
@@ -813,8 +813,8 @@ class DecryptPKCS1v15BytesRequest extends $pb.GeneratedMessage {
 
   DecryptPKCS1v15BytesRequest._() : super();
   factory DecryptPKCS1v15BytesRequest({
-    $core.List<$core.int> ciphertext,
-    $core.String privateKey,
+    $core.List<$core.int>? ciphertext,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (ciphertext != null) {
@@ -841,8 +841,9 @@ class DecryptPKCS1v15BytesRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   DecryptPKCS1v15BytesRequest copyWith(
           void Function(DecryptPKCS1v15BytesRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as DecryptPKCS1v15BytesRequest)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as DecryptPKCS1v15BytesRequest))
+          as DecryptPKCS1v15BytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DecryptPKCS1v15BytesRequest create() =>
@@ -853,7 +854,7 @@ class DecryptPKCS1v15BytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DecryptPKCS1v15BytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DecryptPKCS1v15BytesRequest>(create);
-  static DecryptPKCS1v15BytesRequest _defaultInstance;
+  static DecryptPKCS1v15BytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get ciphertext => $_getN(0);
@@ -905,8 +906,8 @@ class DecryptPrivateKeyRequest extends $pb.GeneratedMessage {
 
   DecryptPrivateKeyRequest._() : super();
   factory DecryptPrivateKeyRequest({
-    $core.String privateKeyEncrypted,
-    $core.String password,
+    $core.String? privateKeyEncrypted,
+    $core.String? password,
   }) {
     final _result = create();
     if (privateKeyEncrypted != null) {
@@ -933,8 +934,8 @@ class DecryptPrivateKeyRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   DecryptPrivateKeyRequest copyWith(
           void Function(DecryptPrivateKeyRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as DecryptPrivateKeyRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DecryptPrivateKeyRequest))
+          as DecryptPrivateKeyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DecryptPrivateKeyRequest create() => DecryptPrivateKeyRequest._();
@@ -944,7 +945,7 @@ class DecryptPrivateKeyRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DecryptPrivateKeyRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DecryptPrivateKeyRequest>(create);
-  static DecryptPrivateKeyRequest _defaultInstance;
+  static DecryptPrivateKeyRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get privateKeyEncrypted => $_getSZ(0);
@@ -1002,10 +1003,10 @@ class EncryptOAEPRequest extends $pb.GeneratedMessage {
 
   EncryptOAEPRequest._() : super();
   factory EncryptOAEPRequest({
-    $core.String message,
-    $core.String label,
-    Hash hash,
-    $core.String publicKey,
+    $core.String? message,
+    $core.String? label,
+    Hash? hash,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -1036,8 +1037,8 @@ class EncryptOAEPRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   EncryptOAEPRequest copyWith(void Function(EncryptOAEPRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as EncryptOAEPRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as EncryptOAEPRequest))
+          as EncryptOAEPRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EncryptOAEPRequest create() => EncryptOAEPRequest._();
@@ -1047,7 +1048,7 @@ class EncryptOAEPRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static EncryptOAEPRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<EncryptOAEPRequest>(create);
-  static EncryptOAEPRequest _defaultInstance;
+  static EncryptOAEPRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -1129,10 +1130,10 @@ class EncryptOAEPBytesRequest extends $pb.GeneratedMessage {
 
   EncryptOAEPBytesRequest._() : super();
   factory EncryptOAEPBytesRequest({
-    $core.List<$core.int> message,
-    $core.String label,
-    Hash hash,
-    $core.String publicKey,
+    $core.List<$core.int>? message,
+    $core.String? label,
+    Hash? hash,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -1165,8 +1166,8 @@ class EncryptOAEPBytesRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   EncryptOAEPBytesRequest copyWith(
           void Function(EncryptOAEPBytesRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as EncryptOAEPBytesRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as EncryptOAEPBytesRequest))
+          as EncryptOAEPBytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EncryptOAEPBytesRequest create() => EncryptOAEPBytesRequest._();
@@ -1176,7 +1177,7 @@ class EncryptOAEPBytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static EncryptOAEPBytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<EncryptOAEPBytesRequest>(create);
-  static EncryptOAEPBytesRequest _defaultInstance;
+  static EncryptOAEPBytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get message => $_getN(0);
@@ -1252,8 +1253,8 @@ class EncryptPKCS1v15Request extends $pb.GeneratedMessage {
 
   EncryptPKCS1v15Request._() : super();
   factory EncryptPKCS1v15Request({
-    $core.String message,
-    $core.String publicKey,
+    $core.String? message,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -1280,8 +1281,8 @@ class EncryptPKCS1v15Request extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   EncryptPKCS1v15Request copyWith(
           void Function(EncryptPKCS1v15Request) updates) =>
-      super.copyWith((message) => updates(
-          message as EncryptPKCS1v15Request)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as EncryptPKCS1v15Request))
+          as EncryptPKCS1v15Request; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EncryptPKCS1v15Request create() => EncryptPKCS1v15Request._();
@@ -1291,7 +1292,7 @@ class EncryptPKCS1v15Request extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static EncryptPKCS1v15Request getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<EncryptPKCS1v15Request>(create);
-  static EncryptPKCS1v15Request _defaultInstance;
+  static EncryptPKCS1v15Request? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -1344,8 +1345,8 @@ class EncryptPKCS1v15BytesRequest extends $pb.GeneratedMessage {
 
   EncryptPKCS1v15BytesRequest._() : super();
   factory EncryptPKCS1v15BytesRequest({
-    $core.List<$core.int> message,
-    $core.String publicKey,
+    $core.List<$core.int>? message,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -1372,8 +1373,9 @@ class EncryptPKCS1v15BytesRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   EncryptPKCS1v15BytesRequest copyWith(
           void Function(EncryptPKCS1v15BytesRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as EncryptPKCS1v15BytesRequest)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as EncryptPKCS1v15BytesRequest))
+          as EncryptPKCS1v15BytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EncryptPKCS1v15BytesRequest create() =>
@@ -1384,7 +1386,7 @@ class EncryptPKCS1v15BytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static EncryptPKCS1v15BytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<EncryptPKCS1v15BytesRequest>(create);
-  static EncryptPKCS1v15BytesRequest _defaultInstance;
+  static EncryptPKCS1v15BytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get message => $_getN(0);
@@ -1438,9 +1440,9 @@ class EncryptPrivateKeyRequest extends $pb.GeneratedMessage {
 
   EncryptPrivateKeyRequest._() : super();
   factory EncryptPrivateKeyRequest({
-    $core.String privateKey,
-    $core.String password,
-    PEMCipher cipher,
+    $core.String? privateKey,
+    $core.String? password,
+    PEMCipher? cipher,
   }) {
     final _result = create();
     if (privateKey != null) {
@@ -1470,8 +1472,8 @@ class EncryptPrivateKeyRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   EncryptPrivateKeyRequest copyWith(
           void Function(EncryptPrivateKeyRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as EncryptPrivateKeyRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as EncryptPrivateKeyRequest))
+          as EncryptPrivateKeyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EncryptPrivateKeyRequest create() => EncryptPrivateKeyRequest._();
@@ -1481,7 +1483,7 @@ class EncryptPrivateKeyRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static EncryptPrivateKeyRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<EncryptPrivateKeyRequest>(create);
-  static EncryptPrivateKeyRequest _defaultInstance;
+  static EncryptPrivateKeyRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get privateKey => $_getSZ(0);
@@ -1541,7 +1543,7 @@ class GenerateRequest extends $pb.GeneratedMessage {
 
   GenerateRequest._() : super();
   factory GenerateRequest({
-    $core.int nBits,
+    $core.int? nBits,
   }) {
     final _result = create();
     if (nBits != null) {
@@ -1563,8 +1565,8 @@ class GenerateRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   GenerateRequest copyWith(void Function(GenerateRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as GenerateRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as GenerateRequest))
+          as GenerateRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GenerateRequest create() => GenerateRequest._();
@@ -1574,7 +1576,7 @@ class GenerateRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static GenerateRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<GenerateRequest>(create);
-  static GenerateRequest _defaultInstance;
+  static GenerateRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get nBits => $_getIZ(0);
@@ -1617,8 +1619,8 @@ class HashRequest extends $pb.GeneratedMessage {
 
   HashRequest._() : super();
   factory HashRequest({
-    $core.String message,
-    Hash hash,
+    $core.String? message,
+    Hash? hash,
   }) {
     final _result = create();
     if (message != null) {
@@ -1643,8 +1645,8 @@ class HashRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   HashRequest copyWith(void Function(HashRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as HashRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as HashRequest))
+          as HashRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static HashRequest create() => HashRequest._();
@@ -1653,7 +1655,7 @@ class HashRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static HashRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<HashRequest>(create);
-  static HashRequest _defaultInstance;
+  static HashRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -1699,7 +1701,7 @@ class Base64Request extends $pb.GeneratedMessage {
 
   Base64Request._() : super();
   factory Base64Request({
-    $core.String message,
+    $core.String? message,
   }) {
     final _result = create();
     if (message != null) {
@@ -1721,8 +1723,8 @@ class Base64Request extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Base64Request copyWith(void Function(Base64Request) updates) =>
-      super.copyWith((message) =>
-          updates(message as Base64Request)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as Base64Request))
+          as Base64Request; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Base64Request create() => Base64Request._();
@@ -1732,7 +1734,7 @@ class Base64Request extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Base64Request getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<Base64Request>(create);
-  static Base64Request _defaultInstance;
+  static Base64Request? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -1767,7 +1769,7 @@ class MetadataPrivateKeyRequest extends $pb.GeneratedMessage {
 
   MetadataPrivateKeyRequest._() : super();
   factory MetadataPrivateKeyRequest({
-    $core.String privateKey,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (privateKey != null) {
@@ -1791,8 +1793,8 @@ class MetadataPrivateKeyRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   MetadataPrivateKeyRequest copyWith(
           void Function(MetadataPrivateKeyRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as MetadataPrivateKeyRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as MetadataPrivateKeyRequest))
+          as MetadataPrivateKeyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MetadataPrivateKeyRequest create() => MetadataPrivateKeyRequest._();
@@ -1802,7 +1804,7 @@ class MetadataPrivateKeyRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static MetadataPrivateKeyRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<MetadataPrivateKeyRequest>(create);
-  static MetadataPrivateKeyRequest _defaultInstance;
+  static MetadataPrivateKeyRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get privateKey => $_getSZ(0);
@@ -1837,7 +1839,7 @@ class MetadataPublicKeyRequest extends $pb.GeneratedMessage {
 
   MetadataPublicKeyRequest._() : super();
   factory MetadataPublicKeyRequest({
-    $core.String publicKey,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (publicKey != null) {
@@ -1861,8 +1863,8 @@ class MetadataPublicKeyRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   MetadataPublicKeyRequest copyWith(
           void Function(MetadataPublicKeyRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as MetadataPublicKeyRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as MetadataPublicKeyRequest))
+          as MetadataPublicKeyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MetadataPublicKeyRequest create() => MetadataPublicKeyRequest._();
@@ -1872,7 +1874,7 @@ class MetadataPublicKeyRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static MetadataPublicKeyRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<MetadataPublicKeyRequest>(create);
-  static MetadataPublicKeyRequest _defaultInstance;
+  static MetadataPublicKeyRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get publicKey => $_getSZ(0);
@@ -1914,9 +1916,9 @@ class SignPKCS1v15Request extends $pb.GeneratedMessage {
 
   SignPKCS1v15Request._() : super();
   factory SignPKCS1v15Request({
-    $core.String message,
-    Hash hash,
-    $core.String privateKey,
+    $core.String? message,
+    Hash? hash,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -1944,8 +1946,8 @@ class SignPKCS1v15Request extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   SignPKCS1v15Request copyWith(void Function(SignPKCS1v15Request) updates) =>
-      super.copyWith((message) => updates(
-          message as SignPKCS1v15Request)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as SignPKCS1v15Request))
+          as SignPKCS1v15Request; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SignPKCS1v15Request create() => SignPKCS1v15Request._();
@@ -1955,7 +1957,7 @@ class SignPKCS1v15Request extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static SignPKCS1v15Request getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<SignPKCS1v15Request>(create);
-  static SignPKCS1v15Request _defaultInstance;
+  static SignPKCS1v15Request? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -2022,9 +2024,9 @@ class SignPKCS1v15BytesRequest extends $pb.GeneratedMessage {
 
   SignPKCS1v15BytesRequest._() : super();
   factory SignPKCS1v15BytesRequest({
-    $core.List<$core.int> message,
-    Hash hash,
-    $core.String privateKey,
+    $core.List<$core.int>? message,
+    Hash? hash,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -2054,8 +2056,8 @@ class SignPKCS1v15BytesRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   SignPKCS1v15BytesRequest copyWith(
           void Function(SignPKCS1v15BytesRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as SignPKCS1v15BytesRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as SignPKCS1v15BytesRequest))
+          as SignPKCS1v15BytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SignPKCS1v15BytesRequest create() => SignPKCS1v15BytesRequest._();
@@ -2065,7 +2067,7 @@ class SignPKCS1v15BytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static SignPKCS1v15BytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<SignPKCS1v15BytesRequest>(create);
-  static SignPKCS1v15BytesRequest _defaultInstance;
+  static SignPKCS1v15BytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get message => $_getN(0);
@@ -2136,10 +2138,10 @@ class SignPSSRequest extends $pb.GeneratedMessage {
 
   SignPSSRequest._() : super();
   factory SignPSSRequest({
-    $core.String message,
-    Hash hash,
-    SaltLength saltLength,
-    $core.String privateKey,
+    $core.String? message,
+    Hash? hash,
+    SaltLength? saltLength,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -2170,8 +2172,8 @@ class SignPSSRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   SignPSSRequest copyWith(void Function(SignPSSRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as SignPSSRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as SignPSSRequest))
+          as SignPSSRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SignPSSRequest create() => SignPSSRequest._();
@@ -2181,7 +2183,7 @@ class SignPSSRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static SignPSSRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<SignPSSRequest>(create);
-  static SignPSSRequest _defaultInstance;
+  static SignPSSRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -2264,10 +2266,10 @@ class SignPSSBytesRequest extends $pb.GeneratedMessage {
 
   SignPSSBytesRequest._() : super();
   factory SignPSSBytesRequest({
-    $core.List<$core.int> message,
-    Hash hash,
-    SaltLength saltLength,
-    $core.String privateKey,
+    $core.List<$core.int>? message,
+    Hash? hash,
+    SaltLength? saltLength,
+    $core.String? privateKey,
   }) {
     final _result = create();
     if (message != null) {
@@ -2298,8 +2300,8 @@ class SignPSSBytesRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   SignPSSBytesRequest copyWith(void Function(SignPSSBytesRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as SignPSSBytesRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as SignPSSBytesRequest))
+          as SignPSSBytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SignPSSBytesRequest create() => SignPSSBytesRequest._();
@@ -2309,7 +2311,7 @@ class SignPSSBytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static SignPSSBytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<SignPSSBytesRequest>(create);
-  static SignPSSBytesRequest _defaultInstance;
+  static SignPSSBytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get message => $_getN(0);
@@ -2391,10 +2393,10 @@ class VerifyPKCS1v15Request extends $pb.GeneratedMessage {
 
   VerifyPKCS1v15Request._() : super();
   factory VerifyPKCS1v15Request({
-    $core.String signature,
-    $core.String message,
-    Hash hash,
-    $core.String publicKey,
+    $core.String? signature,
+    $core.String? message,
+    Hash? hash,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (signature != null) {
@@ -2427,8 +2429,8 @@ class VerifyPKCS1v15Request extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   VerifyPKCS1v15Request copyWith(
           void Function(VerifyPKCS1v15Request) updates) =>
-      super.copyWith((message) => updates(
-          message as VerifyPKCS1v15Request)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as VerifyPKCS1v15Request))
+          as VerifyPKCS1v15Request; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VerifyPKCS1v15Request create() => VerifyPKCS1v15Request._();
@@ -2438,7 +2440,7 @@ class VerifyPKCS1v15Request extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static VerifyPKCS1v15Request getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<VerifyPKCS1v15Request>(create);
-  static VerifyPKCS1v15Request _defaultInstance;
+  static VerifyPKCS1v15Request? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get signature => $_getSZ(0);
@@ -2520,10 +2522,10 @@ class VerifyPKCS1v15BytesRequest extends $pb.GeneratedMessage {
 
   VerifyPKCS1v15BytesRequest._() : super();
   factory VerifyPKCS1v15BytesRequest({
-    $core.List<$core.int> signature,
-    $core.List<$core.int> message,
-    Hash hash,
-    $core.String publicKey,
+    $core.List<$core.int>? signature,
+    $core.List<$core.int>? message,
+    Hash? hash,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (signature != null) {
@@ -2556,8 +2558,9 @@ class VerifyPKCS1v15BytesRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   VerifyPKCS1v15BytesRequest copyWith(
           void Function(VerifyPKCS1v15BytesRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as VerifyPKCS1v15BytesRequest)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as VerifyPKCS1v15BytesRequest))
+          as VerifyPKCS1v15BytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VerifyPKCS1v15BytesRequest create() => VerifyPKCS1v15BytesRequest._();
@@ -2567,7 +2570,7 @@ class VerifyPKCS1v15BytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static VerifyPKCS1v15BytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<VerifyPKCS1v15BytesRequest>(create);
-  static VerifyPKCS1v15BytesRequest _defaultInstance;
+  static VerifyPKCS1v15BytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get signature => $_getN(0);
@@ -2653,11 +2656,11 @@ class VerifyPSSRequest extends $pb.GeneratedMessage {
 
   VerifyPSSRequest._() : super();
   factory VerifyPSSRequest({
-    $core.String signature,
-    $core.String message,
-    Hash hash,
-    SaltLength saltLength,
-    $core.String publicKey,
+    $core.String? signature,
+    $core.String? message,
+    Hash? hash,
+    SaltLength? saltLength,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (signature != null) {
@@ -2691,8 +2694,8 @@ class VerifyPSSRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   VerifyPSSRequest copyWith(void Function(VerifyPSSRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as VerifyPSSRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as VerifyPSSRequest))
+          as VerifyPSSRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VerifyPSSRequest create() => VerifyPSSRequest._();
@@ -2702,7 +2705,7 @@ class VerifyPSSRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static VerifyPSSRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<VerifyPSSRequest>(create);
-  static VerifyPSSRequest _defaultInstance;
+  static VerifyPSSRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get signature => $_getSZ(0);
@@ -2800,11 +2803,11 @@ class VerifyPSSBytesRequest extends $pb.GeneratedMessage {
 
   VerifyPSSBytesRequest._() : super();
   factory VerifyPSSBytesRequest({
-    $core.List<$core.int> signature,
-    $core.List<$core.int> message,
-    Hash hash,
-    SaltLength saltLength,
-    $core.String publicKey,
+    $core.List<$core.int>? signature,
+    $core.List<$core.int>? message,
+    Hash? hash,
+    SaltLength? saltLength,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (signature != null) {
@@ -2840,8 +2843,8 @@ class VerifyPSSBytesRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   VerifyPSSBytesRequest copyWith(
           void Function(VerifyPSSBytesRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as VerifyPSSBytesRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as VerifyPSSBytesRequest))
+          as VerifyPSSBytesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VerifyPSSBytesRequest create() => VerifyPSSBytesRequest._();
@@ -2851,7 +2854,7 @@ class VerifyPSSBytesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static VerifyPSSBytesRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<VerifyPSSBytesRequest>(create);
-  static VerifyPSSBytesRequest _defaultInstance;
+  static VerifyPSSBytesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get signature => $_getN(0);
@@ -2938,8 +2941,8 @@ class StringResponse extends $pb.GeneratedMessage {
 
   StringResponse._() : super();
   factory StringResponse({
-    $core.String output,
-    $core.String error,
+    $core.String? output,
+    $core.String? error,
   }) {
     final _result = create();
     if (output != null) {
@@ -2964,8 +2967,8 @@ class StringResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   StringResponse copyWith(void Function(StringResponse) updates) =>
-      super.copyWith((message) =>
-          updates(message as StringResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as StringResponse))
+          as StringResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StringResponse create() => StringResponse._();
@@ -2975,7 +2978,7 @@ class StringResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StringResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StringResponse>(create);
-  static StringResponse _defaultInstance;
+  static StringResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get output => $_getSZ(0);
@@ -3027,8 +3030,8 @@ class BytesResponse extends $pb.GeneratedMessage {
 
   BytesResponse._() : super();
   factory BytesResponse({
-    $core.List<$core.int> output,
-    $core.String error,
+    $core.List<$core.int>? output,
+    $core.String? error,
   }) {
     final _result = create();
     if (output != null) {
@@ -3053,8 +3056,8 @@ class BytesResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BytesResponse copyWith(void Function(BytesResponse) updates) =>
-      super.copyWith((message) =>
-          updates(message as BytesResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BytesResponse))
+          as BytesResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BytesResponse create() => BytesResponse._();
@@ -3064,7 +3067,7 @@ class BytesResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BytesResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BytesResponse>(create);
-  static BytesResponse _defaultInstance;
+  static BytesResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get output => $_getN(0);
@@ -3115,8 +3118,8 @@ class BoolResponse extends $pb.GeneratedMessage {
 
   BoolResponse._() : super();
   factory BoolResponse({
-    $core.bool output,
-    $core.String error,
+    $core.bool? output,
+    $core.String? error,
   }) {
     final _result = create();
     if (output != null) {
@@ -3141,8 +3144,8 @@ class BoolResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BoolResponse copyWith(void Function(BoolResponse) updates) =>
-      super.copyWith((message) =>
-          updates(message as BoolResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BoolResponse))
+          as BoolResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BoolResponse create() => BoolResponse._();
@@ -3152,7 +3155,7 @@ class BoolResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BoolResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BoolResponse>(create);
-  static BoolResponse _defaultInstance;
+  static BoolResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get output => $_getBF(0);
@@ -3204,8 +3207,8 @@ class PKCS12KeyPairResponse extends $pb.GeneratedMessage {
 
   PKCS12KeyPairResponse._() : super();
   factory PKCS12KeyPairResponse({
-    PKCS12KeyPair output,
-    $core.String error,
+    PKCS12KeyPair? output,
+    $core.String? error,
   }) {
     final _result = create();
     if (output != null) {
@@ -3232,8 +3235,8 @@ class PKCS12KeyPairResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   PKCS12KeyPairResponse copyWith(
           void Function(PKCS12KeyPairResponse) updates) =>
-      super.copyWith((message) => updates(
-          message as PKCS12KeyPairResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PKCS12KeyPairResponse))
+          as PKCS12KeyPairResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PKCS12KeyPairResponse create() => PKCS12KeyPairResponse._();
@@ -3243,7 +3246,7 @@ class PKCS12KeyPairResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PKCS12KeyPairResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PKCS12KeyPairResponse>(create);
-  static PKCS12KeyPairResponse _defaultInstance;
+  static PKCS12KeyPairResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   PKCS12KeyPair get output => $_getN(0);
@@ -3296,9 +3299,9 @@ class PKCS12KeyPair extends $pb.GeneratedMessage {
 
   PKCS12KeyPair._() : super();
   factory PKCS12KeyPair({
-    $core.String privateKey,
-    $core.String publicKey,
-    $core.String certificate,
+    $core.String? privateKey,
+    $core.String? publicKey,
+    $core.String? certificate,
   }) {
     final _result = create();
     if (privateKey != null) {
@@ -3326,8 +3329,8 @@ class PKCS12KeyPair extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   PKCS12KeyPair copyWith(void Function(PKCS12KeyPair) updates) =>
-      super.copyWith((message) =>
-          updates(message as PKCS12KeyPair)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PKCS12KeyPair))
+          as PKCS12KeyPair; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PKCS12KeyPair create() => PKCS12KeyPair._();
@@ -3337,7 +3340,7 @@ class PKCS12KeyPair extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PKCS12KeyPair getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PKCS12KeyPair>(create);
-  static PKCS12KeyPair _defaultInstance;
+  static PKCS12KeyPair? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get privateKey => $_getSZ(0);
@@ -3401,8 +3404,8 @@ class KeyPairResponse extends $pb.GeneratedMessage {
 
   KeyPairResponse._() : super();
   factory KeyPairResponse({
-    KeyPair output,
-    $core.String error,
+    KeyPair? output,
+    $core.String? error,
   }) {
     final _result = create();
     if (output != null) {
@@ -3427,8 +3430,8 @@ class KeyPairResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   KeyPairResponse copyWith(void Function(KeyPairResponse) updates) =>
-      super.copyWith((message) =>
-          updates(message as KeyPairResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as KeyPairResponse))
+          as KeyPairResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static KeyPairResponse create() => KeyPairResponse._();
@@ -3438,7 +3441,7 @@ class KeyPairResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static KeyPairResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<KeyPairResponse>(create);
-  static KeyPairResponse _defaultInstance;
+  static KeyPairResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   KeyPair get output => $_getN(0);
@@ -3490,8 +3493,8 @@ class KeyPair extends $pb.GeneratedMessage {
 
   KeyPair._() : super();
   factory KeyPair({
-    $core.String privateKey,
-    $core.String publicKey,
+    $core.String? privateKey,
+    $core.String? publicKey,
   }) {
     final _result = create();
     if (privateKey != null) {
@@ -3516,8 +3519,8 @@ class KeyPair extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   KeyPair copyWith(void Function(KeyPair) updates) =>
-      super.copyWith((message) =>
-          updates(message as KeyPair)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as KeyPair))
+          as KeyPair; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static KeyPair create() => KeyPair._();
@@ -3526,7 +3529,7 @@ class KeyPair extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static KeyPair getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<KeyPair>(create);
-  static KeyPair _defaultInstance;
+  static KeyPair? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get privateKey => $_getSZ(0);
@@ -3578,8 +3581,8 @@ class PrivateKeyInfoResponse extends $pb.GeneratedMessage {
 
   PrivateKeyInfoResponse._() : super();
   factory PrivateKeyInfoResponse({
-    PrivateKeyInfo output,
-    $core.String error,
+    PrivateKeyInfo? output,
+    $core.String? error,
   }) {
     final _result = create();
     if (output != null) {
@@ -3606,8 +3609,8 @@ class PrivateKeyInfoResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   PrivateKeyInfoResponse copyWith(
           void Function(PrivateKeyInfoResponse) updates) =>
-      super.copyWith((message) => updates(
-          message as PrivateKeyInfoResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PrivateKeyInfoResponse))
+          as PrivateKeyInfoResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PrivateKeyInfoResponse create() => PrivateKeyInfoResponse._();
@@ -3617,7 +3620,7 @@ class PrivateKeyInfoResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PrivateKeyInfoResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PrivateKeyInfoResponse>(create);
-  static PrivateKeyInfoResponse _defaultInstance;
+  static PrivateKeyInfoResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   PrivateKeyInfo get output => $_getN(0);
@@ -3672,9 +3675,9 @@ class PrivateKeyInfo extends $pb.GeneratedMessage {
 
   PrivateKeyInfo._() : super();
   factory PrivateKeyInfo({
-    $fixnum.Int64 bitLen,
-    $fixnum.Int64 size,
-    $core.String error,
+    $fixnum.Int64? bitLen,
+    $fixnum.Int64? size,
+    $core.String? error,
   }) {
     final _result = create();
     if (bitLen != null) {
@@ -3702,8 +3705,8 @@ class PrivateKeyInfo extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   PrivateKeyInfo copyWith(void Function(PrivateKeyInfo) updates) =>
-      super.copyWith((message) =>
-          updates(message as PrivateKeyInfo)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PrivateKeyInfo))
+          as PrivateKeyInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PrivateKeyInfo create() => PrivateKeyInfo._();
@@ -3713,7 +3716,7 @@ class PrivateKeyInfo extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PrivateKeyInfo getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PrivateKeyInfo>(create);
-  static PrivateKeyInfo _defaultInstance;
+  static PrivateKeyInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get bitLen => $_getI64(0);
@@ -3777,8 +3780,8 @@ class PublicKeyInfoResponse extends $pb.GeneratedMessage {
 
   PublicKeyInfoResponse._() : super();
   factory PublicKeyInfoResponse({
-    PublicKeyInfo output,
-    $core.String error,
+    PublicKeyInfo? output,
+    $core.String? error,
   }) {
     final _result = create();
     if (output != null) {
@@ -3805,8 +3808,8 @@ class PublicKeyInfoResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   PublicKeyInfoResponse copyWith(
           void Function(PublicKeyInfoResponse) updates) =>
-      super.copyWith((message) => updates(
-          message as PublicKeyInfoResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PublicKeyInfoResponse))
+          as PublicKeyInfoResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PublicKeyInfoResponse create() => PublicKeyInfoResponse._();
@@ -3816,7 +3819,7 @@ class PublicKeyInfoResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PublicKeyInfoResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PublicKeyInfoResponse>(create);
-  static PublicKeyInfoResponse _defaultInstance;
+  static PublicKeyInfoResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   PublicKeyInfo get output => $_getN(0);
@@ -3871,9 +3874,9 @@ class PublicKeyInfo extends $pb.GeneratedMessage {
 
   PublicKeyInfo._() : super();
   factory PublicKeyInfo({
-    $fixnum.Int64 bitLen,
-    $fixnum.Int64 size,
-    $fixnum.Int64 e,
+    $fixnum.Int64? bitLen,
+    $fixnum.Int64? size,
+    $fixnum.Int64? e,
   }) {
     final _result = create();
     if (bitLen != null) {
@@ -3901,8 +3904,8 @@ class PublicKeyInfo extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   PublicKeyInfo copyWith(void Function(PublicKeyInfo) updates) =>
-      super.copyWith((message) =>
-          updates(message as PublicKeyInfo)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PublicKeyInfo))
+          as PublicKeyInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PublicKeyInfo create() => PublicKeyInfo._();
@@ -3912,7 +3915,7 @@ class PublicKeyInfo extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PublicKeyInfo getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PublicKeyInfo>(create);
-  static PublicKeyInfo _defaultInstance;
+  static PublicKeyInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get bitLen => $_getI64(0);

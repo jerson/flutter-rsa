@@ -11,7 +11,7 @@ class Binding {
   Binding._internal();
 
   Future<Uint8List> callAsync(String name, Uint8List payload) async {
-    return null;
+    return Uint8List.fromList(''.codeUnits);
   }
 
   bool isSupported() {

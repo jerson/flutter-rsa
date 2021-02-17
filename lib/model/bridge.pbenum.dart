@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: bridge.proto
 //
-// @dart = 2.7
+
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
@@ -34,7 +34,7 @@ class SaltLength extends $pb.ProtobufEnum {
 
   static final $core.Map<$core.int, SaltLength> _byValue =
       $pb.ProtobufEnum.initByValue(values);
-  static SaltLength valueOf($core.int value) => _byValue[value];
+  static SaltLength? valueOf($core.int value) => _byValue[value];
 
   const SaltLength._($core.int v, $core.String n) : super(v, n);
 }
@@ -82,7 +82,7 @@ class PEMCipher extends $pb.ProtobufEnum {
 
   static final $core.Map<$core.int, PEMCipher> _byValue =
       $pb.ProtobufEnum.initByValue(values);
-  static PEMCipher valueOf($core.int value) => _byValue[value];
+  static PEMCipher? valueOf($core.int value) => _byValue[value];
 
   const PEMCipher._($core.int v, $core.String n) : super(v, n);
 }
@@ -136,7 +136,7 @@ class Hash extends $pb.ProtobufEnum {
 
   static final $core.Map<$core.int, Hash> _byValue =
       $pb.ProtobufEnum.initByValue(values);
-  static Hash valueOf($core.int value) => _byValue[value];
+  static Hash? valueOf($core.int value) => _byValue[value];
 
   const Hash._($core.int v, $core.String n) : super(v, n);
 }
