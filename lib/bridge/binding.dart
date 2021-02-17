@@ -122,8 +122,7 @@ class Binding {
       return ffi.DynamicLibrary.process();
     }
     if (Platform.isLinux) {
-      var baseDir = Directory(Platform.resolvedExecutable).parent.path;
-      return ffi.DynamicLibrary.open("$baseDir/lib/$_libraryName.so");
+      return ffi.DynamicLibrary.open("$_libraryName.so");
     }
     return ffi.DynamicLibrary.open("$_libraryName.so");
   }
