@@ -1,6 +1,6 @@
 name: fast_rsa
 description: library for use RSA with support for android and ios, macOS, linux, windows, web and hover
-version: 1.4.0-nullsafety.3
+version: 1.4.0-nullsafety.4
 homepage: https://github.com/jerson/flutter-rsa
 
 environment:
