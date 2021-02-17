@@ -1,6 +1,7 @@
 name: Build Example Docker images
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
@@ -24,4 +25,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:example-web
+            ghcr.io/${{ github.repository }}:example-web-${{ github.ref }}

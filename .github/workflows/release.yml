@@ -1,9 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -25,4 +24,4 @@ jobs:
           body: |
             ${{ steps.Changelog.outputs.changelog }}
           draft: false
-          prerelease: false
+          prerelease: true
