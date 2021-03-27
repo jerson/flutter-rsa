@@ -13,8 +13,6 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   ffi: ^1.0.0
-  protobuf: ^2.0.0
-  fixnum: ^1.0.0
 
 dev_dependencies:
   flutter_test:
