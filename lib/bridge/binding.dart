@@ -124,6 +124,19 @@ class Binding {
     if (Platform.isLinux) {
       return ffi.DynamicLibrary.open("$_libraryName.so");
     }
-    return ffi.DynamicLibrary.open("$_libraryName.so");
+    try {
+      return ffi.DynamicLibrary.open("$_libraryName.so");
+    } catch (e) {
+      print("fallback to open DynamicLibrary on older devices");
+      //fallback for devices that cannot load dynamic libraries by name: load the library with an absolute path
+      //read the app id
+      var appid = File("/proc/self/cmdline").readAsStringSync();
+      // the file /proc/self/cmdline returns a string with many trailing \0 characters, which makes the string pretty useless for dart, many
+      // operations will not work correctly. remove these trailing zero bytes.
+      appid = String.fromCharCodes(
+          appid.codeUnits.where((element) => element != 0));
+      final loadPath = "/data/data/$appid/lib/$_libraryName.so";
+      return ffi.DynamicLibrary.open(loadPath);
+    }
   }
 }
