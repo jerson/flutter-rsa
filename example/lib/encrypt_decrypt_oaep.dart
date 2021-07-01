@@ -15,7 +15,7 @@ class EncryptAndDecryptOAEP extends StatefulWidget {
     Key? key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })   : keyPair = keyPair,
+  })  : keyPair = keyPair,
         super(key: key);
 
   final PKCS12KeyPair keyPair;
@@ -45,7 +45,7 @@ class _EncryptAndDecryptOAEPState extends State<EncryptAndDecryptOAEP> {
                 var encrypted = await RSA.encryptOAEP(
                   controller.text,
                   "",
-                  Hash.HASH_SHA256,
+                  Hash.SHA256,
                   widget.keyPair.publicKey,
                 );
                 setState(() {
@@ -61,7 +61,7 @@ class _EncryptAndDecryptOAEPState extends State<EncryptAndDecryptOAEP> {
                 var decrypted = await RSA.decryptOAEP(
                   _encrypted,
                   "",
-                  Hash.HASH_SHA256,
+                  Hash.SHA256,
                   widget.keyPair.privateKey,
                 );
                 setState(() {

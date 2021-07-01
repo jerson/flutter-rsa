@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_rsa/rsa.dart';
-import 'package:fast_rsa/model/bridge.pb.dart' as pb;
 import 'package:rsa_example/base64.dart';
 import 'package:rsa_example/convert_jwt.dart';
 import 'package:rsa_example/convert_keypair.dart';
@@ -126,10 +125,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  pb.PKCS12KeyPair _pkcs12KeyPair = pb.PKCS12KeyPair()
-    ..privateKey = ""
-    ..publicKey = ""
-    ..certificate = "";
+  PKCS12KeyPair _pkcs12KeyPair = PKCS12KeyPair("", "", "");
 
   @override
   void initState() {
@@ -208,7 +204,7 @@ class _MyAppState extends State<MyApp> {
               keyPair: _pkcs12KeyPair,
               key: Key("base64"),
             ),
-            Hash(
+            HashExample(
               title: "Hash",
               keyPair: _pkcs12KeyPair,
               key: Key("hash"),

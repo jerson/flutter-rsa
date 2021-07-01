@@ -16,7 +16,7 @@ class ConvertPrivate extends StatefulWidget {
     Key? key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })   : keyPair = keyPair,
+  })  : keyPair = keyPair,
         super(key: key);
 
   final PKCS12KeyPair keyPair;

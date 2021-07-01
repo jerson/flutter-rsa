@@ -7,7 +7,7 @@ class InputWidget extends StatefulWidget {
     required this.result,
     required String title,
     required Function(TextEditingController) onPressed,
-  })   : onPressed = onPressed,
+  })  : onPressed = onPressed,
         title = title,
         super(key: key);
 

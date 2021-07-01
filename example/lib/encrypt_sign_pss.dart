@@ -15,7 +15,7 @@ class SignAndVerifyPSS extends StatefulWidget {
     Key? key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })   : keyPair = keyPair,
+  })  : keyPair = keyPair,
         super(key: key);
 
   final PKCS12KeyPair keyPair;
@@ -45,8 +45,8 @@ class _SignAndVerifyPSSState extends State<SignAndVerifyPSS> {
               onPressed: (controller) async {
                 var result = await RSA.signPSS(
                   controller.text,
-                  Hash.HASH_SHA256,
-                  SaltLength.SALTLENGTH_AUTO,
+                  Hash.SHA256,
+                  SaltLength.AUTO,
                   widget.keyPair.privateKey,
                 );
                 setState(() {
@@ -63,8 +63,8 @@ class _SignAndVerifyPSSState extends State<SignAndVerifyPSS> {
                 var result = await RSA.verifyPSS(
                   _signed,
                   _text,
-                  Hash.HASH_SHA256,
-                  SaltLength.SALTLENGTH_AUTO,
+                  Hash.SHA256,
+                  SaltLength.AUTO,
                   widget.keyPair.publicKey,
                 );
                 setState(() {

@@ -2,17 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-// Ignore existing issues in FB to avoid a score penalty for pub.dev/objectbox
-// ignore_for_file: prefer_generic_function_type_aliases
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: unnecessary_new
-// ignore_for_file: prefer_final_fields
-// ignore_for_file: prefer_equal_for_default_values
-// ignore_for_file: prefer_collection_literals
-// ignore_for_file: curly_braces_in_flow_control_structures
-// ignore_for_file: annotate_overrides
-// ignore_for_file: avoid_return_types_on_setters
-
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
@@ -41,56 +30,45 @@ class BufferContext {
 
   ByteData get buffer => _buffer;
 
+  /// Create from a FlatBuffer represented by a list of bytes (uint8).
   factory BufferContext.fromBytes(List<int> byteList) {
     Uint8List uint8List = _asUint8List(byteList);
     ByteData buf = new ByteData.view(uint8List.buffer, uint8List.offsetInBytes);
-    return new BufferContext._(buf);
+    return BufferContext(buf);
   }
 
-  BufferContext._(this._buffer);
+  /// Create from a FlatBuffer represented by ByteData.
+  BufferContext(this._buffer);
 
-  @pragma('vm:prefer-inline')
   int derefObject(int offset) {
     return offset + _getUint32(offset);
   }
 
-  @pragma('vm:prefer-inline')
   Uint8List _asUint8LIst(int offset, int length) =>
       _buffer.buffer.asUint8List(_buffer.offsetInBytes + offset, length);
 
-  @pragma('vm:prefer-inline')
   double _getFloat64(int offset) => _buffer.getFloat64(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   double _getFloat32(int offset) => _buffer.getFloat32(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   int _getInt64(int offset) => _buffer.getInt64(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   int _getInt32(int offset) => _buffer.getInt32(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   int _getInt16(int offset) => _buffer.getInt16(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   int _getInt8(int offset) => _buffer.getInt8(offset);
 
-  @pragma('vm:prefer-inline')
   int _getUint64(int offset) => _buffer.getUint64(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   int _getUint32(int offset) => _buffer.getUint32(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   int _getUint16(int offset) => _buffer.getUint16(offset, Endian.little);
 
-  @pragma('vm:prefer-inline')
   int _getUint8(int offset) => _buffer.getUint8(offset);
 
   /// If the [byteList] is already a [Uint8List] return it.
   /// Otherwise return a [Uint8List] copy of the [byteList].
-  @pragma('vm:prefer-inline')
   static Uint8List _asUint8List(List<int> byteList) {
     if (byteList is Uint8List) {
       return byteList;
@@ -128,13 +106,10 @@ class Builder {
   final int initialSize;
 
   /// The list of existing VTable(s).
-  //final List<_VTable> _vTables = <_VTable>[];
   final List<int> _vTables = List<int>.filled(16, 0, growable: true)
     ..length = 0;
 
-  late ByteData _buf;
-
-  Allocator _allocator;
+  ByteData _buf;
 
   /// The maximum alignment that has been seen so far.  If [_buf] has to be
   /// reallocated in the future (to insert room at its start for more bytes) the
@@ -146,7 +121,7 @@ class Builder {
   int _tail = 0;
 
   /// The location of the end of the current table, measured in bytes from the
-  /// end of [_buf], or `null` if a table is not currently being built.
+  /// end of [_buf].
   int _currentTableEndTail = 0;
 
   _VTable? _currentVTable;
@@ -163,19 +138,15 @@ class Builder {
   /// automatically grow the array if/as needed.  `internStrings`, if set to
   /// true, will cause [writeString] to pool strings in the buffer so that
   /// identical strings will always use the same offset in tables.
-  Builder(
-      {this.initialSize: 1024,
-      bool internStrings = false,
-      Allocator? allocator})
-      : _allocator = allocator ?? DefaultAllocator() {
-    _buf = _allocator.allocate(initialSize);
-    _allocator.clear(_buf, true);
+  Builder({this.initialSize: 1024, bool internStrings = false})
+      : _buf = ByteData(initialSize) {
     if (internStrings == true) {
       _strings = new Map<String, int>();
     }
   }
 
-  int get size => _tail + ((-_tail) & (_maxAlign - 1));
+  /// Calculate the finished buffer size (aligned).
+  int size() => _tail + ((-_tail) % _maxAlign);
 
   /// Add the [field] with the given boolean [value].  The field is not added if
   /// the [value] is equal to [def].  Booleans are stored as 8-bit fields with
@@ -324,11 +295,12 @@ class Builder {
     _prepare(_sizeofInt32, 1);
     int tableTail = _tail;
     // Prepare the size of the current table.
-    _currentVTable!.tableSize = tableTail - _currentTableEndTail;
+    final currentVTable = _currentVTable!;
+    currentVTable.tableSize = tableTail - _currentTableEndTail;
     // Prepare the VTable to use for the current table.
     int? vTableTail;
     {
-      _currentVTable!.computeFieldOffsets(tableTail);
+      currentVTable.computeFieldOffsets(tableTail);
       // Try to find an existing compatible VTable.
       // Search backward - more likely to have recently used one
       for (int i = _vTables.length - 1; i >= 0; i--) {
@@ -336,8 +308,8 @@ class Builder {
         final int vt2Start = _buf.lengthInBytes - vt2Offset;
         final int vt2Size = _buf.getUint16(vt2Start, Endian.little);
 
-        if (_currentVTable!._vTableSize == vt2Size &&
-            _currentVTable!._offsetsMatch(vt2Start, _buf)) {
+        if (currentVTable._vTableSize == vt2Size &&
+            currentVTable._offsetsMatch(vt2Start, _buf)) {
           vTableTail = vt2Offset;
           break;
         }
@@ -346,9 +318,9 @@ class Builder {
       if (vTableTail == null) {
         _prepare(_sizeofUint16, _currentVTable!.numOfUint16);
         vTableTail = _tail;
-        _currentVTable!.tail = vTableTail;
-        _currentVTable!.output(_buf, _buf.lengthInBytes - _tail);
-        _vTables.add(_currentVTable!.tail);
+        currentVTable.tail = vTableTail;
+        currentVTable.output(_buf, _buf.lengthInBytes - _tail);
+        _vTables.add(currentVTable.tail);
       }
     }
     // Set the VTable offset.
@@ -363,7 +335,7 @@ class Builder {
   ///
   /// Most clients should prefer calling [finish].
   Uint8List lowFinish() {
-    return _buf.buffer.asUint8List(_buf.lengthInBytes - size);
+    return _buf.buffer.asUint8List(_buf.lengthInBytes - size());
   }
 
   /// Finish off the creation of the buffer.  The given [offset] is used as the
@@ -373,14 +345,15 @@ class Builder {
   /// bytes 4-7 of the file.
   Uint8List finish(int offset, [String? fileIdentifier]) {
     _prepare(max(_sizeofUint32, _maxAlign), fileIdentifier == null ? 1 : 2);
-    _setUint32AtTail(_buf, size, size - offset);
+    final finishedSize = size();
+    _setUint32AtTail(_buf, finishedSize, finishedSize - offset);
     if (fileIdentifier != null) {
       for (int i = 0; i < 4; i++) {
-        _setUint8AtTail(
-            _buf, size - _sizeofUint32 - i, fileIdentifier.codeUnitAt(i));
+        _setUint8AtTail(_buf, finishedSize - _sizeofUint32 - i,
+            fileIdentifier.codeUnitAt(i));
       }
     }
-    return _buf.buffer.asUint8List(_buf.lengthInBytes - size);
+    return _buf.buffer.asUint8List(_buf.lengthInBytes - finishedSize);
   }
 
   /// Writes a Float64 to the tail of the buffer after preparing space for it.
@@ -465,7 +438,6 @@ class Builder {
 
   /// Reset the builder and make it ready for filling a new buffer.
   void reset() {
-    _allocator.clear(_buf, false);
     _maxAlign = 1;
     _tail = 0;
     _currentVTable = null;
@@ -476,11 +448,11 @@ class Builder {
   }
 
   /// Start a new table.  Must be finished with [endTable] invocation.
-  void startTable(int numFields) {
+  void startTable() {
     if (_currentVTable != null) {
       throw new StateError('Inline tables are not supported.');
     }
-    _currentVTable = new _VTable(numFields);
+    _currentVTable = new _VTable();
     _currentTableEndTail = _tail;
   }
 
@@ -671,14 +643,18 @@ class Builder {
     return result;
   }
 
-  /// Write the given string [value] and return its offset.
-  int writeString(String value) {
+  /// Write the given string [value] and return its offset, or `null` if
+  /// the [value] is `null`.
+  int? writeString(String? value) {
     _ensureNoVTable();
-    if (_strings != null) {
-      return _strings!.putIfAbsent(value, () => _writeString(value));
-    } else {
-      return _writeString(value);
+    if (value != null) {
+      if (_strings != null) {
+        return _strings!.putIfAbsent(value, () => _writeString(value));
+      } else {
+        return _writeString(value);
+      }
     }
+    return null;
   }
 
   int _writeString(String value) {
@@ -723,7 +699,6 @@ class Builder {
   /// Prepare for writing the given `count` of scalars of the given `size`.
   /// Additionally allocate the specified `additionalBytes`. Update the current
   /// tail pointer to point at the allocated space.
-  @pragma('vm:prefer-inline')
   void _prepare(int size, int count, {int additionalBytes = 0}) {
     // Update the alignment.
     if (_maxAlign < size) {
@@ -731,17 +706,21 @@ class Builder {
     }
     // Prepare amount of required space.
     int dataSize = size * count + additionalBytes;
-    int alignDelta = (-(_tail + dataSize)) & (size - 1);
+    int alignDelta = (-(_tail + dataSize)) % size;
     int bufSize = alignDelta + dataSize;
     // Ensure that we have the required amount of space.
-    {
+        {
       int oldCapacity = _buf.lengthInBytes;
       if (_tail + bufSize > oldCapacity) {
         int desiredNewCapacity = (oldCapacity + bufSize) * 2;
         int deltaCapacity = desiredNewCapacity - oldCapacity;
-        deltaCapacity += (-deltaCapacity) & (_maxAlign - 1);
+        deltaCapacity += (-deltaCapacity) % _maxAlign;
         int newCapacity = oldCapacity + deltaCapacity;
-        _buf = _allocator.reallocateDownward(_buf, newCapacity, oldCapacity, 0);
+        ByteData newBuf = new ByteData(newCapacity);
+        newBuf.buffer
+            .asUint8List()
+            .setAll(deltaCapacity, _buf.buffer.asUint8List());
+        _buf = newBuf;
       }
     }
     // Update the tail pointer.
@@ -749,57 +728,46 @@ class Builder {
   }
 
   /// Record the offset of the given [field].
-  @pragma('vm:prefer-inline')
   void _trackField(int field) {
     _currentVTable!.addField(field, _tail);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setFloat64AtTail(ByteData _buf, int tail, double x) {
     _buf.setFloat64(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setFloat32AtTail(ByteData _buf, int tail, double x) {
     _buf.setFloat32(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setUint64AtTail(ByteData _buf, int tail, int x) {
     _buf.setUint64(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setInt64AtTail(ByteData _buf, int tail, int x) {
     _buf.setInt64(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setInt32AtTail(ByteData _buf, int tail, int x) {
     _buf.setInt32(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setUint32AtTail(ByteData _buf, int tail, int x) {
     _buf.setUint32(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setInt16AtTail(ByteData _buf, int tail, int x) {
     _buf.setInt16(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setUint16AtTail(ByteData _buf, int tail, int x) {
     _buf.setUint16(_buf.lengthInBytes - tail, x, Endian.little);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setInt8AtTail(ByteData _buf, int tail, int x) {
     _buf.setInt8(_buf.lengthInBytes - tail, x);
   }
 
-  @pragma('vm:prefer-inline')
   static void _setUint8AtTail(ByteData _buf, int tail, int x) {
     _buf.setUint8(_buf.lengthInBytes - tail, x);
   }
@@ -815,7 +783,6 @@ class BoolListReader extends Reader<List<bool>> {
   int get size => _sizeofUint32;
 
   @override
-  @pragma('vm:prefer-inline')
   List<bool> read(BufferContext bc, int offset) =>
       new _FbBoolList(bc, bc.derefObject(offset));
 }
@@ -828,7 +795,6 @@ class BoolReader extends Reader<bool> {
   int get size => _sizeofUint8;
 
   @override
-  @pragma('vm:prefer-inline')
   bool read(BufferContext bc, int offset) => bc._getInt8(offset) != 0;
 }
 
@@ -842,7 +808,6 @@ class Float64ListReader extends Reader<List<double>> {
   int get size => _sizeofFloat64;
 
   @override
-  @pragma('vm:prefer-inline')
   List<double> read(BufferContext bc, int offset) =>
       new _FbFloat64List(bc, bc.derefObject(offset));
 }
@@ -854,7 +819,6 @@ class Float32ListReader extends Reader<List<double>> {
   int get size => _sizeofFloat32;
 
   @override
-  @pragma('vm:prefer-inline')
   List<double> read(BufferContext bc, int offset) =>
       new _FbFloat32List(bc, bc.derefObject(offset));
 }
@@ -866,7 +830,6 @@ class Float64Reader extends Reader<double> {
   int get size => _sizeofFloat64;
 
   @override
-  @pragma('vm:prefer-inline')
   double read(BufferContext bc, int offset) => bc._getFloat64(offset);
 }
 
@@ -877,17 +840,16 @@ class Float32Reader extends Reader<double> {
   int get size => _sizeofFloat32;
 
   @override
-  @pragma('vm:prefer-inline')
   double read(BufferContext bc, int offset) => bc._getFloat32(offset);
 }
 
 class Int64Reader extends Reader<int> {
   const Int64Reader() : super();
+
   @override
   int get size => _sizeofInt64;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getInt64(offset);
 }
 
@@ -899,7 +861,6 @@ class Int32Reader extends Reader<int> {
   int get size => _sizeofInt32;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getInt32(offset);
 }
 
@@ -911,7 +872,6 @@ class Int16Reader extends Reader<int> {
   int get size => _sizeofInt16;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getInt16(offset);
 }
 
@@ -923,7 +883,6 @@ class Int8Reader extends Reader<int> {
   int get size => _sizeofInt8;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getInt8(offset);
 }
 
@@ -953,27 +912,24 @@ abstract class Reader<T> {
   /// Read the value at the given [offset] in [bc].
   T read(BufferContext bc, int offset);
 
-  @pragma('vm:prefer-inline')
+  /// Read the value of the given [field] in the given [object].
+  T vTableGet(BufferContext object, int offset, int field, T defaultValue) {
+    int fieldOffset = _vTableFieldOffset(object, offset, field);
+    return fieldOffset == 0 ? defaultValue : read(object, offset + fieldOffset);
+  }
+
+  /// Read the value of the given [field] in the given [object].
+  T? vTableGetNullable(BufferContext object, int offset, int field) {
+    int fieldOffset = _vTableFieldOffset(object, offset, field);
+    return fieldOffset == 0 ? null : read(object, offset + fieldOffset);
+  }
+
   int _vTableFieldOffset(BufferContext object, int offset, int field) {
     int vTableSOffset = object._getInt32(offset);
     int vTableOffset = offset - vTableSOffset;
     int vTableSize = object._getUint16(vTableOffset);
     if (field >= vTableSize) return 0;
     return object._getUint16(vTableOffset + field);
-  }
-
-  /// Read the value of the given [field] in the given [object].
-  @pragma('vm:prefer-inline')
-  T? vTableGetNullable(BufferContext object, int offset, int field) {
-    int fieldOffset = _vTableFieldOffset(object, offset, field);
-    return fieldOffset == 0 ? null : read(object, offset + fieldOffset);
-  }
-
-  /// Read the value of the given [field] in the given [object].
-  @pragma('vm:prefer-inline')
-  T vTableGet(BufferContext object, int offset, int field, T defaultValue) {
-    int fieldOffset = _vTableFieldOffset(object, offset, field);
-    return fieldOffset == 0 ? defaultValue : read(object, offset + fieldOffset);
   }
 }
 
@@ -985,7 +941,6 @@ class StringReader extends Reader<String> {
   int get size => 4;
 
   @override
-  @pragma('vm:prefer-inline')
   String read(BufferContext bc, int offset) {
     int strOffset = bc.derefObject(offset);
     int length = bc._getUint32(strOffset);
@@ -996,7 +951,6 @@ class StringReader extends Reader<String> {
     return utf8.decode(bytes);
   }
 
-  @pragma('vm:prefer-inline')
   static bool _isLatin(Uint8List bytes) {
     int length = bytes.length;
     for (int i = 0; i < length; i++) {
@@ -1047,7 +1001,6 @@ class Uint32ListReader extends Reader<List<int>> {
   int get size => _sizeofUint32;
 
   @override
-  @pragma('vm:prefer-inline')
   List<int> read(BufferContext bc, int offset) =>
       new _FbUint32List(bc, bc.derefObject(offset));
 }
@@ -1062,7 +1015,6 @@ class Uint64Reader extends Reader<int> {
   int get size => _sizeofUint64;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getUint64(offset);
 }
 
@@ -1074,7 +1026,6 @@ class Uint32Reader extends Reader<int> {
   int get size => _sizeofUint32;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getUint32(offset);
 }
 
@@ -1088,7 +1039,6 @@ class Uint16ListReader extends Reader<List<int>> {
   int get size => _sizeofUint32;
 
   @override
-  @pragma('vm:prefer-inline')
   List<int> read(BufferContext bc, int offset) =>
       new _FbUint16List(bc, bc.derefObject(offset));
 }
@@ -1101,7 +1051,6 @@ class Uint16Reader extends Reader<int> {
   int get size => _sizeofUint16;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getUint16(offset);
 }
 
@@ -1115,7 +1064,6 @@ class Uint8ListReader extends Reader<List<int>> {
   int get size => _sizeofUint32;
 
   @override
-  @pragma('vm:prefer-inline')
   List<int> read(BufferContext bc, int offset) =>
       new _FbUint8List(bc, bc.derefObject(offset));
 }
@@ -1128,7 +1076,6 @@ class Uint8Reader extends Reader<int> {
   int get size => _sizeofUint8;
 
   @override
-  @pragma('vm:prefer-inline')
   int read(BufferContext bc, int offset) => bc._getUint8(offset);
 }
 
@@ -1137,7 +1084,6 @@ class _FbFloat64List extends _FbList<double> {
   _FbFloat64List(BufferContext bc, int offset) : super(bc, offset);
 
   @override
-  @pragma('vm:prefer-inline')
   double operator [](int i) {
     return bc._getFloat64(offset + 4 + 8 * i);
   }
@@ -1148,7 +1094,6 @@ class _FbFloat32List extends _FbList<double> {
   _FbFloat32List(BufferContext bc, int offset) : super(bc, offset);
 
   @override
-  @pragma('vm:prefer-inline')
   double operator [](int i) {
     return bc._getFloat32(offset + 4 + 4 * i);
   }
@@ -1164,7 +1109,6 @@ class _FbGenericList<E> extends _FbList<E> {
       : super(bp, offset);
 
   @override
-  @pragma('vm:prefer-inline')
   E operator [](int i) {
     _items ??= List<E?>.filled(length, null);
     E? item = _items![i];
@@ -1185,7 +1129,6 @@ abstract class _FbList<E> extends Object with ListMixin<E> implements List<E> {
   _FbList(this.bc, this.offset);
 
   @override
-  @pragma('vm:prefer-inline')
   int get length {
     _length ??= bc._getUint32(offset);
     return _length!;
@@ -1205,7 +1148,6 @@ class _FbUint32List extends _FbList<int> {
   _FbUint32List(BufferContext bc, int offset) : super(bc, offset);
 
   @override
-  @pragma('vm:prefer-inline')
   int operator [](int i) {
     return bc._getUint32(offset + 4 + 4 * i);
   }
@@ -1216,7 +1158,6 @@ class _FbUint16List extends _FbList<int> {
   _FbUint16List(BufferContext bc, int offset) : super(bc, offset);
 
   @override
-  @pragma('vm:prefer-inline')
   int operator [](int i) {
     return bc._getUint16(offset + 4 + 2 * i);
   }
@@ -1227,7 +1168,6 @@ class _FbUint8List extends _FbList<int> {
   _FbUint8List(BufferContext bc, int offset) : super(bc, offset);
 
   @override
-  @pragma('vm:prefer-inline')
   int operator [](int i) {
     return bc._getUint8(offset + 4 + i);
   }
@@ -1238,7 +1178,6 @@ class _FbBoolList extends _FbList<bool> {
   _FbBoolList(BufferContext bc, int offset) : super(bc, offset);
 
   @override
-  @pragma('vm:prefer-inline')
   bool operator [](int i) {
     return bc._getUint8(offset + 4 + i) == 1 ? true : false;
   }
@@ -1248,36 +1187,28 @@ class _FbBoolList extends _FbList<bool> {
 class _VTable {
   static const int _metadataLength = 4;
 
-  // Note: fieldOffsets start as "tail offsets"+1 and are then transformed to
-  // actual offsets when a table is finished, by calling [computeFieldOffsets].
-  final Uint32List fieldOffsets;
-  static const uint32Max = 4294967295;
-  bool offsetsComputed = false;
-
-  _VTable(int numFields) : fieldOffsets = Uint32List(numFields);
+  final fieldTails = <int?>[];
+  final fieldOffsets = <int>[];
 
   /// The size of the table that uses this VTable.
   int tableSize = 0;
 
-  /// The tail of this VTable.  It is used to share the same VTable between
+  /// The tail of this VTable. It is used to share the same VTable between
   /// multiple tables of identical structure.
   int tail = 0;
 
   int get _vTableSize => numOfUint16 * _sizeofUint16;
 
-  int get numOfUint16 => 1 + 1 + fieldOffsets.length;
+  int get numOfUint16 => 1 + 1 + fieldTails.length;
 
-  @pragma('vm:prefer-inline')
   void addField(int field, int offset) {
-    assert(!offsetsComputed);
-    // We need to increase the offset by 1 to later (in [computeFieldOffsets])
-    // recognize fields that haven't been set (Uint32List initializes to 0s).
-    assert(offset < uint32Max);
-    fieldOffsets[field] = offset + 1;
+    while (fieldTails.length <= field) {
+      fieldTails.add(null);
+    }
+    fieldTails[field] = offset;
   }
 
   bool _offsetsMatch(int vt2Start, ByteData buf) {
-    assert(offsetsComputed);
     for (int i = 0; i < fieldOffsets.length; i++) {
       if (fieldOffsets[i] !=
           buf.getUint16(vt2Start + _metadataLength + (2 * i), Endian.little)) {
@@ -1289,18 +1220,16 @@ class _VTable {
 
   /// Fill the [fieldOffsets] field.
   void computeFieldOffsets(int tableTail) {
-    assert(!offsetsComputed);
-    offsetsComputed = true;
-    for (var i = 0; i < fieldOffsets.length; i++) {
-      int fieldTail = fieldOffsets[i];
-      fieldOffsets[i] = fieldTail == 0 ? 0 : tableTail - fieldTail + 1;
+    assert(fieldOffsets.isEmpty);
+    for (int? fieldTail in fieldTails) {
+      int fieldOffset = fieldTail == null ? 0 : tableTail - fieldTail;
+      fieldOffsets.add(fieldOffset);
     }
   }
 
   /// Outputs this VTable to [buf], which is is expected to be aligned to 16-bit
   /// and have at least [numOfUint16] 16-bit words available.
   void output(ByteData buf, int bufOffset) {
-    assert(offsetsComputed);
     // VTable size.
     buf.setUint16(bufOffset, numOfUint16 * 2, Endian.little);
     bufOffset += 2;
@@ -1308,80 +1237,9 @@ class _VTable {
     buf.setUint16(bufOffset, tableSize, Endian.little);
     bufOffset += 2;
     // Field offsets.
-    for (int i = 0; i < fieldOffsets.length; i++) {
-      final fieldOffset = fieldOffsets[i];
+    for (int fieldOffset in fieldOffsets) {
       buf.setUint16(bufOffset, fieldOffset, Endian.little);
       bufOffset += 2;
-    }
-  }
-}
-
-// Allocator interface. This is flatbuffers-specific - only for [Builder].
-abstract class Allocator {
-  ByteData allocate(int size);
-
-  void deallocate(ByteData data);
-
-  /// Reallocate [newSize] bytes of memory, replacing the old [oldData]. This
-  /// grows downwards, and is intended specifically for use with [Builder].
-  /// Params [inUseBack] and [inUseFront] indicate how much of [oldData] is
-  /// actually in use at each end, and needs to be copied.
-  ByteData reallocateDownward(
-      ByteData oldData, int newSize, int inUseBack, int inUseFront) {
-    final newData = allocate(newSize);
-    clear(newData, true);
-    _copyDownward(oldData, newData, inUseBack, inUseFront);
-    deallocate(oldData);
-    return newData;
-  }
-
-  /// Clear the allocated data contents.
-  ///
-  /// Param [isFresh] is true if the given data has been freshly allocated,
-  /// depending on the allocator implementation, clearing may be unnecessary.
-  void clear(ByteData data, bool isFresh) {
-    final length = data.lengthInBytes;
-    final length64b = (length / 8).floor();
-    // fillRange iterates over data so it's faster with larger data type
-    if (length64b > 0) data.buffer.asUint64List().fillRange(0, length64b, 0);
-    data.buffer.asUint8List().fillRange(length64b * 8, length % 8, 0);
-  }
-
-  /// Called by [reallocate] to copy memory from [oldData] to [newData]. Only
-  /// memory of size [inUseFront] and [inUseBack] will be copied from the front
-  /// and back of the old memory allocation.
-  void _copyDownward(
-      ByteData oldData, ByteData newData, int inUseBack, int inUseFront) {
-    if (inUseBack != 0) {
-      newData.buffer.asUint8List().setAll(
-          newData.lengthInBytes - inUseBack,
-          oldData.buffer.asUint8List().getRange(
-              oldData.lengthInBytes - inUseBack, oldData.lengthInBytes));
-    }
-    if (inUseFront != 0) {
-      newData.buffer
-          .asUint8List()
-          .setAll(0, oldData.buffer.asUint8List().getRange(0, inUseFront));
-    }
-  }
-}
-
-class DefaultAllocator extends Allocator {
-  @override
-  ByteData allocate(int size) => ByteData(size);
-
-  @override
-  void deallocate(ByteData _) {
-    // nothing to do, it's garbage-collected
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  void clear(ByteData data, bool isFresh) {
-    if (isFresh) {
-      // nothing to do, ByteData is created all zeroed out
-    } else {
-      super.clear(data, isFresh);
     }
   }
 }
