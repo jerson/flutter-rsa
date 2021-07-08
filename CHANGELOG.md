@@ -1,4 +1,4 @@
-## 2.1.0
+## 3.0.0
 
 - First version with flatbuffers, smaller binaries, please take a look
 ## 2.0.1
