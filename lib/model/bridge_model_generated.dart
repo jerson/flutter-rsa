@@ -6,7 +6,6 @@ library model;
 import 'dart:typed_data' show Uint8List;
 import 'package:fast_rsa/flatbuffers/flat_buffers.dart' as fb;
 
-
 class SaltLength {
   final int value;
   const SaltLength._(this.value);
@@ -19,7 +18,7 @@ class SaltLength {
     return result;
   }
 
-  static SaltLength? _createOrNull(int? value) => 
+  static SaltLength? _createOrNull(int? value) =>
       value == null ? null : SaltLength.fromValue(value);
 
   static const int minValue = 0;
@@ -28,9 +27,7 @@ class SaltLength {
 
   static const SaltLength AUTO = const SaltLength._(0);
   static const SaltLength EQUALS_HASH = const SaltLength._(1);
-  static const Map<int, SaltLength> values = {
-    0: AUTO,
-    1: EQUALS_HASH};
+  static const Map<int, SaltLength> values = {0: AUTO, 1: EQUALS_HASH};
 
   static const fb.Reader<SaltLength> reader = const _SaltLengthReader();
 
@@ -63,7 +60,7 @@ class PEMCipher {
     return result;
   }
 
-  static PEMCipher? _createOrNull(int? value) => 
+  static PEMCipher? _createOrNull(int? value) =>
       value == null ? null : PEMCipher.fromValue(value);
 
   static const int minValue = 0;
@@ -80,7 +77,8 @@ class PEMCipher {
     1: D3DES,
     2: AES128,
     3: AES192,
-    4: AES256};
+    4: AES256
+  };
 
   static const fb.Reader<PEMCipher> reader = const _PEMCipherReader();
 
@@ -113,7 +111,7 @@ class Hash {
     return result;
   }
 
-  static Hash? _createOrNull(int? value) => 
+  static Hash? _createOrNull(int? value) =>
       value == null ? null : Hash.fromValue(value);
 
   static const int minValue = 0;
@@ -132,7 +130,8 @@ class Hash {
     2: SHA224,
     3: SHA256,
     4: SHA384,
-    5: SHA512};
+    5: SHA512
+  };
 
   static const fb.Reader<Hash> reader = const _HashReader();
 
@@ -160,13 +159,16 @@ class ConvertJWTRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<ConvertJWTRequest> reader = const _ConvertJWTRequestReader();
+  static const fb.Reader<ConvertJWTRequest> reader =
+      const _ConvertJWTRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get data => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get keyId => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get data =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get keyId =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -178,8 +180,8 @@ class _ConvertJWTRequestReader extends fb.TableReader<ConvertJWTRequest> {
   const _ConvertJWTRequestReader();
 
   @override
-  ConvertJWTRequest createObject(fb.BufferContext bc, int offset) => 
-    new ConvertJWTRequest._(bc, offset);
+  ConvertJWTRequest createObject(fb.BufferContext bc, int offset) =>
+      new ConvertJWTRequest._(bc, offset);
 }
 
 class ConvertJWTRequestBuilder {
@@ -195,6 +197,7 @@ class ConvertJWTRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addKeyIdOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -212,8 +215,7 @@ class ConvertJWTRequestObjectBuilder extends fb.ObjectBuilder {
   ConvertJWTRequestObjectBuilder({
     String? data,
     String? keyId,
-  })
-      : _data = data,
+  })  : _data = data,
         _keyId = keyId;
 
   /// Finish building, and store into the [fbBuilder].
@@ -235,6 +237,7 @@ class ConvertJWTRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class ConvertKeyPairRequest {
   ConvertKeyPairRequest._(this._bc, this._bcOffset);
   factory ConvertKeyPairRequest(List<int> bytes) {
@@ -242,14 +245,18 @@ class ConvertKeyPairRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<ConvertKeyPairRequest> reader = const _ConvertKeyPairRequestReader();
+  static const fb.Reader<ConvertKeyPairRequest> reader =
+      const _ConvertKeyPairRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get certificate => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  String? get password => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get certificate =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get password =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
 
   @override
   String toString() {
@@ -257,12 +264,13 @@ class ConvertKeyPairRequest {
   }
 }
 
-class _ConvertKeyPairRequestReader extends fb.TableReader<ConvertKeyPairRequest> {
+class _ConvertKeyPairRequestReader
+    extends fb.TableReader<ConvertKeyPairRequest> {
   const _ConvertKeyPairRequestReader();
 
   @override
-  ConvertKeyPairRequest createObject(fb.BufferContext bc, int offset) => 
-    new ConvertKeyPairRequest._(bc, offset);
+  ConvertKeyPairRequest createObject(fb.BufferContext bc, int offset) =>
+      new ConvertKeyPairRequest._(bc, offset);
 }
 
 class ConvertKeyPairRequestBuilder {
@@ -278,10 +286,12 @@ class ConvertKeyPairRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addCertificateOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addPasswordOffset(int? offset) {
     fbBuilder.addOffset(2, offset);
     return fbBuilder.offset;
@@ -301,8 +311,7 @@ class ConvertKeyPairRequestObjectBuilder extends fb.ObjectBuilder {
     String? privateKey,
     String? certificate,
     String? password,
-  })
-      : _privateKey = privateKey,
+  })  : _privateKey = privateKey,
         _certificate = certificate,
         _password = password;
 
@@ -327,6 +336,7 @@ class ConvertKeyPairRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class ConvertPKCS12Request {
   ConvertPKCS12Request._(this._bc, this._bcOffset);
   factory ConvertPKCS12Request(List<int> bytes) {
@@ -334,13 +344,16 @@ class ConvertPKCS12Request {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<ConvertPKCS12Request> reader = const _ConvertPKCS12RequestReader();
+  static const fb.Reader<ConvertPKCS12Request> reader =
+      const _ConvertPKCS12RequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get pkcs12 => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get password => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get pkcs12 =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get password =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -352,8 +365,8 @@ class _ConvertPKCS12RequestReader extends fb.TableReader<ConvertPKCS12Request> {
   const _ConvertPKCS12RequestReader();
 
   @override
-  ConvertPKCS12Request createObject(fb.BufferContext bc, int offset) => 
-    new ConvertPKCS12Request._(bc, offset);
+  ConvertPKCS12Request createObject(fb.BufferContext bc, int offset) =>
+      new ConvertPKCS12Request._(bc, offset);
 }
 
 class ConvertPKCS12RequestBuilder {
@@ -369,6 +382,7 @@ class ConvertPKCS12RequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPasswordOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -386,8 +400,7 @@ class ConvertPKCS12RequestObjectBuilder extends fb.ObjectBuilder {
   ConvertPKCS12RequestObjectBuilder({
     String? pkcs12,
     String? password,
-  })
-      : _pkcs12 = pkcs12,
+  })  : _pkcs12 = pkcs12,
         _password = password;
 
   /// Finish building, and store into the [fbBuilder].
@@ -409,6 +422,7 @@ class ConvertPKCS12RequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class ConvertPrivateKeyRequest {
   ConvertPrivateKeyRequest._(this._bc, this._bcOffset);
   factory ConvertPrivateKeyRequest(List<int> bytes) {
@@ -416,12 +430,14 @@ class ConvertPrivateKeyRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<ConvertPrivateKeyRequest> reader = const _ConvertPrivateKeyRequestReader();
+  static const fb.Reader<ConvertPrivateKeyRequest> reader =
+      const _ConvertPrivateKeyRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
 
   @override
   String toString() {
@@ -429,12 +445,13 @@ class ConvertPrivateKeyRequest {
   }
 }
 
-class _ConvertPrivateKeyRequestReader extends fb.TableReader<ConvertPrivateKeyRequest> {
+class _ConvertPrivateKeyRequestReader
+    extends fb.TableReader<ConvertPrivateKeyRequest> {
   const _ConvertPrivateKeyRequestReader();
 
   @override
-  ConvertPrivateKeyRequest createObject(fb.BufferContext bc, int offset) => 
-    new ConvertPrivateKeyRequest._(bc, offset);
+  ConvertPrivateKeyRequest createObject(fb.BufferContext bc, int offset) =>
+      new ConvertPrivateKeyRequest._(bc, offset);
 }
 
 class ConvertPrivateKeyRequestBuilder {
@@ -461,8 +478,7 @@ class ConvertPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
 
   ConvertPrivateKeyRequestObjectBuilder({
     String? privateKey,
-  })
-      : _privateKey = privateKey;
+  }) : _privateKey = privateKey;
 
   /// Finish building, and store into the [fbBuilder].
   @override
@@ -481,6 +497,7 @@ class ConvertPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class ConvertPublicKeyRequest {
   ConvertPublicKeyRequest._(this._bc, this._bcOffset);
   factory ConvertPublicKeyRequest(List<int> bytes) {
@@ -488,12 +505,14 @@ class ConvertPublicKeyRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<ConvertPublicKeyRequest> reader = const _ConvertPublicKeyRequestReader();
+  static const fb.Reader<ConvertPublicKeyRequest> reader =
+      const _ConvertPublicKeyRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
 
   @override
   String toString() {
@@ -501,12 +520,13 @@ class ConvertPublicKeyRequest {
   }
 }
 
-class _ConvertPublicKeyRequestReader extends fb.TableReader<ConvertPublicKeyRequest> {
+class _ConvertPublicKeyRequestReader
+    extends fb.TableReader<ConvertPublicKeyRequest> {
   const _ConvertPublicKeyRequestReader();
 
   @override
-  ConvertPublicKeyRequest createObject(fb.BufferContext bc, int offset) => 
-    new ConvertPublicKeyRequest._(bc, offset);
+  ConvertPublicKeyRequest createObject(fb.BufferContext bc, int offset) =>
+      new ConvertPublicKeyRequest._(bc, offset);
 }
 
 class ConvertPublicKeyRequestBuilder {
@@ -533,8 +553,7 @@ class ConvertPublicKeyRequestObjectBuilder extends fb.ObjectBuilder {
 
   ConvertPublicKeyRequestObjectBuilder({
     String? publicKey,
-  })
-      : _publicKey = publicKey;
+  }) : _publicKey = publicKey;
 
   /// Finish building, and store into the [fbBuilder].
   @override
@@ -553,6 +572,7 @@ class ConvertPublicKeyRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class DecryptOAEPRequest {
   DecryptOAEPRequest._(this._bc, this._bcOffset);
   factory DecryptOAEPRequest(List<int> bytes) {
@@ -560,15 +580,20 @@ class DecryptOAEPRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<DecryptOAEPRequest> reader = const _DecryptOAEPRequestReader();
+  static const fb.Reader<DecryptOAEPRequest> reader =
+      const _DecryptOAEPRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get ciphertext => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get label => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  String? get ciphertext =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get label =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -580,8 +605,8 @@ class _DecryptOAEPRequestReader extends fb.TableReader<DecryptOAEPRequest> {
   const _DecryptOAEPRequestReader();
 
   @override
-  DecryptOAEPRequest createObject(fb.BufferContext bc, int offset) => 
-    new DecryptOAEPRequest._(bc, offset);
+  DecryptOAEPRequest createObject(fb.BufferContext bc, int offset) =>
+      new DecryptOAEPRequest._(bc, offset);
 }
 
 class DecryptOAEPRequestBuilder {
@@ -597,14 +622,17 @@ class DecryptOAEPRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addLabelOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -626,8 +654,7 @@ class DecryptOAEPRequestObjectBuilder extends fb.ObjectBuilder {
     String? label,
     Hash? hash,
     String? privateKey,
-  })
-      : _ciphertext = ciphertext,
+  })  : _ciphertext = ciphertext,
         _label = label,
         _hash = hash,
         _privateKey = privateKey;
@@ -654,6 +681,7 @@ class DecryptOAEPRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class DecryptOAEPBytesRequest {
   DecryptOAEPBytesRequest._(this._bc, this._bcOffset);
   factory DecryptOAEPBytesRequest(List<int> bytes) {
@@ -661,15 +689,20 @@ class DecryptOAEPBytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<DecryptOAEPBytesRequest> reader = const _DecryptOAEPBytesRequestReader();
+  static const fb.Reader<DecryptOAEPBytesRequest> reader =
+      const _DecryptOAEPBytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get ciphertext => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  String? get label => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  List<int>? get ciphertext => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  String? get label =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -677,12 +710,13 @@ class DecryptOAEPBytesRequest {
   }
 }
 
-class _DecryptOAEPBytesRequestReader extends fb.TableReader<DecryptOAEPBytesRequest> {
+class _DecryptOAEPBytesRequestReader
+    extends fb.TableReader<DecryptOAEPBytesRequest> {
   const _DecryptOAEPBytesRequestReader();
 
   @override
-  DecryptOAEPBytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new DecryptOAEPBytesRequest._(bc, offset);
+  DecryptOAEPBytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new DecryptOAEPBytesRequest._(bc, offset);
 }
 
 class DecryptOAEPBytesRequestBuilder {
@@ -698,14 +732,17 @@ class DecryptOAEPBytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addLabelOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -727,8 +764,7 @@ class DecryptOAEPBytesRequestObjectBuilder extends fb.ObjectBuilder {
     String? label,
     Hash? hash,
     String? privateKey,
-  })
-      : _ciphertext = ciphertext,
+  })  : _ciphertext = ciphertext,
         _label = label,
         _hash = hash,
         _privateKey = privateKey;
@@ -757,6 +793,7 @@ class DecryptOAEPBytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class DecryptPKCS1v15Request {
   DecryptPKCS1v15Request._(this._bc, this._bcOffset);
   factory DecryptPKCS1v15Request(List<int> bytes) {
@@ -764,13 +801,16 @@ class DecryptPKCS1v15Request {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<DecryptPKCS1v15Request> reader = const _DecryptPKCS1v15RequestReader();
+  static const fb.Reader<DecryptPKCS1v15Request> reader =
+      const _DecryptPKCS1v15RequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get ciphertext => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get ciphertext =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -778,12 +818,13 @@ class DecryptPKCS1v15Request {
   }
 }
 
-class _DecryptPKCS1v15RequestReader extends fb.TableReader<DecryptPKCS1v15Request> {
+class _DecryptPKCS1v15RequestReader
+    extends fb.TableReader<DecryptPKCS1v15Request> {
   const _DecryptPKCS1v15RequestReader();
 
   @override
-  DecryptPKCS1v15Request createObject(fb.BufferContext bc, int offset) => 
-    new DecryptPKCS1v15Request._(bc, offset);
+  DecryptPKCS1v15Request createObject(fb.BufferContext bc, int offset) =>
+      new DecryptPKCS1v15Request._(bc, offset);
 }
 
 class DecryptPKCS1v15RequestBuilder {
@@ -799,6 +840,7 @@ class DecryptPKCS1v15RequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -816,8 +858,7 @@ class DecryptPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
   DecryptPKCS1v15RequestObjectBuilder({
     String? ciphertext,
     String? privateKey,
-  })
-      : _ciphertext = ciphertext,
+  })  : _ciphertext = ciphertext,
         _privateKey = privateKey;
 
   /// Finish building, and store into the [fbBuilder].
@@ -839,6 +880,7 @@ class DecryptPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class DecryptPKCS1v15BytesRequest {
   DecryptPKCS1v15BytesRequest._(this._bc, this._bcOffset);
   factory DecryptPKCS1v15BytesRequest(List<int> bytes) {
@@ -846,13 +888,16 @@ class DecryptPKCS1v15BytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<DecryptPKCS1v15BytesRequest> reader = const _DecryptPKCS1v15BytesRequestReader();
+  static const fb.Reader<DecryptPKCS1v15BytesRequest> reader =
+      const _DecryptPKCS1v15BytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get ciphertext => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  List<int>? get ciphertext => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -860,12 +905,13 @@ class DecryptPKCS1v15BytesRequest {
   }
 }
 
-class _DecryptPKCS1v15BytesRequestReader extends fb.TableReader<DecryptPKCS1v15BytesRequest> {
+class _DecryptPKCS1v15BytesRequestReader
+    extends fb.TableReader<DecryptPKCS1v15BytesRequest> {
   const _DecryptPKCS1v15BytesRequestReader();
 
   @override
-  DecryptPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new DecryptPKCS1v15BytesRequest._(bc, offset);
+  DecryptPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new DecryptPKCS1v15BytesRequest._(bc, offset);
 }
 
 class DecryptPKCS1v15BytesRequestBuilder {
@@ -881,6 +927,7 @@ class DecryptPKCS1v15BytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -898,8 +945,7 @@ class DecryptPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
   DecryptPKCS1v15BytesRequestObjectBuilder({
     List<int>? ciphertext,
     String? privateKey,
-  })
-      : _ciphertext = ciphertext,
+  })  : _ciphertext = ciphertext,
         _privateKey = privateKey;
 
   /// Finish building, and store into the [fbBuilder].
@@ -923,6 +969,7 @@ class DecryptPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class DecryptPrivateKeyRequest {
   DecryptPrivateKeyRequest._(this._bc, this._bcOffset);
   factory DecryptPrivateKeyRequest(List<int> bytes) {
@@ -930,13 +977,16 @@ class DecryptPrivateKeyRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<DecryptPrivateKeyRequest> reader = const _DecryptPrivateKeyRequestReader();
+  static const fb.Reader<DecryptPrivateKeyRequest> reader =
+      const _DecryptPrivateKeyRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get privateKeyEncrypted => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get password => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get privateKeyEncrypted =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get password =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -944,12 +994,13 @@ class DecryptPrivateKeyRequest {
   }
 }
 
-class _DecryptPrivateKeyRequestReader extends fb.TableReader<DecryptPrivateKeyRequest> {
+class _DecryptPrivateKeyRequestReader
+    extends fb.TableReader<DecryptPrivateKeyRequest> {
   const _DecryptPrivateKeyRequestReader();
 
   @override
-  DecryptPrivateKeyRequest createObject(fb.BufferContext bc, int offset) => 
-    new DecryptPrivateKeyRequest._(bc, offset);
+  DecryptPrivateKeyRequest createObject(fb.BufferContext bc, int offset) =>
+      new DecryptPrivateKeyRequest._(bc, offset);
 }
 
 class DecryptPrivateKeyRequestBuilder {
@@ -965,6 +1016,7 @@ class DecryptPrivateKeyRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPasswordOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -982,14 +1034,14 @@ class DecryptPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
   DecryptPrivateKeyRequestObjectBuilder({
     String? privateKeyEncrypted,
     String? password,
-  })
-      : _privateKeyEncrypted = privateKeyEncrypted,
+  })  : _privateKeyEncrypted = privateKeyEncrypted,
         _password = password;
 
   /// Finish building, and store into the [fbBuilder].
   @override
   int finish(fb.Builder fbBuilder) {
-    final int? privateKeyEncryptedOffset = fbBuilder.writeString(_privateKeyEncrypted);
+    final int? privateKeyEncryptedOffset =
+        fbBuilder.writeString(_privateKeyEncrypted);
     final int? passwordOffset = fbBuilder.writeString(_password);
     fbBuilder.startTable();
     fbBuilder.addOffset(0, privateKeyEncryptedOffset);
@@ -1005,6 +1057,7 @@ class DecryptPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class EncryptOAEPRequest {
   EncryptOAEPRequest._(this._bc, this._bcOffset);
   factory EncryptOAEPRequest(List<int> bytes) {
@@ -1012,15 +1065,20 @@ class EncryptOAEPRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<EncryptOAEPRequest> reader = const _EncryptOAEPRequestReader();
+  static const fb.Reader<EncryptOAEPRequest> reader =
+      const _EncryptOAEPRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get label => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get label =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -1032,8 +1090,8 @@ class _EncryptOAEPRequestReader extends fb.TableReader<EncryptOAEPRequest> {
   const _EncryptOAEPRequestReader();
 
   @override
-  EncryptOAEPRequest createObject(fb.BufferContext bc, int offset) => 
-    new EncryptOAEPRequest._(bc, offset);
+  EncryptOAEPRequest createObject(fb.BufferContext bc, int offset) =>
+      new EncryptOAEPRequest._(bc, offset);
 }
 
 class EncryptOAEPRequestBuilder {
@@ -1049,14 +1107,17 @@ class EncryptOAEPRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addLabelOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -1078,8 +1139,7 @@ class EncryptOAEPRequestObjectBuilder extends fb.ObjectBuilder {
     String? label,
     Hash? hash,
     String? publicKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _label = label,
         _hash = hash,
         _publicKey = publicKey;
@@ -1106,6 +1166,7 @@ class EncryptOAEPRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class EncryptOAEPBytesRequest {
   EncryptOAEPBytesRequest._(this._bc, this._bcOffset);
   factory EncryptOAEPBytesRequest(List<int> bytes) {
@@ -1113,15 +1174,20 @@ class EncryptOAEPBytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<EncryptOAEPBytesRequest> reader = const _EncryptOAEPBytesRequestReader();
+  static const fb.Reader<EncryptOAEPBytesRequest> reader =
+      const _EncryptOAEPBytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  String? get label => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  String? get label =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -1129,12 +1195,13 @@ class EncryptOAEPBytesRequest {
   }
 }
 
-class _EncryptOAEPBytesRequestReader extends fb.TableReader<EncryptOAEPBytesRequest> {
+class _EncryptOAEPBytesRequestReader
+    extends fb.TableReader<EncryptOAEPBytesRequest> {
   const _EncryptOAEPBytesRequestReader();
 
   @override
-  EncryptOAEPBytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new EncryptOAEPBytesRequest._(bc, offset);
+  EncryptOAEPBytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new EncryptOAEPBytesRequest._(bc, offset);
 }
 
 class EncryptOAEPBytesRequestBuilder {
@@ -1150,14 +1217,17 @@ class EncryptOAEPBytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addLabelOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -1179,8 +1249,7 @@ class EncryptOAEPBytesRequestObjectBuilder extends fb.ObjectBuilder {
     String? label,
     Hash? hash,
     String? publicKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _label = label,
         _hash = hash,
         _publicKey = publicKey;
@@ -1209,6 +1278,7 @@ class EncryptOAEPBytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class EncryptPKCS1v15Request {
   EncryptPKCS1v15Request._(this._bc, this._bcOffset);
   factory EncryptPKCS1v15Request(List<int> bytes) {
@@ -1216,13 +1286,16 @@ class EncryptPKCS1v15Request {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<EncryptPKCS1v15Request> reader = const _EncryptPKCS1v15RequestReader();
+  static const fb.Reader<EncryptPKCS1v15Request> reader =
+      const _EncryptPKCS1v15RequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -1230,12 +1303,13 @@ class EncryptPKCS1v15Request {
   }
 }
 
-class _EncryptPKCS1v15RequestReader extends fb.TableReader<EncryptPKCS1v15Request> {
+class _EncryptPKCS1v15RequestReader
+    extends fb.TableReader<EncryptPKCS1v15Request> {
   const _EncryptPKCS1v15RequestReader();
 
   @override
-  EncryptPKCS1v15Request createObject(fb.BufferContext bc, int offset) => 
-    new EncryptPKCS1v15Request._(bc, offset);
+  EncryptPKCS1v15Request createObject(fb.BufferContext bc, int offset) =>
+      new EncryptPKCS1v15Request._(bc, offset);
 }
 
 class EncryptPKCS1v15RequestBuilder {
@@ -1251,6 +1325,7 @@ class EncryptPKCS1v15RequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -1268,8 +1343,7 @@ class EncryptPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
   EncryptPKCS1v15RequestObjectBuilder({
     String? message,
     String? publicKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _publicKey = publicKey;
 
   /// Finish building, and store into the [fbBuilder].
@@ -1291,6 +1365,7 @@ class EncryptPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class EncryptPKCS1v15BytesRequest {
   EncryptPKCS1v15BytesRequest._(this._bc, this._bcOffset);
   factory EncryptPKCS1v15BytesRequest(List<int> bytes) {
@@ -1298,13 +1373,16 @@ class EncryptPKCS1v15BytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<EncryptPKCS1v15BytesRequest> reader = const _EncryptPKCS1v15BytesRequestReader();
+  static const fb.Reader<EncryptPKCS1v15BytesRequest> reader =
+      const _EncryptPKCS1v15BytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -1312,12 +1390,13 @@ class EncryptPKCS1v15BytesRequest {
   }
 }
 
-class _EncryptPKCS1v15BytesRequestReader extends fb.TableReader<EncryptPKCS1v15BytesRequest> {
+class _EncryptPKCS1v15BytesRequestReader
+    extends fb.TableReader<EncryptPKCS1v15BytesRequest> {
   const _EncryptPKCS1v15BytesRequestReader();
 
   @override
-  EncryptPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new EncryptPKCS1v15BytesRequest._(bc, offset);
+  EncryptPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new EncryptPKCS1v15BytesRequest._(bc, offset);
 }
 
 class EncryptPKCS1v15BytesRequestBuilder {
@@ -1333,6 +1412,7 @@ class EncryptPKCS1v15BytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -1350,8 +1430,7 @@ class EncryptPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
   EncryptPKCS1v15BytesRequestObjectBuilder({
     List<int>? message,
     String? publicKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _publicKey = publicKey;
 
   /// Finish building, and store into the [fbBuilder].
@@ -1375,6 +1454,7 @@ class EncryptPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class EncryptPrivateKeyRequest {
   EncryptPrivateKeyRequest._(this._bc, this._bcOffset);
   factory EncryptPrivateKeyRequest(List<int> bytes) {
@@ -1382,14 +1462,18 @@ class EncryptPrivateKeyRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<EncryptPrivateKeyRequest> reader = const _EncryptPrivateKeyRequestReader();
+  static const fb.Reader<EncryptPrivateKeyRequest> reader =
+      const _EncryptPrivateKeyRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get password => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  PEMCipher get cipher => PEMCipher.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get password =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  PEMCipher get cipher => PEMCipher.fromValue(
+      const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
 
   @override
   String toString() {
@@ -1397,12 +1481,13 @@ class EncryptPrivateKeyRequest {
   }
 }
 
-class _EncryptPrivateKeyRequestReader extends fb.TableReader<EncryptPrivateKeyRequest> {
+class _EncryptPrivateKeyRequestReader
+    extends fb.TableReader<EncryptPrivateKeyRequest> {
   const _EncryptPrivateKeyRequestReader();
 
   @override
-  EncryptPrivateKeyRequest createObject(fb.BufferContext bc, int offset) => 
-    new EncryptPrivateKeyRequest._(bc, offset);
+  EncryptPrivateKeyRequest createObject(fb.BufferContext bc, int offset) =>
+      new EncryptPrivateKeyRequest._(bc, offset);
 }
 
 class EncryptPrivateKeyRequestBuilder {
@@ -1418,10 +1503,12 @@ class EncryptPrivateKeyRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPasswordOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addCipher(PEMCipher? cipher) {
     fbBuilder.addInt32(2, cipher?.value);
     return fbBuilder.offset;
@@ -1441,8 +1528,7 @@ class EncryptPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
     String? privateKey,
     String? password,
     PEMCipher? cipher,
-  })
-      : _privateKey = privateKey,
+  })  : _privateKey = privateKey,
         _password = password,
         _cipher = cipher;
 
@@ -1466,6 +1552,7 @@ class EncryptPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class GenerateRequest {
   GenerateRequest._(this._bc, this._bcOffset);
   factory GenerateRequest(List<int> bytes) {
@@ -1473,7 +1560,8 @@ class GenerateRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<GenerateRequest> reader = const _GenerateRequestReader();
+  static const fb.Reader<GenerateRequest> reader =
+      const _GenerateRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
@@ -1490,8 +1578,8 @@ class _GenerateRequestReader extends fb.TableReader<GenerateRequest> {
   const _GenerateRequestReader();
 
   @override
-  GenerateRequest createObject(fb.BufferContext bc, int offset) => 
-    new GenerateRequest._(bc, offset);
+  GenerateRequest createObject(fb.BufferContext bc, int offset) =>
+      new GenerateRequest._(bc, offset);
 }
 
 class GenerateRequestBuilder {
@@ -1518,8 +1606,7 @@ class GenerateRequestObjectBuilder extends fb.ObjectBuilder {
 
   GenerateRequestObjectBuilder({
     int? nBits,
-  })
-      : _nBits = nBits;
+  }) : _nBits = nBits;
 
   /// Finish building, and store into the [fbBuilder].
   @override
@@ -1537,6 +1624,7 @@ class GenerateRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class HashRequest {
   HashRequest._(this._bc, this._bcOffset);
   factory HashRequest(List<int> bytes) {
@@ -1549,8 +1637,10 @@ class HashRequest {
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
 
   @override
   String toString() {
@@ -1562,8 +1652,8 @@ class _HashRequestReader extends fb.TableReader<HashRequest> {
   const _HashRequestReader();
 
   @override
-  HashRequest createObject(fb.BufferContext bc, int offset) => 
-    new HashRequest._(bc, offset);
+  HashRequest createObject(fb.BufferContext bc, int offset) =>
+      new HashRequest._(bc, offset);
 }
 
 class HashRequestBuilder {
@@ -1579,6 +1669,7 @@ class HashRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(1, hash?.value);
     return fbBuilder.offset;
@@ -1596,8 +1687,7 @@ class HashRequestObjectBuilder extends fb.ObjectBuilder {
   HashRequestObjectBuilder({
     String? message,
     Hash? hash,
-  })
-      : _message = message,
+  })  : _message = message,
         _hash = hash;
 
   /// Finish building, and store into the [fbBuilder].
@@ -1618,6 +1708,7 @@ class HashRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class Base64Request {
   Base64Request._(this._bc, this._bcOffset);
   factory Base64Request(List<int> bytes) {
@@ -1630,7 +1721,8 @@ class Base64Request {
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
 
   @override
   String toString() {
@@ -1642,8 +1734,8 @@ class _Base64RequestReader extends fb.TableReader<Base64Request> {
   const _Base64RequestReader();
 
   @override
-  Base64Request createObject(fb.BufferContext bc, int offset) => 
-    new Base64Request._(bc, offset);
+  Base64Request createObject(fb.BufferContext bc, int offset) =>
+      new Base64Request._(bc, offset);
 }
 
 class Base64RequestBuilder {
@@ -1670,8 +1762,7 @@ class Base64RequestObjectBuilder extends fb.ObjectBuilder {
 
   Base64RequestObjectBuilder({
     String? message,
-  })
-      : _message = message;
+  }) : _message = message;
 
   /// Finish building, and store into the [fbBuilder].
   @override
@@ -1690,6 +1781,7 @@ class Base64RequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class MetadataPrivateKeyRequest {
   MetadataPrivateKeyRequest._(this._bc, this._bcOffset);
   factory MetadataPrivateKeyRequest(List<int> bytes) {
@@ -1697,12 +1789,14 @@ class MetadataPrivateKeyRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<MetadataPrivateKeyRequest> reader = const _MetadataPrivateKeyRequestReader();
+  static const fb.Reader<MetadataPrivateKeyRequest> reader =
+      const _MetadataPrivateKeyRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
 
   @override
   String toString() {
@@ -1710,12 +1804,13 @@ class MetadataPrivateKeyRequest {
   }
 }
 
-class _MetadataPrivateKeyRequestReader extends fb.TableReader<MetadataPrivateKeyRequest> {
+class _MetadataPrivateKeyRequestReader
+    extends fb.TableReader<MetadataPrivateKeyRequest> {
   const _MetadataPrivateKeyRequestReader();
 
   @override
-  MetadataPrivateKeyRequest createObject(fb.BufferContext bc, int offset) => 
-    new MetadataPrivateKeyRequest._(bc, offset);
+  MetadataPrivateKeyRequest createObject(fb.BufferContext bc, int offset) =>
+      new MetadataPrivateKeyRequest._(bc, offset);
 }
 
 class MetadataPrivateKeyRequestBuilder {
@@ -1742,8 +1837,7 @@ class MetadataPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
 
   MetadataPrivateKeyRequestObjectBuilder({
     String? privateKey,
-  })
-      : _privateKey = privateKey;
+  }) : _privateKey = privateKey;
 
   /// Finish building, and store into the [fbBuilder].
   @override
@@ -1762,6 +1856,7 @@ class MetadataPrivateKeyRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class MetadataPublicKeyRequest {
   MetadataPublicKeyRequest._(this._bc, this._bcOffset);
   factory MetadataPublicKeyRequest(List<int> bytes) {
@@ -1769,12 +1864,14 @@ class MetadataPublicKeyRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<MetadataPublicKeyRequest> reader = const _MetadataPublicKeyRequestReader();
+  static const fb.Reader<MetadataPublicKeyRequest> reader =
+      const _MetadataPublicKeyRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
 
   @override
   String toString() {
@@ -1782,12 +1879,13 @@ class MetadataPublicKeyRequest {
   }
 }
 
-class _MetadataPublicKeyRequestReader extends fb.TableReader<MetadataPublicKeyRequest> {
+class _MetadataPublicKeyRequestReader
+    extends fb.TableReader<MetadataPublicKeyRequest> {
   const _MetadataPublicKeyRequestReader();
 
   @override
-  MetadataPublicKeyRequest createObject(fb.BufferContext bc, int offset) => 
-    new MetadataPublicKeyRequest._(bc, offset);
+  MetadataPublicKeyRequest createObject(fb.BufferContext bc, int offset) =>
+      new MetadataPublicKeyRequest._(bc, offset);
 }
 
 class MetadataPublicKeyRequestBuilder {
@@ -1814,8 +1912,7 @@ class MetadataPublicKeyRequestObjectBuilder extends fb.ObjectBuilder {
 
   MetadataPublicKeyRequestObjectBuilder({
     String? publicKey,
-  })
-      : _publicKey = publicKey;
+  }) : _publicKey = publicKey;
 
   /// Finish building, and store into the [fbBuilder].
   @override
@@ -1834,6 +1931,7 @@ class MetadataPublicKeyRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class SignPKCS1v15Request {
   SignPKCS1v15Request._(this._bc, this._bcOffset);
   factory SignPKCS1v15Request(List<int> bytes) {
@@ -1841,14 +1939,18 @@ class SignPKCS1v15Request {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<SignPKCS1v15Request> reader = const _SignPKCS1v15RequestReader();
+  static const fb.Reader<SignPKCS1v15Request> reader =
+      const _SignPKCS1v15RequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
 
   @override
   String toString() {
@@ -1860,8 +1962,8 @@ class _SignPKCS1v15RequestReader extends fb.TableReader<SignPKCS1v15Request> {
   const _SignPKCS1v15RequestReader();
 
   @override
-  SignPKCS1v15Request createObject(fb.BufferContext bc, int offset) => 
-    new SignPKCS1v15Request._(bc, offset);
+  SignPKCS1v15Request createObject(fb.BufferContext bc, int offset) =>
+      new SignPKCS1v15Request._(bc, offset);
 }
 
 class SignPKCS1v15RequestBuilder {
@@ -1877,10 +1979,12 @@ class SignPKCS1v15RequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(1, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(2, offset);
     return fbBuilder.offset;
@@ -1900,8 +2004,7 @@ class SignPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
     String? message,
     Hash? hash,
     String? privateKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _hash = hash,
         _privateKey = privateKey;
 
@@ -1925,6 +2028,7 @@ class SignPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class SignPKCS1v15BytesRequest {
   SignPKCS1v15BytesRequest._(this._bc, this._bcOffset);
   factory SignPKCS1v15BytesRequest(List<int> bytes) {
@@ -1932,14 +2036,18 @@ class SignPKCS1v15BytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<SignPKCS1v15BytesRequest> reader = const _SignPKCS1v15BytesRequestReader();
+  static const fb.Reader<SignPKCS1v15BytesRequest> reader =
+      const _SignPKCS1v15BytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
+  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
 
   @override
   String toString() {
@@ -1947,12 +2055,13 @@ class SignPKCS1v15BytesRequest {
   }
 }
 
-class _SignPKCS1v15BytesRequestReader extends fb.TableReader<SignPKCS1v15BytesRequest> {
+class _SignPKCS1v15BytesRequestReader
+    extends fb.TableReader<SignPKCS1v15BytesRequest> {
   const _SignPKCS1v15BytesRequestReader();
 
   @override
-  SignPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new SignPKCS1v15BytesRequest._(bc, offset);
+  SignPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new SignPKCS1v15BytesRequest._(bc, offset);
 }
 
 class SignPKCS1v15BytesRequestBuilder {
@@ -1968,10 +2077,12 @@ class SignPKCS1v15BytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(1, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(2, offset);
     return fbBuilder.offset;
@@ -1991,8 +2102,7 @@ class SignPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
     List<int>? message,
     Hash? hash,
     String? privateKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _hash = hash,
         _privateKey = privateKey;
 
@@ -2018,6 +2128,7 @@ class SignPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class SignPSSRequest {
   SignPSSRequest._(this._bc, this._bcOffset);
   factory SignPSSRequest(List<int> bytes) {
@@ -2030,10 +2141,14 @@ class SignPSSRequest {
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
-  SaltLength get saltLength => SaltLength.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
+  SaltLength get saltLength => SaltLength.fromValue(
+      const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -2045,8 +2160,8 @@ class _SignPSSRequestReader extends fb.TableReader<SignPSSRequest> {
   const _SignPSSRequestReader();
 
   @override
-  SignPSSRequest createObject(fb.BufferContext bc, int offset) => 
-    new SignPSSRequest._(bc, offset);
+  SignPSSRequest createObject(fb.BufferContext bc, int offset) =>
+      new SignPSSRequest._(bc, offset);
 }
 
 class SignPSSRequestBuilder {
@@ -2062,14 +2177,17 @@ class SignPSSRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(1, hash?.value);
     return fbBuilder.offset;
   }
+
   int addSaltLength(SaltLength? saltLength) {
     fbBuilder.addInt32(2, saltLength?.value);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -2091,8 +2209,7 @@ class SignPSSRequestObjectBuilder extends fb.ObjectBuilder {
     Hash? hash,
     SaltLength? saltLength,
     String? privateKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _hash = hash,
         _saltLength = saltLength,
         _privateKey = privateKey;
@@ -2118,6 +2235,7 @@ class SignPSSRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class SignPSSBytesRequest {
   SignPSSBytesRequest._(this._bc, this._bcOffset);
   factory SignPSSBytesRequest(List<int> bytes) {
@@ -2125,15 +2243,20 @@ class SignPSSBytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<SignPSSBytesRequest> reader = const _SignPSSBytesRequestReader();
+  static const fb.Reader<SignPSSBytesRequest> reader =
+      const _SignPSSBytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
-  SaltLength get saltLength => SaltLength.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 6, 0));
+  SaltLength get saltLength => SaltLength.fromValue(
+      const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -2145,8 +2268,8 @@ class _SignPSSBytesRequestReader extends fb.TableReader<SignPSSBytesRequest> {
   const _SignPSSBytesRequestReader();
 
   @override
-  SignPSSBytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new SignPSSBytesRequest._(bc, offset);
+  SignPSSBytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new SignPSSBytesRequest._(bc, offset);
 }
 
 class SignPSSBytesRequestBuilder {
@@ -2162,14 +2285,17 @@ class SignPSSBytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(1, hash?.value);
     return fbBuilder.offset;
   }
+
   int addSaltLength(SaltLength? saltLength) {
     fbBuilder.addInt32(2, saltLength?.value);
     return fbBuilder.offset;
   }
+
   int addPrivateKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -2191,8 +2317,7 @@ class SignPSSBytesRequestObjectBuilder extends fb.ObjectBuilder {
     Hash? hash,
     SaltLength? saltLength,
     String? privateKey,
-  })
-      : _message = message,
+  })  : _message = message,
         _hash = hash,
         _saltLength = saltLength,
         _privateKey = privateKey;
@@ -2220,6 +2345,7 @@ class SignPSSBytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class VerifyPKCS1v15Request {
   VerifyPKCS1v15Request._(this._bc, this._bcOffset);
   factory VerifyPKCS1v15Request(List<int> bytes) {
@@ -2227,15 +2353,20 @@ class VerifyPKCS1v15Request {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<VerifyPKCS1v15Request> reader = const _VerifyPKCS1v15RequestReader();
+  static const fb.Reader<VerifyPKCS1v15Request> reader =
+      const _VerifyPKCS1v15RequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get signature => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  String? get signature =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -2243,12 +2374,13 @@ class VerifyPKCS1v15Request {
   }
 }
 
-class _VerifyPKCS1v15RequestReader extends fb.TableReader<VerifyPKCS1v15Request> {
+class _VerifyPKCS1v15RequestReader
+    extends fb.TableReader<VerifyPKCS1v15Request> {
   const _VerifyPKCS1v15RequestReader();
 
   @override
-  VerifyPKCS1v15Request createObject(fb.BufferContext bc, int offset) => 
-    new VerifyPKCS1v15Request._(bc, offset);
+  VerifyPKCS1v15Request createObject(fb.BufferContext bc, int offset) =>
+      new VerifyPKCS1v15Request._(bc, offset);
 }
 
 class VerifyPKCS1v15RequestBuilder {
@@ -2264,14 +2396,17 @@ class VerifyPKCS1v15RequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addMessageOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -2293,8 +2428,7 @@ class VerifyPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
     String? message,
     Hash? hash,
     String? publicKey,
-  })
-      : _signature = signature,
+  })  : _signature = signature,
         _message = message,
         _hash = hash,
         _publicKey = publicKey;
@@ -2321,6 +2455,7 @@ class VerifyPKCS1v15RequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class VerifyPKCS1v15BytesRequest {
   VerifyPKCS1v15BytesRequest._(this._bc, this._bcOffset);
   factory VerifyPKCS1v15BytesRequest(List<int> bytes) {
@@ -2328,15 +2463,20 @@ class VerifyPKCS1v15BytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<VerifyPKCS1v15BytesRequest> reader = const _VerifyPKCS1v15BytesRequestReader();
+  static const fb.Reader<VerifyPKCS1v15BytesRequest> reader =
+      const _VerifyPKCS1v15BytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get signature => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
+  List<int>? get signature => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 10);
 
   @override
   String toString() {
@@ -2344,12 +2484,13 @@ class VerifyPKCS1v15BytesRequest {
   }
 }
 
-class _VerifyPKCS1v15BytesRequestReader extends fb.TableReader<VerifyPKCS1v15BytesRequest> {
+class _VerifyPKCS1v15BytesRequestReader
+    extends fb.TableReader<VerifyPKCS1v15BytesRequest> {
   const _VerifyPKCS1v15BytesRequestReader();
 
   @override
-  VerifyPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new VerifyPKCS1v15BytesRequest._(bc, offset);
+  VerifyPKCS1v15BytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new VerifyPKCS1v15BytesRequest._(bc, offset);
 }
 
 class VerifyPKCS1v15BytesRequestBuilder {
@@ -2365,14 +2506,17 @@ class VerifyPKCS1v15BytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addMessageOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(3, offset);
     return fbBuilder.offset;
@@ -2394,8 +2538,7 @@ class VerifyPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
     List<int>? message,
     Hash? hash,
     String? publicKey,
-  })
-      : _signature = signature,
+  })  : _signature = signature,
         _message = message,
         _hash = hash,
         _publicKey = publicKey;
@@ -2426,6 +2569,7 @@ class VerifyPKCS1v15BytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class VerifyPSSRequest {
   VerifyPSSRequest._(this._bc, this._bcOffset);
   factory VerifyPSSRequest(List<int> bytes) {
@@ -2433,16 +2577,22 @@ class VerifyPSSRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<VerifyPSSRequest> reader = const _VerifyPSSRequestReader();
+  static const fb.Reader<VerifyPSSRequest> reader =
+      const _VerifyPSSRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get signature => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get message => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  SaltLength get saltLength => SaltLength.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 10, 0));
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 12);
+  String? get signature =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get message =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  SaltLength get saltLength => SaltLength.fromValue(
+      const fb.Int32Reader().vTableGet(_bc, _bcOffset, 10, 0));
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 12);
 
   @override
   String toString() {
@@ -2454,8 +2604,8 @@ class _VerifyPSSRequestReader extends fb.TableReader<VerifyPSSRequest> {
   const _VerifyPSSRequestReader();
 
   @override
-  VerifyPSSRequest createObject(fb.BufferContext bc, int offset) => 
-    new VerifyPSSRequest._(bc, offset);
+  VerifyPSSRequest createObject(fb.BufferContext bc, int offset) =>
+      new VerifyPSSRequest._(bc, offset);
 }
 
 class VerifyPSSRequestBuilder {
@@ -2471,18 +2621,22 @@ class VerifyPSSRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addMessageOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addSaltLength(SaltLength? saltLength) {
     fbBuilder.addInt32(3, saltLength?.value);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(4, offset);
     return fbBuilder.offset;
@@ -2506,8 +2660,7 @@ class VerifyPSSRequestObjectBuilder extends fb.ObjectBuilder {
     Hash? hash,
     SaltLength? saltLength,
     String? publicKey,
-  })
-      : _signature = signature,
+  })  : _signature = signature,
         _message = message,
         _hash = hash,
         _saltLength = saltLength,
@@ -2536,6 +2689,7 @@ class VerifyPSSRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class VerifyPSSBytesRequest {
   VerifyPSSBytesRequest._(this._bc, this._bcOffset);
   factory VerifyPSSBytesRequest(List<int> bytes) {
@@ -2543,16 +2697,22 @@ class VerifyPSSBytesRequest {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<VerifyPSSBytesRequest> reader = const _VerifyPSSBytesRequestReader();
+  static const fb.Reader<VerifyPSSBytesRequest> reader =
+      const _VerifyPSSBytesRequestReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get signature => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 6);
-  Hash get hash => Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
-  SaltLength get saltLength => SaltLength.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 10, 0));
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 12);
+  List<int>? get signature => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  List<int>? get message => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 6);
+  Hash get hash =>
+      Hash.fromValue(const fb.Int32Reader().vTableGet(_bc, _bcOffset, 8, 0));
+  SaltLength get saltLength => SaltLength.fromValue(
+      const fb.Int32Reader().vTableGet(_bc, _bcOffset, 10, 0));
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 12);
 
   @override
   String toString() {
@@ -2560,12 +2720,13 @@ class VerifyPSSBytesRequest {
   }
 }
 
-class _VerifyPSSBytesRequestReader extends fb.TableReader<VerifyPSSBytesRequest> {
+class _VerifyPSSBytesRequestReader
+    extends fb.TableReader<VerifyPSSBytesRequest> {
   const _VerifyPSSBytesRequestReader();
 
   @override
-  VerifyPSSBytesRequest createObject(fb.BufferContext bc, int offset) => 
-    new VerifyPSSBytesRequest._(bc, offset);
+  VerifyPSSBytesRequest createObject(fb.BufferContext bc, int offset) =>
+      new VerifyPSSBytesRequest._(bc, offset);
 }
 
 class VerifyPSSBytesRequestBuilder {
@@ -2581,18 +2742,22 @@ class VerifyPSSBytesRequestBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addMessageOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addHash(Hash? hash) {
     fbBuilder.addInt32(2, hash?.value);
     return fbBuilder.offset;
   }
+
   int addSaltLength(SaltLength? saltLength) {
     fbBuilder.addInt32(3, saltLength?.value);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(4, offset);
     return fbBuilder.offset;
@@ -2616,8 +2781,7 @@ class VerifyPSSBytesRequestObjectBuilder extends fb.ObjectBuilder {
     Hash? hash,
     SaltLength? saltLength,
     String? publicKey,
-  })
-      : _signature = signature,
+  })  : _signature = signature,
         _message = message,
         _hash = hash,
         _saltLength = saltLength,
@@ -2650,6 +2814,7 @@ class VerifyPSSBytesRequestObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class StringResponse {
   StringResponse._(this._bc, this._bcOffset);
   factory StringResponse(List<int> bytes) {
@@ -2662,8 +2827,10 @@ class StringResponse {
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get output => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get output =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -2675,8 +2842,8 @@ class _StringResponseReader extends fb.TableReader<StringResponse> {
   const _StringResponseReader();
 
   @override
-  StringResponse createObject(fb.BufferContext bc, int offset) => 
-    new StringResponse._(bc, offset);
+  StringResponse createObject(fb.BufferContext bc, int offset) =>
+      new StringResponse._(bc, offset);
 }
 
 class StringResponseBuilder {
@@ -2692,6 +2859,7 @@ class StringResponseBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -2709,8 +2877,7 @@ class StringResponseObjectBuilder extends fb.ObjectBuilder {
   StringResponseObjectBuilder({
     String? output,
     String? error,
-  })
-      : _output = output,
+  })  : _output = output,
         _error = error;
 
   /// Finish building, and store into the [fbBuilder].
@@ -2732,6 +2899,7 @@ class StringResponseObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class BytesResponse {
   BytesResponse._(this._bc, this._bcOffset);
   factory BytesResponse(List<int> bytes) {
@@ -2744,8 +2912,10 @@ class BytesResponse {
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  List<int>? get output => const fb.ListReader<int>(const fb.Uint8Reader()).vTableGetNullable(_bc, _bcOffset, 4);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  List<int>? get output => const fb.ListReader<int>(const fb.Uint8Reader())
+      .vTableGetNullable(_bc, _bcOffset, 4);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -2757,8 +2927,8 @@ class _BytesResponseReader extends fb.TableReader<BytesResponse> {
   const _BytesResponseReader();
 
   @override
-  BytesResponse createObject(fb.BufferContext bc, int offset) => 
-    new BytesResponse._(bc, offset);
+  BytesResponse createObject(fb.BufferContext bc, int offset) =>
+      new BytesResponse._(bc, offset);
 }
 
 class BytesResponseBuilder {
@@ -2774,6 +2944,7 @@ class BytesResponseBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -2791,16 +2962,14 @@ class BytesResponseObjectBuilder extends fb.ObjectBuilder {
   BytesResponseObjectBuilder({
     List<int>? output,
     String? error,
-  })
-      : _output = output,
+  })  : _output = output,
         _error = error;
 
   /// Finish building, and store into the [fbBuilder].
   @override
   int finish(fb.Builder fbBuilder) {
-    final int? outputOffset = _output?.isNotEmpty == true
-        ? fbBuilder.writeListUint8(_output!)
-        : null;
+    final int? outputOffset =
+        _output?.isNotEmpty == true ? fbBuilder.writeListUint8(_output!) : null;
     final int? errorOffset = fbBuilder.writeString(_error);
     fbBuilder.startTable();
     fbBuilder.addOffset(0, outputOffset);
@@ -2816,6 +2985,7 @@ class BytesResponseObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class BoolResponse {
   BoolResponse._(this._bc, this._bcOffset);
   factory BoolResponse(List<int> bytes) {
@@ -2829,7 +2999,8 @@ class BoolResponse {
   final int _bcOffset;
 
   bool get output => const fb.BoolReader().vTableGet(_bc, _bcOffset, 4, false);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -2841,8 +3012,8 @@ class _BoolResponseReader extends fb.TableReader<BoolResponse> {
   const _BoolResponseReader();
 
   @override
-  BoolResponse createObject(fb.BufferContext bc, int offset) => 
-    new BoolResponse._(bc, offset);
+  BoolResponse createObject(fb.BufferContext bc, int offset) =>
+      new BoolResponse._(bc, offset);
 }
 
 class BoolResponseBuilder {
@@ -2858,6 +3029,7 @@ class BoolResponseBuilder {
     fbBuilder.addBool(0, output);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -2875,8 +3047,7 @@ class BoolResponseObjectBuilder extends fb.ObjectBuilder {
   BoolResponseObjectBuilder({
     bool? output,
     String? error,
-  })
-      : _output = output,
+  })  : _output = output,
         _error = error;
 
   /// Finish building, and store into the [fbBuilder].
@@ -2897,6 +3068,7 @@ class BoolResponseObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class PKCS12KeyPairResponse {
   PKCS12KeyPairResponse._(this._bc, this._bcOffset);
   factory PKCS12KeyPairResponse(List<int> bytes) {
@@ -2904,13 +3076,16 @@ class PKCS12KeyPairResponse {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<PKCS12KeyPairResponse> reader = const _PKCS12KeyPairResponseReader();
+  static const fb.Reader<PKCS12KeyPairResponse> reader =
+      const _PKCS12KeyPairResponseReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  PKCS12KeyPair? get output => PKCS12KeyPair.reader.vTableGetNullable(_bc, _bcOffset, 4);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  PKCS12KeyPair? get output =>
+      PKCS12KeyPair.reader.vTableGetNullable(_bc, _bcOffset, 4);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -2918,12 +3093,13 @@ class PKCS12KeyPairResponse {
   }
 }
 
-class _PKCS12KeyPairResponseReader extends fb.TableReader<PKCS12KeyPairResponse> {
+class _PKCS12KeyPairResponseReader
+    extends fb.TableReader<PKCS12KeyPairResponse> {
   const _PKCS12KeyPairResponseReader();
 
   @override
-  PKCS12KeyPairResponse createObject(fb.BufferContext bc, int offset) => 
-    new PKCS12KeyPairResponse._(bc, offset);
+  PKCS12KeyPairResponse createObject(fb.BufferContext bc, int offset) =>
+      new PKCS12KeyPairResponse._(bc, offset);
 }
 
 class PKCS12KeyPairResponseBuilder {
@@ -2939,6 +3115,7 @@ class PKCS12KeyPairResponseBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -2956,8 +3133,7 @@ class PKCS12KeyPairResponseObjectBuilder extends fb.ObjectBuilder {
   PKCS12KeyPairResponseObjectBuilder({
     PKCS12KeyPairObjectBuilder? output,
     String? error,
-  })
-      : _output = output,
+  })  : _output = output,
         _error = error;
 
   /// Finish building, and store into the [fbBuilder].
@@ -2979,6 +3155,7 @@ class PKCS12KeyPairResponseObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class PKCS12KeyPair {
   PKCS12KeyPair._(this._bc, this._bcOffset);
   factory PKCS12KeyPair(List<int> bytes) {
@@ -2991,9 +3168,12 @@ class PKCS12KeyPair {
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
-  String? get certificate => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get certificate =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
 
   @override
   String toString() {
@@ -3005,8 +3185,8 @@ class _PKCS12KeyPairReader extends fb.TableReader<PKCS12KeyPair> {
   const _PKCS12KeyPairReader();
 
   @override
-  PKCS12KeyPair createObject(fb.BufferContext bc, int offset) => 
-    new PKCS12KeyPair._(bc, offset);
+  PKCS12KeyPair createObject(fb.BufferContext bc, int offset) =>
+      new PKCS12KeyPair._(bc, offset);
 }
 
 class PKCS12KeyPairBuilder {
@@ -3022,10 +3202,12 @@ class PKCS12KeyPairBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
   }
+
   int addCertificateOffset(int? offset) {
     fbBuilder.addOffset(2, offset);
     return fbBuilder.offset;
@@ -3045,8 +3227,7 @@ class PKCS12KeyPairObjectBuilder extends fb.ObjectBuilder {
     String? privateKey,
     String? publicKey,
     String? certificate,
-  })
-      : _privateKey = privateKey,
+  })  : _privateKey = privateKey,
         _publicKey = publicKey,
         _certificate = certificate;
 
@@ -3071,6 +3252,7 @@ class PKCS12KeyPairObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class KeyPairResponse {
   KeyPairResponse._(this._bc, this._bcOffset);
   factory KeyPairResponse(List<int> bytes) {
@@ -3078,13 +3260,15 @@ class KeyPairResponse {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<KeyPairResponse> reader = const _KeyPairResponseReader();
+  static const fb.Reader<KeyPairResponse> reader =
+      const _KeyPairResponseReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
   KeyPair? get output => KeyPair.reader.vTableGetNullable(_bc, _bcOffset, 4);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -3096,8 +3280,8 @@ class _KeyPairResponseReader extends fb.TableReader<KeyPairResponse> {
   const _KeyPairResponseReader();
 
   @override
-  KeyPairResponse createObject(fb.BufferContext bc, int offset) => 
-    new KeyPairResponse._(bc, offset);
+  KeyPairResponse createObject(fb.BufferContext bc, int offset) =>
+      new KeyPairResponse._(bc, offset);
 }
 
 class KeyPairResponseBuilder {
@@ -3113,6 +3297,7 @@ class KeyPairResponseBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -3130,8 +3315,7 @@ class KeyPairResponseObjectBuilder extends fb.ObjectBuilder {
   KeyPairResponseObjectBuilder({
     KeyPairObjectBuilder? output,
     String? error,
-  })
-      : _output = output,
+  })  : _output = output,
         _error = error;
 
   /// Finish building, and store into the [fbBuilder].
@@ -3153,6 +3337,7 @@ class KeyPairResponseObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class KeyPair {
   KeyPair._(this._bc, this._bcOffset);
   factory KeyPair(List<int> bytes) {
@@ -3165,8 +3350,10 @@ class KeyPair {
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  String? get privateKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
-  String? get publicKey => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  String? get privateKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 4);
+  String? get publicKey =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -3178,8 +3365,8 @@ class _KeyPairReader extends fb.TableReader<KeyPair> {
   const _KeyPairReader();
 
   @override
-  KeyPair createObject(fb.BufferContext bc, int offset) => 
-    new KeyPair._(bc, offset);
+  KeyPair createObject(fb.BufferContext bc, int offset) =>
+      new KeyPair._(bc, offset);
 }
 
 class KeyPairBuilder {
@@ -3195,6 +3382,7 @@ class KeyPairBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addPublicKeyOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -3212,8 +3400,7 @@ class KeyPairObjectBuilder extends fb.ObjectBuilder {
   KeyPairObjectBuilder({
     String? privateKey,
     String? publicKey,
-  })
-      : _privateKey = privateKey,
+  })  : _privateKey = privateKey,
         _publicKey = publicKey;
 
   /// Finish building, and store into the [fbBuilder].
@@ -3235,6 +3422,7 @@ class KeyPairObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class PrivateKeyInfoResponse {
   PrivateKeyInfoResponse._(this._bc, this._bcOffset);
   factory PrivateKeyInfoResponse(List<int> bytes) {
@@ -3242,13 +3430,16 @@ class PrivateKeyInfoResponse {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<PrivateKeyInfoResponse> reader = const _PrivateKeyInfoResponseReader();
+  static const fb.Reader<PrivateKeyInfoResponse> reader =
+      const _PrivateKeyInfoResponseReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  PrivateKeyInfo? get output => PrivateKeyInfo.reader.vTableGetNullable(_bc, _bcOffset, 4);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  PrivateKeyInfo? get output =>
+      PrivateKeyInfo.reader.vTableGetNullable(_bc, _bcOffset, 4);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -3256,12 +3447,13 @@ class PrivateKeyInfoResponse {
   }
 }
 
-class _PrivateKeyInfoResponseReader extends fb.TableReader<PrivateKeyInfoResponse> {
+class _PrivateKeyInfoResponseReader
+    extends fb.TableReader<PrivateKeyInfoResponse> {
   const _PrivateKeyInfoResponseReader();
 
   @override
-  PrivateKeyInfoResponse createObject(fb.BufferContext bc, int offset) => 
-    new PrivateKeyInfoResponse._(bc, offset);
+  PrivateKeyInfoResponse createObject(fb.BufferContext bc, int offset) =>
+      new PrivateKeyInfoResponse._(bc, offset);
 }
 
 class PrivateKeyInfoResponseBuilder {
@@ -3277,6 +3469,7 @@ class PrivateKeyInfoResponseBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -3294,8 +3487,7 @@ class PrivateKeyInfoResponseObjectBuilder extends fb.ObjectBuilder {
   PrivateKeyInfoResponseObjectBuilder({
     PrivateKeyInfoObjectBuilder? output,
     String? error,
-  })
-      : _output = output,
+  })  : _output = output,
         _error = error;
 
   /// Finish building, and store into the [fbBuilder].
@@ -3317,6 +3509,7 @@ class PrivateKeyInfoResponseObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class PrivateKeyInfo {
   PrivateKeyInfo._(this._bc, this._bcOffset);
   factory PrivateKeyInfo(List<int> bytes) {
@@ -3331,7 +3524,8 @@ class PrivateKeyInfo {
 
   int get bitLen => const fb.Int64Reader().vTableGet(_bc, _bcOffset, 4, 0);
   int get size => const fb.Int64Reader().vTableGet(_bc, _bcOffset, 6, 0);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 8);
 
   @override
   String toString() {
@@ -3343,8 +3537,8 @@ class _PrivateKeyInfoReader extends fb.TableReader<PrivateKeyInfo> {
   const _PrivateKeyInfoReader();
 
   @override
-  PrivateKeyInfo createObject(fb.BufferContext bc, int offset) => 
-    new PrivateKeyInfo._(bc, offset);
+  PrivateKeyInfo createObject(fb.BufferContext bc, int offset) =>
+      new PrivateKeyInfo._(bc, offset);
 }
 
 class PrivateKeyInfoBuilder {
@@ -3360,10 +3554,12 @@ class PrivateKeyInfoBuilder {
     fbBuilder.addInt64(0, bitLen);
     return fbBuilder.offset;
   }
+
   int addSize(int? size) {
     fbBuilder.addInt64(1, size);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(2, offset);
     return fbBuilder.offset;
@@ -3383,8 +3579,7 @@ class PrivateKeyInfoObjectBuilder extends fb.ObjectBuilder {
     int? bitLen,
     int? size,
     String? error,
-  })
-      : _bitLen = bitLen,
+  })  : _bitLen = bitLen,
         _size = size,
         _error = error;
 
@@ -3407,6 +3602,7 @@ class PrivateKeyInfoObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class PublicKeyInfoResponse {
   PublicKeyInfoResponse._(this._bc, this._bcOffset);
   factory PublicKeyInfoResponse(List<int> bytes) {
@@ -3414,13 +3610,16 @@ class PublicKeyInfoResponse {
     return reader.read(rootRef, 0);
   }
 
-  static const fb.Reader<PublicKeyInfoResponse> reader = const _PublicKeyInfoResponseReader();
+  static const fb.Reader<PublicKeyInfoResponse> reader =
+      const _PublicKeyInfoResponseReader();
 
   final fb.BufferContext _bc;
   final int _bcOffset;
 
-  PublicKeyInfo? get output => PublicKeyInfo.reader.vTableGetNullable(_bc, _bcOffset, 4);
-  String? get error => const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
+  PublicKeyInfo? get output =>
+      PublicKeyInfo.reader.vTableGetNullable(_bc, _bcOffset, 4);
+  String? get error =>
+      const fb.StringReader().vTableGetNullable(_bc, _bcOffset, 6);
 
   @override
   String toString() {
@@ -3428,12 +3627,13 @@ class PublicKeyInfoResponse {
   }
 }
 
-class _PublicKeyInfoResponseReader extends fb.TableReader<PublicKeyInfoResponse> {
+class _PublicKeyInfoResponseReader
+    extends fb.TableReader<PublicKeyInfoResponse> {
   const _PublicKeyInfoResponseReader();
 
   @override
-  PublicKeyInfoResponse createObject(fb.BufferContext bc, int offset) => 
-    new PublicKeyInfoResponse._(bc, offset);
+  PublicKeyInfoResponse createObject(fb.BufferContext bc, int offset) =>
+      new PublicKeyInfoResponse._(bc, offset);
 }
 
 class PublicKeyInfoResponseBuilder {
@@ -3449,6 +3649,7 @@ class PublicKeyInfoResponseBuilder {
     fbBuilder.addOffset(0, offset);
     return fbBuilder.offset;
   }
+
   int addErrorOffset(int? offset) {
     fbBuilder.addOffset(1, offset);
     return fbBuilder.offset;
@@ -3466,8 +3667,7 @@ class PublicKeyInfoResponseObjectBuilder extends fb.ObjectBuilder {
   PublicKeyInfoResponseObjectBuilder({
     PublicKeyInfoObjectBuilder? output,
     String? error,
-  })
-      : _output = output,
+  })  : _output = output,
         _error = error;
 
   /// Finish building, and store into the [fbBuilder].
@@ -3489,6 +3689,7 @@ class PublicKeyInfoResponseObjectBuilder extends fb.ObjectBuilder {
     return fbBuilder.finish(offset, fileIdentifier);
   }
 }
+
 class PublicKeyInfo {
   PublicKeyInfo._(this._bc, this._bcOffset);
   factory PublicKeyInfo(List<int> bytes) {
@@ -3515,8 +3716,8 @@ class _PublicKeyInfoReader extends fb.TableReader<PublicKeyInfo> {
   const _PublicKeyInfoReader();
 
   @override
-  PublicKeyInfo createObject(fb.BufferContext bc, int offset) => 
-    new PublicKeyInfo._(bc, offset);
+  PublicKeyInfo createObject(fb.BufferContext bc, int offset) =>
+      new PublicKeyInfo._(bc, offset);
 }
 
 class PublicKeyInfoBuilder {
@@ -3532,10 +3733,12 @@ class PublicKeyInfoBuilder {
     fbBuilder.addInt64(0, bitLen);
     return fbBuilder.offset;
   }
+
   int addSize(int? size) {
     fbBuilder.addInt64(1, size);
     return fbBuilder.offset;
   }
+
   int addE(int? e) {
     fbBuilder.addInt64(2, e);
     return fbBuilder.offset;
@@ -3555,8 +3758,7 @@ class PublicKeyInfoObjectBuilder extends fb.ObjectBuilder {
     int? bitLen,
     int? size,
     int? e,
-  })
-      : _bitLen = bitLen,
+  })  : _bitLen = bitLen,
         _size = size,
         _e = e;
 

@@ -709,7 +709,7 @@ class Builder {
     int alignDelta = (-(_tail + dataSize)) % size;
     int bufSize = alignDelta + dataSize;
     // Ensure that we have the required amount of space.
-        {
+    {
       int oldCapacity = _buf.lengthInBytes;
       if (_tail + bufSize > oldCapacity) {
         int desiredNewCapacity = (oldCapacity + bufSize) * 2;
