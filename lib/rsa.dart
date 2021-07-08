@@ -6,11 +6,31 @@ import 'package:flutter/services.dart';
 import 'package:fast_rsa/bridge/binding_stub.dart'
     if (dart.library.io) 'package:fast_rsa/bridge/binding.dart'
     if (dart.library.js) 'package:fast_rsa/bridge/binding_stub.dart';
-import 'package:fast_rsa/model/bridge.pb.dart';
+import 'package:fast_rsa/model/bridge_model_generated.dart' as model;
 
 class RSAException implements Exception {
   String cause;
+
   RSAException(this.cause);
+}
+
+enum Hash { MD5, SHA1, SHA224, SHA256, SHA384, SHA512 }
+enum PEMCipher { DES, D3DES, AES128, AES192, AES256 }
+enum SaltLength { AUTO, EQUALS_HASH }
+
+class KeyPair {
+  String publicKey;
+  String privateKey;
+
+  KeyPair(this.publicKey, this.privateKey);
+}
+
+class PKCS12KeyPair {
+  String publicKey;
+  String privateKey;
+  String certificate;
+
+  PKCS12KeyPair(this.publicKey, this.privateKey, this.certificate);
 }
 
 class RSA {
@@ -27,27 +47,27 @@ class RSA {
   static Future<Uint8List> _bytesResponse(
       String name, Uint8List payload) async {
     var data = await _call(name, payload);
-    var response = BytesResponse()..mergeFromBuffer(data);
-    if (response.hasError()) {
-      throw new RSAException(response.error);
+    var response = model.BytesResponse(data);
+    if (response.error != null && response.error != "") {
+      throw new RSAException(response.error!);
     }
-    return Uint8List.fromList(response.output);
+    return Uint8List.fromList(response.output!);
   }
 
   static Future<String> _stringResponse(String name, Uint8List payload) async {
     var data = await _call(name, payload);
-    var response = StringResponse()..mergeFromBuffer(data);
-    if (response.hasError()) {
-      throw new RSAException(response.error);
+    var response = model.StringResponse(data);
+    if (response.error != null && response.error != "") {
+      throw new RSAException(response.error!);
     }
-    return response.output;
+    return response.output!;
   }
 
   static Future<bool> _boolResponse(String name, Uint8List payload) async {
     var data = await _call(name, payload);
-    var response = BoolResponse()..mergeFromBuffer(data);
-    if (response.hasError()) {
-      throw new RSAException(response.error);
+    var response = model.BoolResponse(data);
+    if (response.error != null && response.error != "") {
+      throw new RSAException(response.error!);
     }
     return response.output;
   }
@@ -55,319 +75,363 @@ class RSA {
   static Future<KeyPair> _keyPairResponse(
       String name, Uint8List payload) async {
     var data = await _call(name, payload);
-    var response = KeyPairResponse()..mergeFromBuffer(data);
-    if (response.hasError()) {
-      throw new RSAException(response.error);
+    var response = model.KeyPairResponse(data);
+    if (response.error != null && response.error != "") {
+      throw new RSAException(response.error!);
     }
-    return response.output;
+    var output = response.output!;
+    return KeyPair(output.publicKey!, output.privateKey!);
   }
 
   static Future<PKCS12KeyPair> _pkcs12KeyPairResponse(
       String name, Uint8List payload) async {
     var data = await _call(name, payload);
-    var response = PKCS12KeyPairResponse()..mergeFromBuffer(data);
-    if (response.hasError()) {
-      throw new RSAException(response.error);
+    var response = model.PKCS12KeyPairResponse(data);
+    if (response.error != null && response.error != "") {
+      throw new RSAException(response.error!);
     }
-    return response.output;
+    var output = response.output!;
+    return PKCS12KeyPair(
+        output.publicKey!, output.privateKey!, output.certificate!);
   }
 
   static Future<String> convertJWKToPrivateKey(
       dynamic data, String keyId) async {
-    var request = ConvertJWTRequest()
-      ..data = jsonEncode(data)
-      ..keyId = keyId;
+    var requestBuilder = model.ConvertJWTRequestObjectBuilder(
+      data: jsonEncode(data),
+      keyId: keyId,
+    );
 
     return await _stringResponse(
-        "convertJWKToPrivateKey", request.writeToBuffer());
+        "convertJWKToPrivateKey", requestBuilder.toBytes());
   }
 
   static Future<String> convertJWKToPublicKey(
       dynamic data, String keyId) async {
-    var request = ConvertJWTRequest()
-      ..data = jsonEncode(data)
-      ..keyId = keyId;
+    var requestBuilder = model.ConvertJWTRequestObjectBuilder(
+      data: jsonEncode(data),
+      keyId: keyId,
+    );
 
     return await _stringResponse(
-        "convertJWKToPublicKey", request.writeToBuffer());
+        "convertJWKToPublicKey", requestBuilder.toBytes());
   }
 
   static Future<String> convertKeyPairToPKCS12(
       String privateKey, String certificate, String password) async {
-    var request = ConvertKeyPairRequest()
-      ..privateKey = privateKey
-      ..password = password
-      ..certificate = certificate;
+    var requestBuilder = model.ConvertKeyPairRequestObjectBuilder(
+      certificate: certificate,
+      password: password,
+      privateKey: privateKey,
+    );
 
     return await _stringResponse(
-        "convertKeyPairToPKCS12", request.writeToBuffer());
+        "convertKeyPairToPKCS12", requestBuilder.toBytes());
   }
 
   static Future<PKCS12KeyPair> convertPKCS12ToKeyPair(
       String pkcs12, String password) async {
-    var request = ConvertPKCS12Request()
-      ..pkcs12 = pkcs12
-      ..password = password;
+    var requestBuilder = model.ConvertPKCS12RequestObjectBuilder(
+      password: password,
+      pkcs12: pkcs12,
+    );
 
     return await _pkcs12KeyPairResponse(
-        "convertPKCS12ToKeyPair", request.writeToBuffer());
+        "convertPKCS12ToKeyPair", requestBuilder.toBytes());
   }
 
   static Future<String> convertPrivateKeyToPKCS8(String privateKey) async {
-    var request = ConvertPrivateKeyRequest()..privateKey = privateKey;
+    var requestBuilder = model.ConvertPrivateKeyRequestObjectBuilder(
+      privateKey: privateKey,
+    );
 
     return await _stringResponse(
-        "convertPrivateKeyToPKCS8", request.writeToBuffer());
+        "convertPrivateKeyToPKCS8", requestBuilder.toBytes());
   }
 
   static Future<String> convertPrivateKeyToPKCS1(String privateKey) async {
-    var request = ConvertPrivateKeyRequest()..privateKey = privateKey;
+    var requestBuilder = model.ConvertPrivateKeyRequestObjectBuilder(
+      privateKey: privateKey,
+    );
 
     return await _stringResponse(
-        "convertPrivateKeyToPKCS1", request.writeToBuffer());
+        "convertPrivateKeyToPKCS1", requestBuilder.toBytes());
   }
 
   static Future<dynamic> convertPrivateKeyToJWK(String privateKey) async {
-    var request = ConvertPrivateKeyRequest()..privateKey = privateKey;
+    var requestBuilder = model.ConvertPrivateKeyRequestObjectBuilder(
+      privateKey: privateKey,
+    );
 
     return jsonDecode(await _stringResponse(
-        "convertPrivateKeyToJWK", request.writeToBuffer()));
+        "convertPrivateKeyToJWK", requestBuilder.toBytes()));
   }
 
   static Future<String> convertPrivateKeyToPublicKey(String privateKey) async {
-    var request = ConvertPrivateKeyRequest()..privateKey = privateKey;
+    var requestBuilder = model.ConvertPrivateKeyRequestObjectBuilder(
+      privateKey: privateKey,
+    );
 
     return await _stringResponse(
-        "convertPrivateKeyToPublicKey", request.writeToBuffer());
+        "convertPrivateKeyToPublicKey", requestBuilder.toBytes());
   }
 
   static Future<String> convertPublicKeyToPKIX(String publicKey) async {
-    var request = ConvertPublicKeyRequest()..publicKey = publicKey;
+    var requestBuilder = model.ConvertPublicKeyRequestObjectBuilder(
+      publicKey: publicKey,
+    );
 
     return await _stringResponse(
-        "convertPublicKeyToPKIX", request.writeToBuffer());
+        "convertPublicKeyToPKIX", requestBuilder.toBytes());
   }
 
   static Future<String> convertPublicKeyToPKCS1(String publicKey) async {
-    var request = ConvertPublicKeyRequest()..publicKey = publicKey;
+    var requestBuilder = model.ConvertPublicKeyRequestObjectBuilder(
+      publicKey: publicKey,
+    );
 
     return await _stringResponse(
-        "convertPublicKeyToPKCS1", request.writeToBuffer());
+        "convertPublicKeyToPKCS1", requestBuilder.toBytes());
   }
 
   static Future<dynamic> convertPublicKeyToJWK(String publicKey) async {
-    var request = ConvertPublicKeyRequest()..publicKey = publicKey;
+    var requestBuilder = model.ConvertPublicKeyRequestObjectBuilder(
+      publicKey: publicKey,
+    );
 
     return jsonDecode(await _stringResponse(
-        "convertPublicKeyToJWK", request.writeToBuffer()));
+        "convertPublicKeyToJWK", requestBuilder.toBytes()));
   }
 
   static Future<String> decryptPrivateKey(
       String privateKeyEncrypted, String password) async {
-    var request = DecryptPrivateKeyRequest()
-      ..privateKeyEncrypted = privateKeyEncrypted
-      ..password = password;
+    var requestBuilder = model.DecryptPrivateKeyRequestObjectBuilder(
+      privateKeyEncrypted: privateKeyEncrypted,
+      password: password,
+    );
 
-    return await _stringResponse("decryptPrivateKey", request.writeToBuffer());
+    return await _stringResponse("decryptPrivateKey", requestBuilder.toBytes());
   }
 
   static Future<String> encryptPrivateKey(
       String privateKey, String password, PEMCipher cipher) async {
-    var request = EncryptPrivateKeyRequest()
-      ..privateKey = privateKey
-      ..password = password
-      ..cipher = cipher;
+    var requestBuilder = model.EncryptPrivateKeyRequestObjectBuilder(
+      privateKey: privateKey,
+      password: password,
+      cipher: model.PEMCipher.values[cipher.index],
+    );
 
-    return await _stringResponse("encryptPrivateKey", request.writeToBuffer());
+    return await _stringResponse("encryptPrivateKey", requestBuilder.toBytes());
   }
 
   static Future<String> decryptOAEP(
       String ciphertext, String label, Hash hash, String privateKey) async {
-    var request = DecryptOAEPRequest()
-      ..ciphertext = ciphertext
-      ..label = label
-      ..hash = hash
-      ..privateKey = privateKey;
+    var requestBuilder = model.DecryptOAEPRequestObjectBuilder(
+      privateKey: privateKey,
+      ciphertext: ciphertext,
+      label: label,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _stringResponse("decryptOAEP", request.writeToBuffer());
+    return await _stringResponse("decryptOAEP", requestBuilder.toBytes());
   }
 
   static Future<Uint8List> decryptOAEPBytes(
       Uint8List ciphertext, String label, Hash hash, String privateKey) async {
-    var request = DecryptOAEPBytesRequest()
-      ..ciphertext = ciphertext
-      ..label = label
-      ..hash = hash
-      ..privateKey = privateKey;
+    var requestBuilder = model.DecryptOAEPBytesRequestObjectBuilder(
+      privateKey: privateKey,
+      ciphertext: ciphertext,
+      label: label,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _bytesResponse("decryptOAEPBytes", request.writeToBuffer());
+    return await _bytesResponse("decryptOAEPBytes", requestBuilder.toBytes());
   }
 
   static Future<String> decryptPKCS1v15(
       String ciphertext, String privateKey) async {
-    var request = DecryptPKCS1v15Request()
-      ..ciphertext = ciphertext
-      ..privateKey = privateKey;
+    var requestBuilder = model.DecryptPKCS1v15RequestObjectBuilder(
+      privateKey: privateKey,
+      ciphertext: ciphertext,
+    );
 
-    return await _stringResponse("decryptPKCS1v15", request.writeToBuffer());
+    return await _stringResponse("decryptPKCS1v15", requestBuilder.toBytes());
   }
 
   static Future<Uint8List> decryptPKCS1v15Bytes(
       Uint8List ciphertext, String privateKey) async {
-    var request = DecryptPKCS1v15BytesRequest()
-      ..ciphertext = ciphertext
-      ..privateKey = privateKey;
+    var requestBuilder = model.DecryptPKCS1v15BytesRequestObjectBuilder(
+      privateKey: privateKey,
+      ciphertext: ciphertext,
+    );
 
     return await _bytesResponse(
-        "decryptPKCS1v15Bytes", request.writeToBuffer());
+        "decryptPKCS1v15Bytes", requestBuilder.toBytes());
   }
 
   static Future<String> encryptOAEP(
       String message, String label, Hash hash, String publicKey) async {
-    var request = EncryptOAEPRequest()
-      ..message = message
-      ..label = label
-      ..publicKey = publicKey
-      ..hash = hash;
+    var requestBuilder = model.EncryptOAEPRequestObjectBuilder(
+      message: message,
+      label: label,
+      publicKey: publicKey,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _stringResponse("encryptOAEP", request.writeToBuffer());
+    return await _stringResponse("encryptOAEP", requestBuilder.toBytes());
   }
 
   static Future<Uint8List> encryptOAEPBytes(
       Uint8List message, String label, Hash hash, String publicKey) async {
-    var request = EncryptOAEPBytesRequest()
-      ..message = message
-      ..label = label
-      ..publicKey = publicKey
-      ..hash = hash;
+    var requestBuilder = model.EncryptOAEPBytesRequestObjectBuilder(
+      message: message,
+      label: label,
+      publicKey: publicKey,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _bytesResponse("encryptOAEPBytes", request.writeToBuffer());
+    return await _bytesResponse("encryptOAEPBytes", requestBuilder.toBytes());
   }
 
   static Future<String> encryptPKCS1v15(
       String message, String publicKey) async {
-    var request = EncryptPKCS1v15Request()
-      ..message = message
-      ..publicKey = publicKey;
+    var requestBuilder = model.EncryptPKCS1v15RequestObjectBuilder(
+      message: message,
+      publicKey: publicKey,
+    );
 
-    return await _stringResponse("encryptPKCS1v15", request.writeToBuffer());
+    return await _stringResponse("encryptPKCS1v15", requestBuilder.toBytes());
   }
 
   static Future<Uint8List> encryptPKCS1v15Bytes(
       Uint8List message, String publicKey) async {
-    var request = EncryptPKCS1v15BytesRequest()
-      ..message = message
-      ..publicKey = publicKey;
+    var requestBuilder = model.EncryptPKCS1v15BytesRequestObjectBuilder(
+      message: message,
+      publicKey: publicKey,
+    );
 
     return await _bytesResponse(
-        "encryptPKCS1v15Bytes", request.writeToBuffer());
+        "encryptPKCS1v15Bytes", requestBuilder.toBytes());
   }
 
   static Future<String> signPSS(String message, Hash hash,
       SaltLength saltLength, String privateKey) async {
-    var request = SignPSSRequest()
-      ..message = message
-      ..hash = hash
-      ..saltLength = saltLength
-      ..privateKey = privateKey;
+    var requestBuilder = model.SignPSSRequestObjectBuilder(
+      message: message,
+      privateKey: privateKey,
+      saltLength: model.SaltLength.values[saltLength.index],
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _stringResponse("signPSS", request.writeToBuffer());
+    return await _stringResponse("signPSS", requestBuilder.toBytes());
   }
 
   static Future<Uint8List> signPSSBytes(Uint8List message, Hash hash,
       SaltLength saltLength, String privateKey) async {
-    var request = SignPSSBytesRequest()
-      ..message = message
-      ..hash = hash
-      ..saltLength = saltLength
-      ..privateKey = privateKey;
+    var requestBuilder = model.SignPSSBytesRequestObjectBuilder(
+      message: message,
+      privateKey: privateKey,
+      saltLength: model.SaltLength.values[saltLength.index],
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _bytesResponse("signPSSBytes", request.writeToBuffer());
+    return await _bytesResponse("signPSSBytes", requestBuilder.toBytes());
   }
 
   static Future<String> signPKCS1v15(
       String message, Hash hash, String privateKey) async {
-    var request = SignPKCS1v15Request()
-      ..message = message
-      ..hash = hash
-      ..privateKey = privateKey;
+    var requestBuilder = model.SignPKCS1v15RequestObjectBuilder(
+      message: message,
+      privateKey: privateKey,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _stringResponse("signPKCS1v15", request.writeToBuffer());
+    return await _stringResponse("signPKCS1v15", requestBuilder.toBytes());
   }
 
   static Future<Uint8List> signPKCS1v15Bytes(
       Uint8List message, Hash hash, String privateKey) async {
-    var request = SignPKCS1v15BytesRequest()
-      ..message = message
-      ..hash = hash
-      ..privateKey = privateKey;
+    var requestBuilder = model.SignPKCS1v15BytesRequestObjectBuilder(
+      message: message,
+      privateKey: privateKey,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _bytesResponse("signPKCS1v15Bytes", request.writeToBuffer());
+    return await _bytesResponse("signPKCS1v15Bytes", requestBuilder.toBytes());
   }
 
   static Future<bool> verifyPSS(String signature, String message, Hash hash,
       SaltLength saltLength, String publicKey) async {
-    var request = VerifyPSSRequest()
-      ..signature = signature
-      ..message = message
-      ..hash = hash
-      ..saltLength = saltLength
-      ..publicKey = publicKey;
+    var requestBuilder = model.VerifyPSSRequestObjectBuilder(
+      message: message,
+      signature: signature,
+      publicKey: publicKey,
+      saltLength: model.SaltLength.values[saltLength.index],
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _boolResponse("verifyPSS", request.writeToBuffer());
+    return await _boolResponse("verifyPSS", requestBuilder.toBytes());
   }
 
   static Future<bool> verifyPSSBytes(Uint8List signature, Uint8List message,
       Hash hash, SaltLength saltLength, String publicKey) async {
-    var request = VerifyPSSBytesRequest()
-      ..signature = signature
-      ..message = message
-      ..hash = hash
-      ..saltLength = saltLength
-      ..publicKey = publicKey;
+    var requestBuilder = model.VerifyPSSBytesRequestObjectBuilder(
+      message: message,
+      signature: signature,
+      publicKey: publicKey,
+      saltLength: model.SaltLength.values[saltLength.index],
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _boolResponse("verifyPSSBytes", request.writeToBuffer());
+    return await _boolResponse("verifyPSSBytes", requestBuilder.toBytes());
   }
 
   static Future<bool> verifyPKCS1v15(
       String signature, String message, Hash hash, String publicKey) async {
-    var request = VerifyPKCS1v15Request()
-      ..signature = signature
-      ..message = message
-      ..hash = hash
-      ..publicKey = publicKey;
+    var requestBuilder = model.VerifyPKCS1v15RequestObjectBuilder(
+      message: message,
+      signature: signature,
+      publicKey: publicKey,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _boolResponse("verifyPKCS1v15", request.writeToBuffer());
+    return await _boolResponse("verifyPKCS1v15", requestBuilder.toBytes());
   }
 
   static Future<bool> verifyPKCS1v15Bytes(Uint8List signature,
       Uint8List message, Hash hash, String publicKey) async {
-    var request = VerifyPKCS1v15BytesRequest()
-      ..signature = signature
-      ..message = message
-      ..hash = hash
-      ..publicKey = publicKey;
+    var requestBuilder = model.VerifyPKCS1v15BytesRequestObjectBuilder(
+      message: message,
+      signature: signature,
+      publicKey: publicKey,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _boolResponse("verifyPKCS1v15Bytes", request.writeToBuffer());
+    return await _boolResponse("verifyPKCS1v15Bytes", requestBuilder.toBytes());
   }
 
   static Future<String> hash(String message, Hash hash) async {
-    var request = HashRequest()
-      ..message = message
-      ..hash = hash;
+    var requestBuilder = model.HashRequestObjectBuilder(
+      message: message,
+      hash: model.Hash.values[hash.index],
+    );
 
-    return await _stringResponse("hash", request.writeToBuffer());
+    return await _stringResponse("hash", requestBuilder.toBytes());
   }
 
   static Future<String> base64(String message) async {
-    var request = Base64Request()..message = message;
+    var requestBuilder = model.Base64RequestObjectBuilder(
+      message: message,
+    );
 
-    return await _stringResponse("base64", request.writeToBuffer());
+    return await _stringResponse("base64", requestBuilder.toBytes());
   }
 
   static Future<KeyPair> generate(int bits) async {
-    var request = GenerateRequest()..nBits = bits;
+    var requestBuilder = model.GenerateRequestObjectBuilder(
+      nBits: bits,
+    );
 
-    return await _keyPairResponse("generate", request.writeToBuffer());
+    return await _keyPairResponse("generate", requestBuilder.toBytes());
   }
 }

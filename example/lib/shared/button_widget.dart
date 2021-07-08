@@ -7,7 +7,7 @@ class ButtonWidget extends StatefulWidget {
     required this.result,
     required String title,
     required Function onPressed,
-  })   : onPressed = onPressed,
+  })  : onPressed = onPressed,
         title = title,
         super(key: key);
 

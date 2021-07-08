@@ -4,28 +4,27 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/rsa.dart';
-import 'package:fast_rsa/model/bridge.pb.dart' as pb;
 import 'package:rsa_example/main.dart';
 import 'package:rsa_example/shared/button_widget.dart';
 import 'package:rsa_example/shared/input_widget.dart';
 import 'package:rsa_example/shared/title_widget.dart';
 
-class Hash extends StatefulWidget {
-  const Hash({
+class HashExample extends StatefulWidget {
+  const HashExample({
     Key? key,
     required this.title,
-    required pb.PKCS12KeyPair keyPair,
-  })   : keyPair = keyPair,
+    required PKCS12KeyPair keyPair,
+  })  : keyPair = keyPair,
         super(key: key);
 
-  final pb.PKCS12KeyPair keyPair;
+  final PKCS12KeyPair keyPair;
   final String title;
 
   @override
-  _HashState createState() => _HashState();
+  _HashExampleState createState() => _HashExampleState();
 }
 
-class _HashState extends State<Hash> {
+class _HashExampleState extends State<HashExample> {
   String _encrypted = "";
 
   @override
@@ -41,8 +40,7 @@ class _HashState extends State<Hash> {
               key: Key("encode"),
               result: _encrypted,
               onPressed: (controller) async {
-                var encrypted =
-                    await RSA.hash(controller.text, pb.Hash.HASH_SHA512);
+                var encrypted = await RSA.hash(controller.text, Hash.SHA512);
                 setState(() {
                   _encrypted = encrypted;
                 });

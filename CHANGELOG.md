@@ -1,3 +1,6 @@
+## 3.0.0
+
+- First version with flatbuffers, smaller binaries, please take a look
 ## 2.0.1
 
 - Support import .so for older android versions, thanks to @BobanLW

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/rsa.dart';
-import 'package:fast_rsa/model/bridge.pb.dart';
+
 import 'package:rsa_example/main.dart';
 import 'package:rsa_example/shared/button_widget.dart';
 import 'package:rsa_example/shared/input_widget.dart';
@@ -16,7 +16,7 @@ class EncryptAndDecryptOAEPBytes extends StatefulWidget {
     Key? key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })   : keyPair = keyPair,
+  })  : keyPair = keyPair,
         super(key: key);
 
   final PKCS12KeyPair keyPair;
@@ -48,7 +48,7 @@ class _EncryptAndDecryptOAEPBytesState
                 var encrypted = await RSA.encryptOAEPBytes(
                   Uint8List.fromList(controller.text.codeUnits),
                   "",
-                  Hash.HASH_SHA256,
+                  Hash.SHA256,
                   widget.keyPair.publicKey,
                 );
                 setState(() {
@@ -64,7 +64,7 @@ class _EncryptAndDecryptOAEPBytesState
                 var decrypted = await RSA.decryptOAEPBytes(
                   base64Decode(_encrypted),
                   "",
-                  Hash.HASH_SHA256,
+                  Hash.SHA256,
                   widget.keyPair.privateKey,
                 );
                 setState(() {
