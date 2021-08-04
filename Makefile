@@ -3,7 +3,7 @@ default: test
 test:
 	cd example && flutter drive --target=test_driver/app.dart
 
-upgrade: upgrade-libs upgrade-protobuf
+upgrade: upgrade-libs upgrade-flatbuffers
 
 upgrade-libs:
 	./scripts/upgrade_bridge_libs.sh
