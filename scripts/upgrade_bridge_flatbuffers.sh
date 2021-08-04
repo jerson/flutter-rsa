@@ -24,16 +24,20 @@ get_version() {
 
 LATEST_VERSION=$(get_version $REPO)
 VERSION=${VERSION:-$LATEST_VERSION}
+TMP_DIR=$(dirname $(mktemp -u))
 
 echo "Using: $VERSION"
 echo "--------------------------------------------"
 
-FILE_URL="https://github.com/${REPO}/releases/download/${VERSION}/${NAME}_${VERSION}.tar.gz"
-echo "Downloading: $FILE_URL to $OUTPUT_DIR"
+FILE_NAME="${NAME}_${VERSION}.tar.gz"
+TMP_FILE="$TMP_DIR/$FILE_NAME" 
+FILE_URL="https://github.com/${REPO}/releases/download/${VERSION}/${FILE_NAME}"
 
-mkdir -p "$OUTPUT_DIR"
-wget -c "$FILE_URL" -O - | tar --strip-components=1 -xz -C "$OUTPUT_DIR"
+echo "Downloading: $FILE_URL to $TMP_FILE"
+curl -L -o $TMP_FILE "$FILE_URL" 
 
+echo "Extracting: $TMP_FILE to $OUTPUT_DIR"
+mkdir -p $OUTPUT_DIR
+tar -xz --strip-components=1 --directory=$OUTPUT_DIR --file=$TMP_FILE 
 
 echo "All updated"
-

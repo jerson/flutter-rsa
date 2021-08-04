@@ -33,18 +33,26 @@ echo "Using: $VERSION"
 echo "--------------------------------------------"
 
 INDEX=0
+TMP_DIR=$(dirname $(mktemp -u))
 for PLATFORM in "${PLATFORMS[@]}"
 do
    :
+
   OUTPUT_DIR=${OUTPUT_DIRS[$INDEX]}
   OUTPUT_SUB_DIR=${OUTPUT_SUB_DIRS[$INDEX]}
   OUTPUT_STRIP_DIR=${OUTPUT_STRIP_DIRS[$INDEX]}
-  echo "Platform: $PLATFORM"
-  FILE_URL="https://github.com/${REPO}/releases/download/${VERSION}/${NAME}_${PLATFORM}_${VERSION}.tar.gz"
-  echo "Downloading: $FILE_URL to $OUTPUT_DIR"
 
-  mkdir -p "$OUTPUT_DIR"
-  wget -c "$FILE_URL" -O - | tar --strip-components="$OUTPUT_STRIP_DIR" -xz -C "$OUTPUT_DIR" "$OUTPUT_SUB_DIR"
+  FILE_NAME="${NAME}_${PLATFORM}_${VERSION}.tar.gz"
+  TMP_FILE="$TMP_DIR/$FILE_NAME" 
+  FILE_URL="https://github.com/${REPO}/releases/download/${VERSION}/${FILE_NAME}"
+
+  echo "Platform: $PLATFORM"
+  echo "Downloading: $FILE_URL to $TMP_FILE"
+  curl -L -o $TMP_FILE "$FILE_URL" 
+
+  echo "Extracting: $TMP_FILE to $OUTPUT_DIR"
+  mkdir -p $OUTPUT_DIR
+  tar -xz --strip-components=$OUTPUT_STRIP_DIR --directory=$OUTPUT_DIR --file=$TMP_FILE $OUTPUT_SUB_DIR
 
   INDEX=${INDEX}+1
 
@@ -53,4 +61,3 @@ do
 done
 #
 echo "All updated"
-
