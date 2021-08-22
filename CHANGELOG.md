@@ -1,3 +1,6 @@
+## 3.0.1
+
+- Using File.join to get a valid path for librsa_bridge.a on ios
 ## 3.0.0
 
 - First version with flatbuffers, smaller binaries, please take a look
