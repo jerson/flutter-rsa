@@ -119,14 +119,7 @@ var result = await RSA.base64(message)
 
 ### Android
 
-#### ProGuard
-
-Add this lines to `android/app/proguard-rules.pro` for proguard support
-
-```proguard
--keep class go.** { *; }
--keep class rsa.** { *; }
-```
+No additional setup required.
 
 ### iOS
 
