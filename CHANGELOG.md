@@ -1,3 +1,6 @@
+## 3.0.2
+
+- Added fix when running on simulator "building for iOS Simulator, but linking in object file built for iOS"
 ## 3.0.1
 
 - Using File.join to get a valid path for librsa_bridge.a on ios
