@@ -1,3 +1,7 @@
+## 3.0.3
+
+- Fixed path import with spaces in cocoapods for ios
+
 ## 3.0.2
 
 - Added fix when running on simulator "building for iOS Simulator, but linking in object file built for iOS"
