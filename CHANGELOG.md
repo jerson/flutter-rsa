@@ -1,6 +1,11 @@
+## 3.1.0
+
+- Renamed rsa.dart to fast_rsa.dart to fix analysis
+
 ## 3.0.4
 
 - Updated BUILD_BUNDLE_DIR for linux, using relative dir
+
 ## 3.0.3
 
 - Fixed path import with spaces in cocoapods for ios

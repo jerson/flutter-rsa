@@ -5,7 +5,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:fast_rsa/rsa.dart';
+import 'package:fast_rsa/fast_rsa.dart';
 import 'package:ffi/ffi.dart';
 import 'package:fast_rsa/bridge/ffi.dart';
 import 'package:fast_rsa/bridge/isolate.dart';

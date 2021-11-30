@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fast_rsa/rsa.dart';
+import 'package:fast_rsa/fast_rsa.dart';
 import 'package:rsa_example/base64.dart';
 import 'package:rsa_example/convert_jwt.dart';
 import 'package:rsa_example/convert_keypair.dart';
