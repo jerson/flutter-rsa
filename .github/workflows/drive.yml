@@ -15,4 +15,5 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'dev'
-      - run: "cd example && flutter drive --target=test_driver/app.dart"
+      - run: flutter devices
+      - run: "cd example && flutter drive -d macos --target=test_driver/app.dart"
