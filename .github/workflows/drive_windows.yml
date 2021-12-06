@@ -1,4 +1,4 @@
-name: Flutter drive macOS
+name: Flutter drive Windows
 
 on:
   workflow_dispatch:
