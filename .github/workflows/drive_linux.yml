@@ -20,4 +20,4 @@ jobs:
         run: |
           flutter config --enable-linux-desktop
           flutter pub get
-      - run: "cd example && sudo flutter drive -d linux --target=test_driver/app.dart"
+      - run: "cd example && flutter drive -d linux --target=test_driver/app.dart"
