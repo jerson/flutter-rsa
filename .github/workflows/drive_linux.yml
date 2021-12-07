@@ -9,7 +9,7 @@ on:
 
 jobs:
   e2e:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
