@@ -1,0 +1,24 @@
+name: Flutter drive Browser
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  e2e:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'dev'
+      - uses: nanasess/setup-chromedriver@master
+      - run: |
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+      - run: flutter pub get
+      - run: "cd example && sudo flutter drive -d chrome --target=test_driver/app.dart"
