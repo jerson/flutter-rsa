@@ -1,3 +1,7 @@
+## 3.2.0
+
+- Fixed header when convert private or public key, thanks to @patachi
+
 ## 3.1.0
 
 - Renamed rsa.dart to fast_rsa.dart to fix analysis
