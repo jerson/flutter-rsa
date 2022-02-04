@@ -1,3 +1,7 @@
+## 3.3.0
+
+- Updated example and android requirements
+
 ## 3.2.0
 
 - Fixed header when convert private or public key, thanks to @patachi
