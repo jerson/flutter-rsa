@@ -1,8 +1,7 @@
-group 'dev.jerson.fast_rsa'
-version '1.0-SNAPSHOT'
+group 'dev.jerson.fat_rsa'
+version '1.0'
 
 buildscript {
-    ext.kotlin_version = '1.6.10'
     repositories {
         google()
         jcenter()
@@ -10,7 +9,6 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -22,16 +20,13 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 31
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
     defaultConfig {
         minSdkVersion 19
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -51,5 +46,4 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     api fileTree(dir: "$buildDir/native-libs", include: 'native-libs.jar')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
