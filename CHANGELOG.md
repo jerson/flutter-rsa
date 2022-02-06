@@ -1,3 +1,7 @@
+## 3.4.0
+
+- Added initial support for bigger messages, see: https://github.com/jerson/rsa-mobile/commit/a6fe44834e39678b6f8628374f658eeec3779c5e
+
 ## 3.3.0
 
 - Updated example and android requirements
