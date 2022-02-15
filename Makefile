@@ -1,7 +1,7 @@
 default: test
 
 test:
-	cd example && flutter drive --target=test_driver/app.dart
+	cd example && flutter test integration_test/app_test.dart
 
 upgrade: upgrade-libs upgrade-flatbuffers
 
