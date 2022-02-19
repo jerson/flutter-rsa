@@ -1,4 +1,4 @@
-name: Flutter drive macOS
+name: Integration Tests Windows
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   e2e:
-    runs-on: macos-11
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
@@ -17,7 +17,6 @@ jobs:
           channel: 'dev'
       - name: install deps
         run: |
-          flutter config --enable-macos-desktop
+          flutter config --enable-windows-desktop
           flutter pub get
-          cd example/macos && pod install
-      - run: "cd example && flutter drive -d macos --target=test_driver/app.dart"
+      - run: "cd example && flutter test -d windows integration_test/app_test.dart"

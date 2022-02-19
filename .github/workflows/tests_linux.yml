@@ -1,4 +1,4 @@
-name: Flutter drive Linux
+name: Integration Tests Linux
 
 on:
   workflow_dispatch:
@@ -20,4 +20,7 @@ jobs:
         run: |
           flutter config --enable-linux-desktop
           flutter pub get
-      - run: "cd example && flutter drive -d linux --profile --target=test_driver/app.dart"
+      - run: |
+          export DISPLAY=:99
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+      - run: "cd example && DISPLAY=:99 flutter test -d linux integration_test/app_test.dart"
