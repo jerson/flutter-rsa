@@ -1,4 +1,4 @@
-name: Flutter drive Linux
+name: Flutter Integration Tests Linux
 
 on:
   workflow_dispatch:

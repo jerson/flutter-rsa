@@ -1,4 +1,4 @@
-name: Flutter drive macOS
+name: Flutter Integration Tests macOS
 
 on:
   workflow_dispatch:

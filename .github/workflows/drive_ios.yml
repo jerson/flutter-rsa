@@ -1,4 +1,4 @@
-name: Flutter drive iOS
+name: Flutter Integration Tests iOS
 
 on:
   workflow_dispatch:
