@@ -27,6 +27,7 @@ void main() {
           matching: find.byKey(ValueKey("encrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -49,6 +50,7 @@ void main() {
           matching: find.byKey(ValueKey("decrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -77,6 +79,7 @@ void main() {
           matching: find.byKey(ValueKey("encrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -99,6 +102,7 @@ void main() {
           matching: find.byKey(ValueKey("decrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -126,6 +130,7 @@ void main() {
           matching: find.byKey(ValueKey("encrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -148,6 +153,7 @@ void main() {
           matching: find.byKey(ValueKey("decrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -175,6 +181,7 @@ void main() {
           matching: find.byKey(ValueKey("encrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -196,6 +203,7 @@ void main() {
           matching: find.byKey(ValueKey("decrypt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -223,6 +231,7 @@ void main() {
           matching: find.byKey(ValueKey("sign")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -244,6 +253,7 @@ void main() {
           matching: find.byKey(ValueKey("verify")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -271,6 +281,7 @@ void main() {
           matching: find.byKey(ValueKey("sign")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -292,6 +303,7 @@ void main() {
           matching: find.byKey(ValueKey("verify")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -319,6 +331,7 @@ void main() {
           matching: find.byKey(ValueKey("sign")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -340,6 +353,7 @@ void main() {
           matching: find.byKey(ValueKey("verify")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -367,6 +381,7 @@ void main() {
           matching: find.byKey(ValueKey("sign")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -388,6 +403,7 @@ void main() {
           matching: find.byKey(ValueKey("verify")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -415,6 +431,7 @@ void main() {
           matching: find.byKey(ValueKey("encode")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -447,6 +464,7 @@ void main() {
           matching: find.byKey(ValueKey("encode")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.enterText(
             find.descendant(
@@ -479,7 +497,7 @@ void main() {
           matching: find.byKey(ValueKey("action")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
-
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -507,6 +525,7 @@ void main() {
           matching: find.byKey(ValueKey("jwt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -530,6 +549,7 @@ void main() {
           matching: find.byKey(ValueKey("pkcs1")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -553,6 +573,7 @@ void main() {
           matching: find.byKey(ValueKey("pkcs8")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -580,7 +601,7 @@ void main() {
           matching: find.byKey(ValueKey("jwt")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
-
+        await tester.pumpAndSettle();
         await tester.tap(
           find.descendant(
               of: container, matching: find.byKey(ValueKey("button"))),
@@ -603,6 +624,7 @@ void main() {
           matching: find.byKey(ValueKey("pkcs1")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -626,7 +648,7 @@ void main() {
           matching: find.byKey(ValueKey("pkix")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
-
+        await tester.pumpAndSettle();
         await tester.tap(
           find.descendant(
               of: container, matching: find.byKey(ValueKey("button"))),
@@ -653,6 +675,7 @@ void main() {
           matching: find.byKey(ValueKey("private")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -676,6 +699,7 @@ void main() {
           matching: find.byKey(ValueKey("public")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
@@ -704,6 +728,7 @@ void main() {
           matching: find.byKey(ValueKey("pkcs12")),
         );
         await tester.scrollUntilVisible(container, dyScroll, scrollable: list);
+        await tester.pumpAndSettle();
 
         await tester.tap(
           find.descendant(
