@@ -2,20 +2,37 @@
 
 Library for use RSA with support for android, ios, macos, windows, linux, web and hover
 
-## Contents
+[![Integration Tests Android](https://github.com/jerson/flutter-rsa/actions/workflows/tests_android.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_android.yml)
 
-- [Usage](#usage)
-- [Setup](#setup)
-  - [Android](#android)
-    - [ProGuard](#proguard)
-  - [iOS](#ios)
-  - [Web](#web)
-  - [MacOS](#macos)
-  - [Hover](#hover)
-  - [Linux](#linux)
-  - [Windows](#windows)
-- [Example](#example)
-- [Native Code](#native-code)
+[![Integration Tests Linux](https://github.com/jerson/flutter-rsa/actions/workflows/tests_linux.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_linux.yml)
+
+[![Integration Tests Windows](https://github.com/jerson/flutter-rsa/actions/workflows/tests_windows.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_windows.yml)
+
+[![Integration Tests iOS](https://github.com/jerson/flutter-rsa/actions/workflows/tests_ios.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_ios.yml)
+
+[![Integration Tests macOS](https://github.com/jerson/flutter-rsa/actions/workflows/tests_macos.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_macos.yml)
+## Contents
+ 
+- [Fast RSA](#fast-rsa)
+  - [Contents](#contents)
+  - [Usage](#usage)
+    - [Encrypt methods](#encrypt-methods)
+    - [Decrypt methods](#decrypt-methods)
+    - [Sign methods](#sign-methods)
+    - [Verify methods](#verify-methods)
+    - [Generate Methods](#generate-methods)
+    - [Convert Methods](#convert-methods)
+    - [Util Methods](#util-methods)
+  - [Setup](#setup)
+    - [Android](#android)
+    - [iOS](#ios)
+    - [Web](#web)
+    - [MacOS](#macos)
+    - [Hover](#hover)
+    - [Linux](#linux)
+    - [Windows](#windows)
+  - [Example](#example)
+  - [Native Code](#native-code)
 
 ## Usage
 
