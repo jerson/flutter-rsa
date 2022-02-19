@@ -20,4 +20,4 @@ jobs:
           flutter config --enable-macos-desktop
           flutter pub get
           cd example/macos && pod install
-      - run: "cd example && flutter drive -d macos --target=test_driver/app.dart"
+      - run: "cd example && flutter test -d macos integration_test/app_test.dart"

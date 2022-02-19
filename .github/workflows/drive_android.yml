@@ -51,4 +51,4 @@ jobs:
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: "cd example && flutter drive --target=test_driver/app.dart"
+          script: "cd example &&  flutter test integration_test/app_test.dart"

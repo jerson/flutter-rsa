@@ -19,4 +19,4 @@ jobs:
         run: |
           flutter config --enable-windows-desktop
           flutter pub get
-      - run: "cd example && flutter drive -d windows --target=test_driver/app.dart"
+      - run: "cd example && flutter test -d windows integration_test/app_test.dart"
