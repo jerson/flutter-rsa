@@ -503,7 +503,7 @@ void main() {
           find.descendant(
               of: container, matching: find.byKey(ValueKey("button"))),
         );
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(Duration(seconds: 5));
         var resultSelector = find.descendant(
             of: container, matching: find.byKey(ValueKey("result")));
         expect(resultSelector, findsOneWidget);
