@@ -19,8 +19,8 @@ jobs:
       - run: GO111MODULE=on go get -u -a github.com/go-flutter-desktop/hover@latest
       - name: config
         run: |
-          git config user.name ${{ secrets.GH_USER }}
-          git config user.email "${{ secrets.GH_MAIL }}"
+          git config user.name "${{ env.GITHUB_REPOSITORY_OWNER }}"
+          git config user.email "bot@github.com"
           git remote remove origin || echo "skipped"
-          git remote add origin "https://${{ secrets.GH_TOKEN }}@github.com/${{ env.GITHUB_REPOSITORY }}.git"
+          git remote add origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
       - run: yes | `go env GOPATH`/bin/hover publish-plugin
