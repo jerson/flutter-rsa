@@ -16,6 +16,5 @@ jobs:
         with:
           channel: 'dev'
       - uses: actions/setup-go@v2
-      - run: sudo apt-get update && sudo apt-get install build-essential
       - run: GO111MODULE=on go get -u -a github.com/go-flutter-desktop/hover@latest
-      - run: yes | hover publish-plugin
+      - run: yes | `go env GOPATH`/bin/hover publish-plugin
