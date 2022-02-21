@@ -22,5 +22,5 @@ jobs:
           git config user.name "${{ env.GITHUB_REPOSITORY_OWNER }}"
           git config user.email "bot@github.com"
           git remote remove origin || echo "skipped"
-          git remote add origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git remote add origin "https://${{ env.GITHUB_REPOSITORY_OWNER }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
       - run: yes | `go env GOPATH`/bin/hover publish-plugin
