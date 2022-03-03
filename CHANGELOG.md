@@ -1,7 +1,11 @@
+## 3.4.2
+
+- Updated hover deps
+
 ## 3.4.1
 
 - Updated binaries to 1.3.0 using flatbuffers 2.0
-- 
+  
 ## 3.4.0
 
 - Added initial support for bigger messages, see: https://github.com/jerson/rsa-mobile/commit/a6fe44834e39678b6f8628374f658eeec3779c5e
