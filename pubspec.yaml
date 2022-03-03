@@ -1,11 +1,14 @@
 name: fast_rsa
 description: library for use RSA with support for android and ios, macOS, linux, windows, web and hover
-version: 3.4.2
+version: 3.4.3
 homepage: https://github.com/jerson/flutter-rsa
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.10.0"
+
+false_secrets:
+ - /example/lib/*.dart
 
 dependencies:
   flutter:
