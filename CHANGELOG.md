@@ -1,3 +1,7 @@
+## 3.4.4
+
+- Updated binaries to 1.3.2
+  
 ## 3.4.3
 
 - Added false_secrets to pubspec

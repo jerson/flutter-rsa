@@ -74,7 +74,7 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-extern BytesReturn* RSABridgeCall(char* name, void* payload, int payloadSize);
+extern __declspec(dllexport) BytesReturn* RSABridgeCall(char* name, void* payload, int payloadSize);
 
 #ifdef __cplusplus
 }
