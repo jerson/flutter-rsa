@@ -1,3 +1,7 @@
+## 3.4.6
+
+- Fixed iOS binary
+  
 ## 3.4.5
 
 - Updated binaries to 1.3.3
