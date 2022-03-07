@@ -1,3 +1,7 @@
+## 3.4.5
+
+- Updated binaries to 1.3.3
+
 ## 3.4.4
 
 - Updated binaries to 1.3.2
