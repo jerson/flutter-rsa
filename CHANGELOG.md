@@ -1,3 +1,7 @@
+## 3.4.7
+
+- Added fallback option when instantiateStreaming is not available
+
 ## 3.4.6
 
 - Fixed iOS binary
