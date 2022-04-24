@@ -11,11 +11,11 @@ jobs:
   publish:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - uses: subosito/flutter-action@main
         with:
           channel: 'dev'
-      - uses: actions/setup-go@v2
+      - uses: actions/setup-go@v3
       - run: GO111MODULE=on go get -u -a github.com/go-flutter-desktop/hover@latest
       - name: config
         run: |
