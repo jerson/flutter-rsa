@@ -51,7 +51,7 @@ class _InputWidgetState extends State<InputWidget> {
             controller: _controller,
             key: Key("message"),
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text(widget.title),
             onPressed: () async {
               _focusNode!.unfocus();

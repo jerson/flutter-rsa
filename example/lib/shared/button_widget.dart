@@ -28,7 +28,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
-          RaisedButton(
+          ElevatedButton(
             child: Text(widget.title),
             onPressed: () async {
               await widget.onPressed();
