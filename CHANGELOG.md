@@ -1,3 +1,8 @@
+## 3.5.0
+
+- Updated ffi to 2.0 and min sdk version to 2.17.0
+
+
 ## 3.4.7
 
 - Added fallback option when instantiateStreaming is not available
