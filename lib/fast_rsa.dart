@@ -15,7 +15,9 @@ class RSAException implements Exception {
 }
 
 enum Hash { MD5, SHA1, SHA224, SHA256, SHA384, SHA512 }
+
 enum PEMCipher { DES, D3DES, AES128, AES192, AES256 }
+
 enum SaltLength { AUTO, EQUALS_HASH }
 
 class KeyPair {

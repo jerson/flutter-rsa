@@ -1,3 +1,7 @@
+## 3.5.1
+
+- Updated binaries to v1.5.5 to support mixed go libraries (openpgp and fast-rsa)
+
 ## 3.5.0
 
 - Updated ffi to 2.0 and min sdk version to 2.17.0
