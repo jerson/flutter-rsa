@@ -9,16 +9,16 @@ on:
 
 jobs:
   e2e:
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-      - uses: actions/cache@v2
+          key: gradle
+      - uses: actions/cache@v3
         id: avd-cache
         with:
           path: |
@@ -28,11 +28,12 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '8'
+          java-version: '11'
       - uses: android-actions/setup-android@v2
       - uses: subosito/flutter-action@main
         with:
-          channel: 'dev'
+          flutter-version: '3.x'
+          channel: 'stable'
       - run: flutter pub get
       - if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
