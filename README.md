@@ -44,7 +44,7 @@ import 'package:fast_rsa/fast_rsa.dart';
 var result = await RSA.encryptOAEP(message, label, Hash.HASH_SHA256, publicKey)
 var result = await RSA.encryptPKCS1v15(message, publicKey)
 
-var result = await RSA.encryptOAEPBytes(messageBytes, label, Hash.HASH_SHA256, publicKey)
+var result = await RSA.encryptOAEPBytes(messageBytes, label, Hash.SHA256, publicKey)
 var result = await RSA.encryptPKCS1v15Bytes(messageBytes, publicKey)
 
 ```
@@ -57,7 +57,7 @@ import 'package:fast_rsa/fast_rsa.dart';
 var result = await RSA.decryptOAEP(message, label, Hash.HASH_SHA256, privateKey)
 var result = await RSA.decryptPKCS1v15(message, privateKey)
 
-var result = await RSA.decryptOAEPBytes(messageBytes, label, Hash.HASH_SHA256, privateKey)
+var result = await RSA.decryptOAEPBytes(messageBytes, label, Hash.SHA256, privateKey)
 var result = await RSA.decryptPKCS1v15Bytes(messageBytes, privateKey)
 
 ```
@@ -67,11 +67,11 @@ var result = await RSA.decryptPKCS1v15Bytes(messageBytes, privateKey)
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
 
-var result = await RSA.signPSS(message, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, privateKey)
-var result = await RSA.signPKCS1v15(message, Hash.HASH_SHA256, privateKey)
+var result = await RSA.signPSS(message, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, privateKey)
+var result = await RSA.signPKCS1v15(message, Hash.SHA256, privateKey)
 
-var result = await RSA.signPSSBytes(messageBytes, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, privateKey)
-var result = await RSA.signPKCS1v15Bytes(messageBytes, Hash.HASH_SHA256, privateKey)
+var result = await RSA.signPSSBytes(messageBytes, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, privateKey)
+var result = await RSA.signPKCS1v15Bytes(messageBytes, Hash.SHA256, privateKey)
 
 ```
 
@@ -80,11 +80,11 @@ var result = await RSA.signPKCS1v15Bytes(messageBytes, Hash.HASH_SHA256, private
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
 
-var result = await RSA.verifyPSS(signature, message, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, publicKey)
-var result = await RSA.verifyPKCS1v15(signature, message, Hash.HASH_SHA256, publicKey)
+var result = await RSA.verifyPSS(signature, message, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, publicKey)
+var result = await RSA.verifyPKCS1v15(signature, message, Hash.SHA256, publicKey)
 
-var result = await RSA.verifyPSSBytes(signatureBytes, messageBytes, Hash.HASH_SHA256, SaltLength.SALTLENGTH_AUTO, publicKey)
-var result = await RSA.verifyPKCS1v15Bytes(signatureBytes, messageBytes, Hash.HASH_SHA256, publicKey)
+var result = await RSA.verifyPSSBytes(signatureBytes, messageBytes, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, publicKey)
+var result = await RSA.verifyPKCS1v15Bytes(signatureBytes, messageBytes, Hash.SHA256, publicKey)
 
 ```
 
@@ -127,7 +127,7 @@ var result = await RSA.decryptPrivateKey(privateKeyEncrypted, password)
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
 
-var result = await RSA.hash(message, Hash.HASH_SHA256)
+var result = await RSA.hash(message, Hash.SHA256)
 var result = await RSA.base64(message)
 
 ```
