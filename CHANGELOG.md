@@ -1,3 +1,7 @@
+## 3.5.2
+
+- Fixed linux DynamicLibrary detection
+
 ## 3.5.1
 
 - Updated binaries to v1.5.5 to support mixed go libraries (openpgp and fast-rsa)
