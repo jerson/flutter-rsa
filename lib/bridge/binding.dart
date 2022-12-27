@@ -9,6 +9,7 @@ import 'package:fast_rsa/fast_rsa.dart';
 import 'package:ffi/ffi.dart';
 import 'package:fast_rsa/bridge/ffi.dart';
 import 'package:fast_rsa/bridge/isolate.dart';
+import 'package:path/path.dart' as Path;
 
 class Binding {
   static final String _callFuncName = 'RSABridgeCall';
@@ -121,8 +122,15 @@ class Binding {
     if (Platform.isIOS) {
       return ffi.DynamicLibrary.process();
     }
-    if (Platform.isLinux) {
-      return ffi.DynamicLibrary.open("$_libraryName.so");
+    if (Platform.isLinux || Platform.isFuchsia) {
+      try {
+        return ffi.DynamicLibrary.open("$_libraryName.so");
+      } catch (_) {
+        var binary = File("/proc/self/cmdline").readAsStringSync();
+        var suggestedFile =
+            Path.join(Path.dirname(binary), "lib", "$_libraryName.so");
+        return ffi.DynamicLibrary.open(suggestedFile);
+      }
     }
     try {
       return ffi.DynamicLibrary.open("$_libraryName.so");
