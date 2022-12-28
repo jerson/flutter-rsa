@@ -1,3 +1,7 @@
+## 3.5.3
+
+- Changed path version to ^1.8.2
+
 ## 3.5.2
 
 - Fixed linux DynamicLibrary detection
