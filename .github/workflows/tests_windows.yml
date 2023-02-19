@@ -21,3 +21,4 @@ jobs:
           flutter config --enable-windows-desktop
           flutter pub get
       - run: "cd example && flutter test -d windows integration_test/app_test.dart"
+      - run: "cd example && flutter test test/app_test.dart"

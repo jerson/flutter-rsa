@@ -22,3 +22,4 @@ jobs:
           flutter pub get
           cd example/macos && pod install
       - run: "cd example && flutter test -d macos integration_test/app_test.dart"
+      - run: "cd example && flutter test test/app_test.dart"
