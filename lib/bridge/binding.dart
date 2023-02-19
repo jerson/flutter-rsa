@@ -115,9 +115,10 @@ class Binding {
     var isFlutterTest = Platform.environment.containsKey('FLUTTER_TEST');
 
     if (Platform.isMacOS || Platform.isIOS) {
+      var _libName = "fast_rsa";
       if (isFlutterTest) {
         return ffi.DynamicLibrary.open('build/macos/Build/Products/Debug'
-            '/$_libraryName.dylib');
+            '/$_libName/$_libName.framework/$_libName');
       }
       if (Platform.isMacOS) {
         return ffi.DynamicLibrary.open("$_libraryName.dylib");
