@@ -1,5 +1,5 @@
 name: fast_rsa
-description: library for use RSA with support for android and ios, macOS, linux, windows, web and hover
+description: library for use RSA with support for android and ios, macOS, linux, windows and web
 version: 3.5.4
 homepage: https://github.com/jerson/flutter-rsa
 
