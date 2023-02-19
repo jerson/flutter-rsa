@@ -9,7 +9,6 @@ import 'package:ffi/ffi.dart';
 import 'package:fast_rsa/bridge/ffi.dart';
 import 'package:fast_rsa/bridge/isolate.dart';
 import 'package:path/path.dart' as Path;
-import 'package:stack_trace/stack_trace.dart';
 
 class Binding {
   static final String _callFuncName = 'RSABridgeCall';
@@ -110,10 +109,6 @@ class Binding {
         Platform.isMacOS ||
         Platform.isFuchsia ||
         Platform.isIOS;
-  }
-
-  Frame _frame() {
-    return Frame.caller(1);
   }
 
   ffi.DynamicLibrary openLib() {
