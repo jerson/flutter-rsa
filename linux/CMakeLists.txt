@@ -19,7 +19,7 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 
 set(LIBRSA_BRIDGE "librsa_bridge.so")
-set(LIBRSA_BRIDGE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/shared/${LIBRSA_BRIDGE}")
+set(LIBRSA_BRIDGE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/shared/${CMAKE_SYSTEM_PROCESSOR}/${LIBRSA_BRIDGE}")
 
 # List of absolute paths to libraries that should be bundled with the plugin
 set(fast_rsa_bundled_libraries
