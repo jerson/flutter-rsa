@@ -13,6 +13,7 @@ import 'package:path/path.dart' as Path;
 class Binding {
   static final String _callFuncName = 'RSABridgeCall';
   static final String _libraryName = 'librsa_bridge';
+  static final String _packageName = 'fast_rsa';
   static final Binding _singleton = Binding._internal();
 
   late ffi.DynamicLibrary _library;
@@ -115,10 +116,9 @@ class Binding {
     var isFlutterTest = Platform.environment.containsKey('FLUTTER_TEST');
 
     if (Platform.isMacOS || Platform.isIOS) {
-      var _libName = "fast_rsa";
       if (isFlutterTest) {
         return ffi.DynamicLibrary.open('build/macos/Build/Products/Debug'
-            '/$_libName/$_libName.framework/Resources/$_libraryName.dylib');
+            '/$_packageName/$_packageName.framework/Resources/$_libraryName.dylib');
       }
       if (Platform.isMacOS) {
         return ffi.DynamicLibrary.open("$_libraryName.dylib");
