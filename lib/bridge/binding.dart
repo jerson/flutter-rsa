@@ -118,7 +118,7 @@ class Binding {
       var _libName = "fast_rsa";
       if (isFlutterTest) {
         return ffi.DynamicLibrary.open('build/macos/Build/Products/Debug'
-            '/$_libName/$_libName.framework/$_libName');
+            '/$_libName/$_libName.framework/Resources/$_libraryName.dylib');
       }
       if (Platform.isMacOS) {
         return ffi.DynamicLibrary.open("$_libraryName.dylib");
