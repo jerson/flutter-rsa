@@ -1,6 +1,6 @@
 # Fast RSA
 
-Library for use RSA with support for android, ios, macos, windows, linux, web and hover
+Library for use RSA with support for android, ios, macos, windows, linux and web
 
 [![Integration Tests Android](https://github.com/jerson/flutter-rsa/actions/workflows/tests_android.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_android.yml)
 
@@ -28,7 +28,6 @@ Library for use RSA with support for android, ios, macos, windows, linux, web an
     - [iOS](#ios)
     - [Web](#web)
     - [MacOS](#macos)
-    - [Hover](#hover)
     - [Linux](#linux)
     - [Windows](#windows)
   - [Example](#example)
@@ -158,27 +157,6 @@ ref: https://github.com/jerson/flutter-rsa/blob/master/example/pubspec.yaml
 ### MacOS
 
 no additional setup required
-
-### Hover
-
-Update your plugins.
-
-```bash
-hover plugins get
-```
-
-In you `main_desktop.dart` by now you need to add `RSA.bindingEnabled = false` in order to use channels instead of shared objects
-
-```dart
-import 'main.dart' as original_main;
-import 'package:fast_rsa/fast_rsa.dart';
-
-void main() {
-  RSA.bindingEnabled = false;
-  original_main.main();
-}
-
-```
 
 ### Linux
 

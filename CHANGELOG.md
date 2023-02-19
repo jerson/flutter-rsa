@@ -1,3 +1,7 @@
+## 3.5.5
+
+- Removed Hover support
+
 ## 3.5.4
 
 - Added unit test support macos, linux and windows
