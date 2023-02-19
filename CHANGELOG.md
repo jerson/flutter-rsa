@@ -1,3 +1,7 @@
+## 3.5.4
+
+- Added unit test support macos, linux and windows
+
 ## 3.5.3
 
 - Changed path version to ^1.8.2
