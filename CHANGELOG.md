@@ -1,3 +1,7 @@
+## 3.5.7
+
+- Refactored `Isolate.spawn` logic to make sure we are closing after execution
+
 ## 3.5.6
 
 - Added support to linux ARM64 devices

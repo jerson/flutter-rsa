@@ -36,19 +36,14 @@ class Binding {
     final port = ReceivePort();
     final args = IsolateArguments(name, payload, port.sendPort);
 
-    Isolate.spawn<IsolateArguments>(
-      callBridge,
-      args,
-      onError: port.sendPort,
-      onExit: port.sendPort,
-    );
+    final isolate = await Isolate.spawn(callBridge, args);
 
     Completer<Uint8List> completer = new Completer();
 
-    StreamSubscription? subscription;
-    subscription = port.listen((message) async {
-      await subscription?.cancel();
+    port.listen((message) async {
       completer.complete(message);
+      port.close();
+      isolate.kill();
     });
     return completer.future;
   }
