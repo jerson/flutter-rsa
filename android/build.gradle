@@ -4,7 +4,7 @@ version '1.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -15,7 +15,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
@@ -34,8 +34,8 @@ android {
 }
 
 task nativeLibsToJar(type: Jar, description: 'create a jar archive of the native libs') {
-    destinationDir file("$buildDir/native-libs")
-    baseName 'native-libs'
+    destinationDirectory.set(file("$buildDir/native-libs"))
+    archiveBaseName = 'native-libs'
     from fileTree(dir: 'libs', include: '**/*.so')
     into 'lib/'
 }
