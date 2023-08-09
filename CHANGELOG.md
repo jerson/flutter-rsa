@@ -1,3 +1,7 @@
+## 3.6.0
+
+- Updated binaries to v1.4.1
+
 ## 3.5.7
 
 - Refactored `Isolate.spawn` logic to make sure we are closing after execution

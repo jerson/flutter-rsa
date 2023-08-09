@@ -137,7 +137,7 @@ class Binding {
     if (Platform.isAndroid || Platform.isLinux) {
       if (isFlutterTest) {
         var arch =
-        Platform.resolvedExecutable.contains("linux-x64") ? "x64" : "arm64";
+            Platform.resolvedExecutable.contains("linux-x64") ? "x64" : "arm64";
 
         var ffiFile = 'build/linux/$arch/debug/bundle/lib/$_libraryName.so';
         validateTestFFIFile(ffiFile);
@@ -151,7 +151,7 @@ class Binding {
           print(e);
           var binary = File("/proc/self/cmdline").readAsStringSync();
           var suggestedFile =
-          Path.join(Path.dirname(binary), "lib", "$_libraryName.so");
+              Path.join(Path.dirname(binary), "lib", "$_libraryName.so");
           return ffi.DynamicLibrary.open(suggestedFile);
         }
       }
