@@ -299,10 +299,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
+				"${PODS_ROOT}/../Flutter/ephemeral/.symlinks/plugins/fast_rsa/macos/librsa_bridge.dylib",
 				"${BUILT_PRODUCTS_DIR}/fast_rsa/fast_rsa.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/librsa_bridge.dylib",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/fast_rsa.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
