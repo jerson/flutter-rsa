@@ -10,3 +10,8 @@ build/
 .idea/
 *._*
 .flutter*
+
+# Packages should not commit the "pubspec.lock" file. 
+#
+# See https://dart.dev/guides/libraries/private-files#pubspeclock
+/pubspec.lock
