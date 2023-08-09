@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
 
 SPEC CHECKSUMS:
-  fast_rsa: 85ea02ae79f9645b62d9ed0eac98e70d92e70db7
+  fast_rsa: 47a50bec1042c8c01726007dc0590a078418f997
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
 
 PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
