@@ -1,3 +1,8 @@
+## 3.6.1
+
+- Fixed macOS podspec issue when signing apps 
+- Updated binaries to v1.4.2
+
 ## 3.6.0
 
 - Updated binaries to v1.4.1
