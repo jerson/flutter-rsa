@@ -14,7 +14,6 @@ import 'package:path/path.dart' as Path;
 class Binding {
   static final String _callFuncName = 'RSABridgeCall';
   static final String _libraryName = 'librsa_bridge';
-  static final String _packageName = 'fast_rsa';
   static final Binding _singleton = Binding._internal();
 
   late ffi.DynamicLibrary _library;
@@ -116,13 +115,26 @@ class Binding {
     }
   }
 
+  Directory _findAppDirectory(Directory directory) {
+    try {
+      return directory
+          .listSync(recursive: false, followLinks: false)
+          .whereType<Directory>()
+          .firstWhere((dir) => dir.path.endsWith('.app'));
+    } catch (e) {
+      return directory;
+    }
+  }
+
   ffi.DynamicLibrary openLib() {
     var isFlutterTest = Platform.environment.containsKey('FLUTTER_TEST');
 
     if (Platform.isMacOS || Platform.isIOS) {
       if (isFlutterTest) {
-        var ffiFile =
-            'build/macos/Build/Products/Debug/$_packageName/$_packageName.framework/Resources/$_libraryName.dylib';
+        final appDirectory =
+            _findAppDirectory(Directory('build/macos/Build/Products/Debug'));
+        var ffiFile = Path.join(
+            appDirectory.path, "Contents", "Frameworks", "$_libraryName.dylib");
         validateTestFFIFile(ffiFile);
         return ffi.DynamicLibrary.open(ffiFile);
       }
