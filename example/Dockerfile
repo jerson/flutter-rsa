@@ -3,7 +3,7 @@ FROM jerson/flutter:web AS build-env
 WORKDIR  /app
 COPY . .
 RUN flutter upgrade
-RUN cd example && flutter build web 
+RUN cd example && flutter build web --release
 
 FROM nginx
 
