@@ -1,3 +1,6 @@
+## 3.6.2
+- Add Android namespace, thanks to @nilsreichardt
+
 ## 3.6.1
 
 - Fixed macOS podspec issue when signing apps 
