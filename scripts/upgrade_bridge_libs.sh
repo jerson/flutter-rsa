@@ -9,7 +9,7 @@
 
 REPO="jerson/rsa-mobile"
 NAME="librsa_bridge"
-PLATFORMS=("android" "darwin" "ios" "wasm" "linux" "linux" "windows")
+PLATFORMS=("android" "darwin" "ios_xcframework" "wasm" "linux" "linux" "windows")
 OUTPUT_DIRS=("android/src/main" "macos" "ios" "lib/web/assets" "linux/shared/x86_64" "linux/shared/aarch64" "windows/shared")
 OUTPUT_SUB_DIRS=("" "" "" "" "./amd64" "./arm64" "./amd64")
 OUTPUT_STRIP_DIRS=(1 1 1 1 2 2 2)

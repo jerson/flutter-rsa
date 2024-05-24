@@ -1,3 +1,8 @@
+## 3.6.2
+
+- Updated binaries to v1.4.2
+- Using XCFramework for iOS
+  
 ## 3.6.1
 
 - Fixed macOS podspec issue when signing apps 
