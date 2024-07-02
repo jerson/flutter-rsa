@@ -27,12 +27,8 @@ class Binding {
   }
 
   static void callBridge(IsolateArguments args) async {
-    try {
-      var result = await Binding().call(args.name, args.payload);
-      args.port.send(result);
-    } catch (e) {
-      args.port.send(e.toString());
-    }
+    var result = await Binding().call(args.name, args.payload);
+    args.port.send(result);
   }
 
   Future<Uint8List> callAsync(String name, Uint8List payload) async {
@@ -43,16 +39,19 @@ class Binding {
     final isolate = await Isolate.spawn(
       callBridge,
       args,
-      errorsAreFatal: true,
+      errorsAreFatal: false,
       debugName: '${_libraryName}_isolate',
+      onError: port.sendPort,
     );
 
     port.listen(
       (message) async {
-        if (message is String) {
-          completer.completeError(message);
-        } else {
+        if (message is Uint8List) {
           completer.complete(message);
+        } else if (message is List) {
+          completer.completeError(message.firstOrNull ?? "internal error");
+        } else {
+          completer.completeError(message ?? "spawn error");
         }
         port.close();
       },
