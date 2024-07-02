@@ -26,24 +26,41 @@ class Binding {
     _library = openLib();
   }
 
-  static callBridge(IsolateArguments args) async {
-    var result = await Binding().call(args.name, args.payload);
-    args.port.send(result);
+  static void callBridge(IsolateArguments args) async {
+    try {
+      var result = await Binding().call(args.name, args.payload);
+      args.port.send(result);
+    } catch (e) {
+      args.port.send(e.toString());
+    }
   }
 
   Future<Uint8List> callAsync(String name, Uint8List payload) async {
-    final port = ReceivePort();
+    final port = ReceivePort('${_libraryName}_port');
     final args = IsolateArguments(name, payload, port.sendPort);
+    final completer = new Completer<Uint8List>();
 
-    final isolate = await Isolate.spawn(callBridge, args);
+    final isolate = await Isolate.spawn(
+      callBridge,
+      args,
+      errorsAreFatal: true,
+      debugName: '${_libraryName}_isolate',
+    );
 
-    Completer<Uint8List> completer = new Completer();
+    port.listen(
+      (message) async {
+        if (message is String) {
+          completer.completeError(message);
+        } else {
+          completer.complete(message);
+        }
+        port.close();
+      },
+      onDone: () {
+        isolate.kill(priority: Isolate.beforeNextEvent);
+      },
+    );
 
-    port.listen((message) async {
-      completer.complete(message);
-      port.close();
-      isolate.kill();
-    });
     return completer.future;
   }
 
@@ -65,7 +82,7 @@ class Binding {
     final result = callable(namePointer, payloadPointer, payload.length);
 
     malloc.free(namePointer);
-    malloc.free(payloadPointer);
+    malloc.free(pointer);
 
     handleError(result.ref.error, result);
 
