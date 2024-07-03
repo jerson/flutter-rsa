@@ -14,7 +14,7 @@ class RSAException implements Exception {
 
   @override
   String toString() {
-    return cause;
+    return 'RSAException: $cause';
   }
 }
 
