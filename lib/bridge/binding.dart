@@ -204,8 +204,11 @@ class Binding {
 
     if (Platform.isWindows) {
       if (isFlutterTest) {
-        var ffiFile = Path.canonicalize(
-            Path.join(r'build\windows\runner\Debug', '$_libraryName.dll'));
+        var arch =
+            Platform.resolvedExecutable.contains("x64") ? "x64" : "arm64";
+
+        var ffiFile = Path.canonicalize(Path.join(
+            r'build\windows', arch, r'runner\Debug', '$_libraryName.dll'));
         validateTestFFIFile(ffiFile);
         return ffi.DynamicLibrary.open(ffiFile);
       }
