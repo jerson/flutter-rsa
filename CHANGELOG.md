@@ -1,3 +1,6 @@
+## 3.6.3
+- Updated Isolate spawn logic to close gracefully
+
 ## 3.6.2
 - Add Android namespace, thanks to @nilsreichardt
 

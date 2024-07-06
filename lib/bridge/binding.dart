@@ -26,24 +26,40 @@ class Binding {
     _library = openLib();
   }
 
-  static callBridge(IsolateArguments args) async {
+  static void callBridge(IsolateArguments args) async {
     var result = await Binding().call(args.name, args.payload);
     args.port.send(result);
   }
 
   Future<Uint8List> callAsync(String name, Uint8List payload) async {
-    final port = ReceivePort();
+    final port = ReceivePort('${_libraryName}_port');
     final args = IsolateArguments(name, payload, port.sendPort);
+    final completer = new Completer<Uint8List>();
 
-    final isolate = await Isolate.spawn(callBridge, args);
+    final isolate = await Isolate.spawn(
+      callBridge,
+      args,
+      errorsAreFatal: false,
+      debugName: '${_libraryName}_isolate',
+      onError: port.sendPort,
+    );
 
-    Completer<Uint8List> completer = new Completer();
+    port.listen(
+      (message) async {
+        if (message is Uint8List) {
+          completer.complete(message);
+        } else if (message is List) {
+          completer.completeError(message.firstOrNull ?? "internal error");
+        } else {
+          completer.completeError(message ?? "spawn error");
+        }
+        port.close();
+      },
+      onDone: () {
+        isolate.kill(priority: Isolate.beforeNextEvent);
+      },
+    );
 
-    port.listen((message) async {
-      completer.complete(message);
-      port.close();
-      isolate.kill();
-    });
     return completer.future;
   }
 
@@ -65,7 +81,7 @@ class Binding {
     final result = callable(namePointer, payloadPointer, payload.length);
 
     malloc.free(namePointer);
-    malloc.free(payloadPointer);
+    malloc.free(pointer);
 
     handleError(result.ref.error, result);
 
@@ -188,8 +204,11 @@ class Binding {
 
     if (Platform.isWindows) {
       if (isFlutterTest) {
-        var ffiFile = Path.canonicalize(
-            Path.join(r'build\windows\runner\Debug', '$_libraryName.dll'));
+        var arch =
+            Platform.resolvedExecutable.contains("x64") ? "x64" : "arm64";
+
+        var ffiFile = Path.canonicalize(Path.join(
+            r'build\windows', arch, r'runner\Debug', '$_libraryName.dll'));
         validateTestFFIFile(ffiFile);
         return ffi.DynamicLibrary.open(ffiFile);
       }

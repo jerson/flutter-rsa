@@ -11,6 +11,11 @@ class RSAException implements Exception {
   String cause;
 
   RSAException(this.cause);
+
+  @override
+  String toString() {
+    return 'RSAException: $cause';
+  }
 }
 
 enum Hash { MD5, SHA1, SHA224, SHA256, SHA384, SHA512 }
