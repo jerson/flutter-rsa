@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: futureware-tech/simulator-action@v1
         with:
-          model: "iPhone 14 Plus"
+          os: iOS
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@main
         with:
