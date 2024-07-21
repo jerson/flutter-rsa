@@ -9,7 +9,7 @@ on:
 
 jobs:
   e2e:
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - uses: futureware-tech/simulator-action@v1
         with:
@@ -23,4 +23,4 @@ jobs:
         run: |
           flutter pub get
           cd example/ios && pod install
-      - run: "cd example && flutter test --verbose --no-enable-impeller integration_test/app_test.dart"
+      - run: "cd example && flutter test integration_test/app_test.dart"
