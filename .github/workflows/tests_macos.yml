@@ -9,7 +9,7 @@ on:
 
 jobs:
   e2e:
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@main
@@ -21,5 +21,5 @@ jobs:
           flutter config --enable-macos-desktop
           flutter pub get
           cd example/macos && pod install
-      - run: "cd example && flutter test --verbose --no-enable-impeller -d macos integration_test/app_test.dart"
-      - run: "cd example && flutter test --verbose test/app_test.dart"
+      - run: "cd example && flutter test -d macos integration_test/app_test.dart"
+      - run: "cd example && flutter test test/app_test.dart"
