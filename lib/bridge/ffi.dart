@@ -12,7 +12,7 @@ typedef Call = ffi.Pointer<FFIBytesReturn> Function(
   int,
 );
 
-class FFIBytesReturn extends ffi.Struct {
+final class FFIBytesReturn extends ffi.Struct {
   external ffi.Pointer<ffi.Void> message;
 
   @ffi.Int32()
