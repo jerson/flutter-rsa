@@ -1,3 +1,6 @@
+## 3.6.4
+- Migrate to package:web
+
 ## 3.6.3
 - Updated Isolate spawn logic to close gracefully
 
