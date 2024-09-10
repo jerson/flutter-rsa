@@ -7,9 +7,7 @@ import 'package:web/web.dart';
 
 class FastRsaPlugin {
   var _counter = 0;
-  Worker worker = Worker(
-    'assets/packages/fast_rsa/web/assets/worker.js'.toJS,
-  );
+  Worker worker = Worker('assets/packages/fast_rsa/web/assets/worker.js');
   Map<String, Completer<Uint8List>> completers = {};
 
   static void registerWith(Registrar registrar) {
