@@ -1,3 +1,6 @@
+## 3.6.6
+- Revert "Fix build on web #77"
+  
 ## 3.6.5
 - Fix build on web #77
 
