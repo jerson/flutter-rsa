@@ -1,23 +1,17 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/fast_rsa.dart';
 
-import 'package:fast_rsa_example/main.dart';
 import 'package:fast_rsa_example/shared/button_widget.dart';
-import 'package:fast_rsa_example/shared/input_widget.dart';
 import 'package:fast_rsa_example/shared/title_widget.dart';
 
 class ConvertPrivate extends StatefulWidget {
   const ConvertPrivate({
-    Key? key,
+    super.key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair,
-        super(key: key);
+  })  : keyPair = keyPair;
 
   final PKCS12KeyPair keyPair;
   final String title;
@@ -42,7 +36,7 @@ class _ConvertPrivateState extends State<ConvertPrivate> {
             TitleWidget(widget.title),
             ButtonWidget(
               title: "To JWT",
-              key: Key("jwt"),
+              key: const Key("jwt"),
               result: _jwt,
               onPressed: () async {
                 var result = await RSA.convertPrivateKeyToJWK(
@@ -55,7 +49,7 @@ class _ConvertPrivateState extends State<ConvertPrivate> {
             ),
             ButtonWidget(
               title: "To PKCS1",
-              key: Key("pkcs1"),
+              key: const Key("pkcs1"),
               result: _pkcs1,
               onPressed: () async {
                 var result = await RSA.convertPrivateKeyToPKCS1(
@@ -68,7 +62,7 @@ class _ConvertPrivateState extends State<ConvertPrivate> {
             ),
             ButtonWidget(
               title: "To PKCS8",
-              key: Key("pkcs8"),
+              key: const Key("pkcs8"),
               result: _pkcs8,
               onPressed: () async {
                 var result = await RSA.convertPrivateKeyToPKCS8(
@@ -81,7 +75,7 @@ class _ConvertPrivateState extends State<ConvertPrivate> {
             ),
             ButtonWidget(
               title: "To PublicKey",
-              key: Key("public-key"),
+              key: const Key("public-key"),
               result: _publicKey,
               onPressed: () async {
                 var result = await RSA.convertPrivateKeyToPublicKey(

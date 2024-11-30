@@ -1,22 +1,15 @@
-import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/fast_rsa.dart';
 
-import 'package:fast_rsa_example/main.dart';
-import 'package:fast_rsa_example/shared/button_widget.dart';
 import 'package:fast_rsa_example/shared/input_widget.dart';
 import 'package:fast_rsa_example/shared/title_widget.dart';
 
 class Base64 extends StatefulWidget {
   const Base64({
-    Key? key,
+    super.key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair,
-        super(key: key);
+  })  : keyPair = keyPair;
 
   final PKCS12KeyPair keyPair;
   final String title;
@@ -38,7 +31,7 @@ class _Base64State extends State<Base64> {
             TitleWidget(widget.title),
             InputWidget(
               title: "Encode",
-              key: Key("encode"),
+              key: const Key("encode"),
               result: _encrypted,
               onPressed: (controller) async {
                 var encrypted = await RSA.base64(

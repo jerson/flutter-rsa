@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -116,10 +114,12 @@ void main() {
     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
   }
 
-  runApp(new MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -157,82 +157,82 @@ class _MyAppState extends State<MyApp> {
           title: const Text('RSA example app'),
         ),
         body: ListView(
-          key: Key("list"),
+          key: const Key("list"),
           children: <Widget>[
             EncryptAndDecryptOAEP(
               title: "Encrypt and Decrypt OAEP",
               keyPair: _pkcs12KeyPair,
-              key: Key("encrypt-oaep"),
+              key: const Key("encrypt-oaep"),
             ),
             EncryptAndDecryptOAEPBytes(
               title: "Encrypt and Decrypt OAEP Bytes",
               keyPair: _pkcs12KeyPair,
-              key: Key("encrypt-oaep-bytes"),
+              key: const Key("encrypt-oaep-bytes"),
             ),
             EncryptAndDecryptPKCS(
               title: "Encrypt and Decrypt PKCS1v15",
               keyPair: _pkcs12KeyPair,
-              key: Key("encrypt-pkcs"),
+              key: const Key("encrypt-pkcs"),
             ),
             EncryptAndDecryptPKCSBytes(
               title: "Encrypt and Decrypt PKCS1v15 Bytes",
               keyPair: _pkcs12KeyPair,
-              key: Key("encrypt-pkcs-bytes"),
+              key: const Key("encrypt-pkcs-bytes"),
             ),
             SignAndVerifyPSS(
               title: "Sign and Verify PSS",
               keyPair: _pkcs12KeyPair,
-              key: Key("sign-pss"),
+              key: const Key("sign-pss"),
             ),
             SignAndVerifyPSSBytes(
               title: "Sign and Verify PSS Bytes",
               keyPair: _pkcs12KeyPair,
-              key: Key("sign-pss-bytes"),
+              key: const Key("sign-pss-bytes"),
             ),
             SignAndVerifyPKCS(
               title: "Sign and Verify PKCS",
               keyPair: _pkcs12KeyPair,
-              key: Key("sign-pkcs"),
+              key: const Key("sign-pkcs"),
             ),
             SignAndVerifyPKCSBytes(
               title: "Sign and Verify PKCS Bytes",
               keyPair: _pkcs12KeyPair,
-              key: Key("sign-pkcs-bytes"),
+              key: const Key("sign-pkcs-bytes"),
             ),
             Base64(
               title: "Base64",
               keyPair: _pkcs12KeyPair,
-              key: Key("base64"),
+              key: const Key("base64"),
             ),
             HashExample(
               title: "Hash",
               keyPair: _pkcs12KeyPair,
-              key: Key("hash"),
+              key: const Key("hash"),
             ),
             Generate(
               title: "Generate",
               keyPair: _pkcs12KeyPair,
-              key: Key("generate"),
+              key: const Key("generate"),
             ),
             ConvertPrivate(
               title: "Convert PrivateKey",
               keyPair: _pkcs12KeyPair,
-              key: Key("convert-private"),
+              key: const Key("convert-private"),
             ),
             ConvertPublic(
               title: "Convert PublicKey",
               keyPair: _pkcs12KeyPair,
-              key: Key("convert-public"),
+              key: const Key("convert-public"),
             ),
             ConvertJWT(
               title: "Convert JWT",
               keyPair: _pkcs12KeyPair,
-              key: Key("convert-jwt"),
+              key: const Key("convert-jwt"),
             ),
             ConvertKeyPair(
               title: "Convert KeyPair",
               keyPair: _pkcs12KeyPair,
-              key: Key("convert-keypair"),
+              key: const Key("convert-keypair"),
             ),
           ],
         ),

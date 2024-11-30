@@ -1,23 +1,16 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/fast_rsa.dart';
 
 import 'package:fast_rsa_example/main.dart';
 import 'package:fast_rsa_example/shared/button_widget.dart';
-import 'package:fast_rsa_example/shared/input_widget.dart';
 import 'package:fast_rsa_example/shared/title_widget.dart';
 
 class ConvertKeyPair extends StatefulWidget {
   const ConvertKeyPair({
-    Key? key,
+    super.key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair,
-        super(key: key);
+  })  : keyPair = keyPair;
 
   final PKCS12KeyPair keyPair;
   final String title;
@@ -44,7 +37,7 @@ class _ConvertKeyPairState extends State<ConvertKeyPair> {
             TitleWidget(widget.title),
             ButtonWidget(
               title: "To PKCS12",
-              key: Key("pkcs12"),
+              key: const Key("pkcs12"),
               result: _pkcs12,
               onPressed: () async {
                 var result = await RSA.convertKeyPairToPKCS12(

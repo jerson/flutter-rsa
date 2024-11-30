@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InputWidget extends StatefulWidget {
   const InputWidget({
-    Key? key,
+    super.key,
     required this.result,
     required String title,
     required Function(TextEditingController) onPressed,
   })  : onPressed = onPressed,
-        title = title,
-        super(key: key);
+        title = title;
 
   final Function(TextEditingController) onPressed;
   final String title;
@@ -47,12 +45,11 @@ class _InputWidgetState extends State<InputWidget> {
           TextField(
             autofocus: false,
             focusNode: _focusNode,
-            decoration: InputDecoration(labelText: "Message"),
+            decoration: const InputDecoration(labelText: "Message"),
             controller: _controller,
-            key: Key("message"),
+            key: const Key("message"),
           ),
           ElevatedButton(
-            child: Text(widget.title),
             onPressed: () async {
               _focusNode!.unfocus();
               await widget.onPressed(_controller);
@@ -60,16 +57,17 @@ class _InputWidgetState extends State<InputWidget> {
                 _loading = false;
               });
             },
-            key: Key("button"),
+            key: const Key("button"),
+            child: Text(widget.title),
           ),
           (_loading)
               ? Text(
                   widget.result,
-                  key: Key("loading"),
+                  key: const Key("loading"),
                 )
               : Text(
                   widget.result,
-                  key: Key("result"),
+                  key: const Key("result"),
                 )
         ],
       ),
