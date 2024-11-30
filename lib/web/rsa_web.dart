@@ -29,7 +29,7 @@ class FastRsaPlugin {
   }
 
   void listen() async {
-    void _onMessage(Event event) {
+    void onMessage(Event event) {
       final msgEvent = event as MessageEvent;
       final data = msgEvent.data as RsaResponse;
       var completer = completers[data.id];
@@ -44,14 +44,14 @@ class FastRsaPlugin {
       completers.remove(data.id);
     }
 
-    worker.onmessage = _onMessage.toJS;
+    worker.onmessage = onMessage.toJS;
     // worker.addEventListener('message', _onMessage.toJS);
   }
 
   Future<Uint8List> bridgeCall(String name, Uint8List? /*!*/ request) async {
     _counter++;
     var id = _counter.toString();
-    var completer = new Completer<Uint8List>();
+    var completer = Completer<Uint8List>();
     completers[id] = completer;
     worker.postMessage(RsaRequest(
       id: id,

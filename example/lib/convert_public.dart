@@ -1,23 +1,17 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/fast_rsa.dart';
 
-import 'package:rsa_example/main.dart';
-import 'package:rsa_example/shared/button_widget.dart';
-import 'package:rsa_example/shared/input_widget.dart';
-import 'package:rsa_example/shared/title_widget.dart';
+import 'package:fast_rsa_example/shared/button_widget.dart';
+import 'package:fast_rsa_example/shared/title_widget.dart';
 
 class ConvertPublic extends StatefulWidget {
   const ConvertPublic({
-    Key? key,
+    super.key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair,
-        super(key: key);
+  }) : keyPair = keyPair;
 
   final PKCS12KeyPair keyPair;
   final String title;
@@ -41,7 +35,7 @@ class _ConvertPublicState extends State<ConvertPublic> {
             TitleWidget(widget.title),
             ButtonWidget(
               title: "To JWT",
-              key: Key("jwt"),
+              key: const Key("jwt"),
               result: _jwt,
               onPressed: () async {
                 var result = await RSA.convertPublicKeyToJWK(
@@ -54,7 +48,7 @@ class _ConvertPublicState extends State<ConvertPublic> {
             ),
             ButtonWidget(
               title: "To PKCS1",
-              key: Key("pkcs1"),
+              key: const Key("pkcs1"),
               result: _pkcs1,
               onPressed: () async {
                 var result = await RSA.convertPublicKeyToPKCS1(
@@ -67,7 +61,7 @@ class _ConvertPublicState extends State<ConvertPublic> {
             ),
             ButtonWidget(
               title: "To PKIX",
-              key: Key("pkix"),
+              key: const Key("pkix"),
               result: _pkix,
               onPressed: () async {
                 var result = await RSA.convertPublicKeyToPKIX(

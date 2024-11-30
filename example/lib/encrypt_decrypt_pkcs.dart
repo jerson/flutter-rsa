@@ -1,22 +1,16 @@
-import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/fast_rsa.dart';
 
-import 'package:rsa_example/main.dart';
-import 'package:rsa_example/shared/button_widget.dart';
-import 'package:rsa_example/shared/input_widget.dart';
-import 'package:rsa_example/shared/title_widget.dart';
+import 'package:fast_rsa_example/shared/button_widget.dart';
+import 'package:fast_rsa_example/shared/input_widget.dart';
+import 'package:fast_rsa_example/shared/title_widget.dart';
 
 class EncryptAndDecryptPKCS extends StatefulWidget {
   const EncryptAndDecryptPKCS({
-    Key? key,
+    super.key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair,
-        super(key: key);
+  }) : keyPair = keyPair;
 
   final PKCS12KeyPair keyPair;
   final String title;
@@ -39,7 +33,7 @@ class _EncryptAndDecryptPKCSState extends State<EncryptAndDecryptPKCS> {
             TitleWidget(widget.title),
             InputWidget(
               title: "Encrypt",
-              key: Key("encrypt"),
+              key: const Key("encrypt"),
               result: _encrypted,
               onPressed: (controller) async {
                 var encrypted = await RSA.encryptPKCS1v15(
@@ -53,7 +47,7 @@ class _EncryptAndDecryptPKCSState extends State<EncryptAndDecryptPKCS> {
             ),
             ButtonWidget(
               title: "Decrypt",
-              key: Key("decrypt"),
+              key: const Key("decrypt"),
               result: _decrypted,
               onPressed: () async {
                 var decrypted = await RSA.decryptPKCS1v15(

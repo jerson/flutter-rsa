@@ -3,6 +3,10 @@ default: test
 test:
 	cd example && flutter test integration_test/app_test.dart
 
+fmt:
+	dart format . && dart fix --apply 
+	cd example && dart format . && dart fix --apply 
+
 upgrade: upgrade-libs upgrade-flatbuffers
 
 upgrade-libs:
