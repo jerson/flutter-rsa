@@ -10,7 +10,7 @@ class SignAndVerifyPSS extends StatefulWidget {
     super.key,
     required this.title,
     required PKCS12KeyPair keyPair,
-  })  : keyPair = keyPair;
+  }) : keyPair = keyPair;
 
   final PKCS12KeyPair keyPair;
   final String title;

@@ -40,7 +40,7 @@ class PKCS12KeyPair {
 }
 
 class RSA {
-  static const MethodChannel _channel = const MethodChannel('fast_rsa');
+  static const MethodChannel _channel = MethodChannel('fast_rsa');
   static bool bindingEnabled = Binding().isSupported();
 
   static Future<Uint8List> _call(String name, Uint8List payload) async {
@@ -55,7 +55,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = model.BytesResponse(data);
     if (response.error != null && response.error != "") {
-      throw new RSAException(response.error!);
+      throw RSAException(response.error!);
     }
     return Uint8List.fromList(response.output!);
   }
@@ -64,7 +64,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = model.StringResponse(data);
     if (response.error != null && response.error != "") {
-      throw new RSAException(response.error!);
+      throw RSAException(response.error!);
     }
     return response.output!;
   }
@@ -73,7 +73,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = model.BoolResponse(data);
     if (response.error != null && response.error != "") {
-      throw new RSAException(response.error!);
+      throw RSAException(response.error!);
     }
     return response.output;
   }
@@ -83,7 +83,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = model.KeyPairResponse(data);
     if (response.error != null && response.error != "") {
-      throw new RSAException(response.error!);
+      throw RSAException(response.error!);
     }
     var output = response.output!;
     return KeyPair(output.publicKey!, output.privateKey!);
@@ -94,7 +94,7 @@ class RSA {
     var data = await _call(name, payload);
     var response = model.Pkcs12KeyPairResponse(data);
     if (response.error != null && response.error != "") {
-      throw new RSAException(response.error!);
+      throw RSAException(response.error!);
     }
     var output = response.output!;
     return PKCS12KeyPair(
