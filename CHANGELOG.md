@@ -1,3 +1,6 @@
+## 3.7.0
+- Updates binaries + Add XCFramework for ios 
+  
 ## 3.6.6
 - Revert "Fix build on web #77"
   
