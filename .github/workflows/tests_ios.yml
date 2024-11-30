@@ -14,7 +14,7 @@ jobs:
       - uses: futureware-tech/simulator-action@v1
         with:
           os: iOS
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@main
         with:
           flutter-version: '3.x'

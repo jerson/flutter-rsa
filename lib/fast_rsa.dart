@@ -92,7 +92,7 @@ class RSA {
   static Future<PKCS12KeyPair> _pkcs12KeyPairResponse(
       String name, Uint8List payload) async {
     var data = await _call(name, payload);
-    var response = model.PKCS12KeyPairResponse(data);
+    var response = model.Pkcs12KeyPairResponse(data);
     if (response.error != null && response.error != "") {
       throw new RSAException(response.error!);
     }
@@ -103,7 +103,7 @@ class RSA {
 
   static Future<String> convertJWKToPrivateKey(
       dynamic data, String keyId) async {
-    var requestBuilder = model.ConvertJWTRequestObjectBuilder(
+    var requestBuilder = model.ConvertJwtrequestObjectBuilder(
       data: jsonEncode(data),
       keyId: keyId,
     );
@@ -114,7 +114,7 @@ class RSA {
 
   static Future<String> convertJWKToPublicKey(
       dynamic data, String keyId) async {
-    var requestBuilder = model.ConvertJWTRequestObjectBuilder(
+    var requestBuilder = model.ConvertJwtrequestObjectBuilder(
       data: jsonEncode(data),
       keyId: keyId,
     );
@@ -137,7 +137,7 @@ class RSA {
 
   static Future<PKCS12KeyPair> convertPKCS12ToKeyPair(
       String pkcs12, String password) async {
-    var requestBuilder = model.ConvertPKCS12RequestObjectBuilder(
+    var requestBuilder = model.ConvertPkcs12RequestObjectBuilder(
       password: password,
       pkcs12: pkcs12,
     );
@@ -224,7 +224,7 @@ class RSA {
     var requestBuilder = model.EncryptPrivateKeyRequestObjectBuilder(
       privateKey: privateKey,
       password: password,
-      cipher: model.PEMCipher.values[cipher.index],
+      cipher: model.Pemcipher.values[cipher.index],
     );
 
     return await _stringResponse("encryptPrivateKey", requestBuilder.toBytes());
@@ -232,7 +232,7 @@ class RSA {
 
   static Future<String> decryptOAEP(
       String ciphertext, String label, Hash hash, String privateKey) async {
-    var requestBuilder = model.DecryptOAEPRequestObjectBuilder(
+    var requestBuilder = model.DecryptOaeprequestObjectBuilder(
       privateKey: privateKey,
       ciphertext: ciphertext,
       label: label,
@@ -244,7 +244,7 @@ class RSA {
 
   static Future<Uint8List> decryptOAEPBytes(
       Uint8List ciphertext, String label, Hash hash, String privateKey) async {
-    var requestBuilder = model.DecryptOAEPBytesRequestObjectBuilder(
+    var requestBuilder = model.DecryptOaepbytesRequestObjectBuilder(
       privateKey: privateKey,
       ciphertext: ciphertext,
       label: label,
@@ -256,7 +256,7 @@ class RSA {
 
   static Future<String> decryptPKCS1v15(
       String ciphertext, String privateKey) async {
-    var requestBuilder = model.DecryptPKCS1v15RequestObjectBuilder(
+    var requestBuilder = model.DecryptPkcs1v15RequestObjectBuilder(
       privateKey: privateKey,
       ciphertext: ciphertext,
     );
@@ -266,7 +266,7 @@ class RSA {
 
   static Future<Uint8List> decryptPKCS1v15Bytes(
       Uint8List ciphertext, String privateKey) async {
-    var requestBuilder = model.DecryptPKCS1v15BytesRequestObjectBuilder(
+    var requestBuilder = model.DecryptPkcs1v15BytesRequestObjectBuilder(
       privateKey: privateKey,
       ciphertext: ciphertext,
     );
@@ -277,7 +277,7 @@ class RSA {
 
   static Future<String> encryptOAEP(
       String message, String label, Hash hash, String publicKey) async {
-    var requestBuilder = model.EncryptOAEPRequestObjectBuilder(
+    var requestBuilder = model.EncryptOaeprequestObjectBuilder(
       message: message,
       label: label,
       publicKey: publicKey,
@@ -289,7 +289,7 @@ class RSA {
 
   static Future<Uint8List> encryptOAEPBytes(
       Uint8List message, String label, Hash hash, String publicKey) async {
-    var requestBuilder = model.EncryptOAEPBytesRequestObjectBuilder(
+    var requestBuilder = model.EncryptOaepbytesRequestObjectBuilder(
       message: message,
       label: label,
       publicKey: publicKey,
@@ -301,7 +301,7 @@ class RSA {
 
   static Future<String> encryptPKCS1v15(
       String message, String publicKey) async {
-    var requestBuilder = model.EncryptPKCS1v15RequestObjectBuilder(
+    var requestBuilder = model.EncryptPkcs1v15RequestObjectBuilder(
       message: message,
       publicKey: publicKey,
     );
@@ -311,7 +311,7 @@ class RSA {
 
   static Future<Uint8List> encryptPKCS1v15Bytes(
       Uint8List message, String publicKey) async {
-    var requestBuilder = model.EncryptPKCS1v15BytesRequestObjectBuilder(
+    var requestBuilder = model.EncryptPkcs1v15BytesRequestObjectBuilder(
       message: message,
       publicKey: publicKey,
     );
@@ -322,7 +322,7 @@ class RSA {
 
   static Future<String> signPSS(String message, Hash hash,
       SaltLength saltLength, String privateKey) async {
-    var requestBuilder = model.SignPSSRequestObjectBuilder(
+    var requestBuilder = model.SignPssrequestObjectBuilder(
       message: message,
       privateKey: privateKey,
       saltLength: model.SaltLength.values[saltLength.index],
@@ -334,7 +334,7 @@ class RSA {
 
   static Future<Uint8List> signPSSBytes(Uint8List message, Hash hash,
       SaltLength saltLength, String privateKey) async {
-    var requestBuilder = model.SignPSSBytesRequestObjectBuilder(
+    var requestBuilder = model.SignPssbytesRequestObjectBuilder(
       message: message,
       privateKey: privateKey,
       saltLength: model.SaltLength.values[saltLength.index],
@@ -346,7 +346,7 @@ class RSA {
 
   static Future<String> signPKCS1v15(
       String message, Hash hash, String privateKey) async {
-    var requestBuilder = model.SignPKCS1v15RequestObjectBuilder(
+    var requestBuilder = model.SignPkcs1v15RequestObjectBuilder(
       message: message,
       privateKey: privateKey,
       hash: model.Hash.values[hash.index],
@@ -357,7 +357,7 @@ class RSA {
 
   static Future<Uint8List> signPKCS1v15Bytes(
       Uint8List message, Hash hash, String privateKey) async {
-    var requestBuilder = model.SignPKCS1v15BytesRequestObjectBuilder(
+    var requestBuilder = model.SignPkcs1v15BytesRequestObjectBuilder(
       message: message,
       privateKey: privateKey,
       hash: model.Hash.values[hash.index],
@@ -368,7 +368,7 @@ class RSA {
 
   static Future<bool> verifyPSS(String signature, String message, Hash hash,
       SaltLength saltLength, String publicKey) async {
-    var requestBuilder = model.VerifyPSSRequestObjectBuilder(
+    var requestBuilder = model.VerifyPssrequestObjectBuilder(
       message: message,
       signature: signature,
       publicKey: publicKey,
@@ -381,7 +381,7 @@ class RSA {
 
   static Future<bool> verifyPSSBytes(Uint8List signature, Uint8List message,
       Hash hash, SaltLength saltLength, String publicKey) async {
-    var requestBuilder = model.VerifyPSSBytesRequestObjectBuilder(
+    var requestBuilder = model.VerifyPssbytesRequestObjectBuilder(
       message: message,
       signature: signature,
       publicKey: publicKey,
@@ -394,7 +394,7 @@ class RSA {
 
   static Future<bool> verifyPKCS1v15(
       String signature, String message, Hash hash, String publicKey) async {
-    var requestBuilder = model.VerifyPKCS1v15RequestObjectBuilder(
+    var requestBuilder = model.VerifyPkcs1v15RequestObjectBuilder(
       message: message,
       signature: signature,
       publicKey: publicKey,
@@ -406,7 +406,7 @@ class RSA {
 
   static Future<bool> verifyPKCS1v15Bytes(Uint8List signature,
       Uint8List message, Hash hash, String publicKey) async {
-    var requestBuilder = model.VerifyPKCS1v15BytesRequestObjectBuilder(
+    var requestBuilder = model.VerifyPkcs1v15BytesRequestObjectBuilder(
       message: message,
       signature: signature,
       publicKey: publicKey,

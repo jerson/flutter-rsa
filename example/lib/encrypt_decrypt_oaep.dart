@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_rsa/fast_rsa.dart';
 
-import 'package:rsa_example/main.dart';
-import 'package:rsa_example/shared/button_widget.dart';
-import 'package:rsa_example/shared/input_widget.dart';
-import 'package:rsa_example/shared/title_widget.dart';
+import 'package:fast_rsa_example/main.dart';
+import 'package:fast_rsa_example/shared/button_widget.dart';
+import 'package:fast_rsa_example/shared/input_widget.dart';
+import 'package:fast_rsa_example/shared/title_widget.dart';
 
 class EncryptAndDecryptOAEP extends StatefulWidget {
   const EncryptAndDecryptOAEP({

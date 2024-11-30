@@ -11,4 +11,4 @@ PRODUCT_NAME = fast_rsa_example
 PRODUCT_BUNDLE_IDENTIFIER = dev.jerson.fastRsaExample
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2020 dev.jerson. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 dev.jerson. All rights reserved.

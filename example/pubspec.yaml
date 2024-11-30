@@ -1,33 +1,55 @@
-name: rsa_example
-description: Demonstrates how to use the rsa plugin.
-publish_to: "none"
+name: fast_rsa_example
+description: "Demonstrates how to use the fast_rsa plugin."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: ^3.5.4
 
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
 
+  fast_rsa:
+    # When depending on this package from a real application you should use:
+    #   fast_rsa: ^x.y.z
+    # See https://dart.dev/tools/pub/dependencies#version-constraints
+    # The example app is bundled with the plugin so we use a path dependency on
+    # the parent directory to use the current plugin's version.
+    path: ../
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  fast_rsa:
-    path: ../
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_test:
     sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^4.0.0
+
   test: any
 
-    
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
+# The following section is specific to Flutter packages.
 flutter:
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -39,26 +61,12 @@ flutter:
     - packages/fast_rsa/web/assets/wasm_exec.js
     - packages/fast_rsa/web/assets/rsa.wasm
 
-  # See https://github.com/flutter/flutter/wiki/Desktop-shells#fonts
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: fonts/Roboto/Roboto-Thin.ttf
-          weight: 100
-        - asset: fonts/Roboto/Roboto-Light.ttf
-          weight: 300
-        - asset: fonts/Roboto/Roboto-Regular.ttf
-          weight: 400
-        - asset: fonts/Roboto/Roboto-Medium.ttf
-          weight: 500
-        - asset: fonts/Roboto/Roboto-Bold.ttf
-          weight: 700
-        - asset: fonts/Roboto/Roboto-Black.ttf
-          weight: 900
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # https://flutter.dev/to/resolution-aware-images
+
   # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+  # https://flutter.dev/to/asset-from-package
+
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -77,4 +85,4 @@ flutter:
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # see https://flutter.dev/to/font-from-package
