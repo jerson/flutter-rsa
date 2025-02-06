@@ -18,6 +18,7 @@ class Binding {
 
   late ffi.DynamicLibrary _library;
 
+  @pragma('vm:entry-point')
   factory Binding() {
     return _singleton;
   }
@@ -26,6 +27,7 @@ class Binding {
     _library = openLib();
   }
 
+  @pragma('vm:entry-point')
   static void callBridge(IsolateArguments args) async {
     var result = await Binding().call(args.name, args.payload);
     args.port.send(result);
@@ -63,6 +65,7 @@ class Binding {
     return completer.future;
   }
 
+  @pragma('vm:entry-point')
   Future<Uint8List> call(String name, Uint8List payload) async {
     final callable = _library
         .lookup<ffi.NativeFunction<call_func>>(_callFuncName)
