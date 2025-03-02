@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-import 'package:fast_rsa/bridge/binding_stub.dart'
-    if (dart.library.io) 'package:fast_rsa/bridge/binding.dart'
-    if (dart.library.js) 'package:fast_rsa/bridge/binding_stub.dart';
+import 'package:fast_rsa/fast_rsa_bridge.dart';
+import 'package:fast_rsa/mixin/fast_rsa_response_handlers.dart';
 import 'package:fast_rsa/model/bridge_model_generated.dart' as model;
+import 'package:flutter/services.dart';
 
 class RSAException implements Exception {
   String cause;
@@ -39,68 +38,7 @@ class PKCS12KeyPair {
   PKCS12KeyPair(this.publicKey, this.privateKey, this.certificate);
 }
 
-class RSA {
-  static const MethodChannel _channel = MethodChannel('fast_rsa');
-  static bool bindingEnabled = Binding().isSupported();
-
-  static Future<Uint8List> _call(String name, Uint8List payload) async {
-    if (bindingEnabled) {
-      return await Binding().callAsync(name, payload);
-    }
-    return await _channel.invokeMethod(name, payload);
-  }
-
-  static Future<Uint8List> _bytesResponse(
-      String name, Uint8List payload) async {
-    var data = await _call(name, payload);
-    var response = model.BytesResponse(data);
-    if (response.error != null && response.error != "") {
-      throw RSAException(response.error!);
-    }
-    return Uint8List.fromList(response.output!);
-  }
-
-  static Future<String> _stringResponse(String name, Uint8List payload) async {
-    var data = await _call(name, payload);
-    var response = model.StringResponse(data);
-    if (response.error != null && response.error != "") {
-      throw RSAException(response.error!);
-    }
-    return response.output!;
-  }
-
-  static Future<bool> _boolResponse(String name, Uint8List payload) async {
-    var data = await _call(name, payload);
-    var response = model.BoolResponse(data);
-    if (response.error != null && response.error != "") {
-      throw RSAException(response.error!);
-    }
-    return response.output;
-  }
-
-  static Future<KeyPair> _keyPairResponse(
-      String name, Uint8List payload) async {
-    var data = await _call(name, payload);
-    var response = model.KeyPairResponse(data);
-    if (response.error != null && response.error != "") {
-      throw RSAException(response.error!);
-    }
-    var output = response.output!;
-    return KeyPair(output.publicKey!, output.privateKey!);
-  }
-
-  static Future<PKCS12KeyPair> _pkcs12KeyPairResponse(
-      String name, Uint8List payload) async {
-    var data = await _call(name, payload);
-    var response = model.Pkcs12KeyPairResponse(data);
-    if (response.error != null && response.error != "") {
-      throw RSAException(response.error!);
-    }
-    var output = response.output!;
-    return PKCS12KeyPair(
-        output.publicKey!, output.privateKey!, output.certificate!);
-  }
-
+class RSA with RSAResponseHandlers {
   static Future<String> convertJWKToPrivateKey(
       dynamic data, String keyId) async {
     var requestBuilder = model.ConvertJwtrequestObjectBuilder(
@@ -108,8 +46,8 @@ class RSA {
       keyId: keyId,
     );
 
-    return await _stringResponse(
-        "convertJWKToPrivateKey", requestBuilder.toBytes());
+    return RSABridge.call("convertJWKToPrivateKey", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> convertJWKToPublicKey(
@@ -119,8 +57,8 @@ class RSA {
       keyId: keyId,
     );
 
-    return await _stringResponse(
-        "convertJWKToPublicKey", requestBuilder.toBytes());
+    return RSABridge.call("convertJWKToPublicKey", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> convertKeyPairToPKCS12(
@@ -131,8 +69,8 @@ class RSA {
       privateKey: privateKey,
     );
 
-    return await _stringResponse(
-        "convertKeyPairToPKCS12", requestBuilder.toBytes());
+    return RSABridge.call("convertKeyPairToPKCS12", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<PKCS12KeyPair> convertPKCS12ToKeyPair(
@@ -142,8 +80,8 @@ class RSA {
       pkcs12: pkcs12,
     );
 
-    return await _pkcs12KeyPairResponse(
-        "convertPKCS12ToKeyPair", requestBuilder.toBytes());
+    return RSABridge.call("convertPKCS12ToKeyPair", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.pkcs12KeyPairResponse);
   }
 
   static Future<String> convertPrivateKeyToPKCS8(String privateKey) async {
@@ -151,8 +89,8 @@ class RSA {
       privateKey: privateKey,
     );
 
-    return await _stringResponse(
-        "convertPrivateKeyToPKCS8", requestBuilder.toBytes());
+    return RSABridge.call("convertPrivateKeyToPKCS8", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> convertPrivateKeyToPKCS1(String privateKey) async {
@@ -160,8 +98,8 @@ class RSA {
       privateKey: privateKey,
     );
 
-    return await _stringResponse(
-        "convertPrivateKeyToPKCS1", requestBuilder.toBytes());
+    return RSABridge.call("convertPrivateKeyToPKCS1", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<dynamic> convertPrivateKeyToJWK(String privateKey) async {
@@ -169,8 +107,9 @@ class RSA {
       privateKey: privateKey,
     );
 
-    return jsonDecode(await _stringResponse(
-        "convertPrivateKeyToJWK", requestBuilder.toBytes()));
+    return RSABridge.call("convertPrivateKeyToJWK", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse)
+        .then(jsonDecode);
   }
 
   static Future<String> convertPrivateKeyToPublicKey(String privateKey) async {
@@ -178,8 +117,9 @@ class RSA {
       privateKey: privateKey,
     );
 
-    return await _stringResponse(
-        "convertPrivateKeyToPublicKey", requestBuilder.toBytes());
+    return RSABridge.call(
+            "convertPrivateKeyToPublicKey", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> convertPublicKeyToPKIX(String publicKey) async {
@@ -187,8 +127,8 @@ class RSA {
       publicKey: publicKey,
     );
 
-    return await _stringResponse(
-        "convertPublicKeyToPKIX", requestBuilder.toBytes());
+    return RSABridge.call("convertPublicKeyToPKIX", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> convertPublicKeyToPKCS1(String publicKey) async {
@@ -196,8 +136,8 @@ class RSA {
       publicKey: publicKey,
     );
 
-    return await _stringResponse(
-        "convertPublicKeyToPKCS1", requestBuilder.toBytes());
+    return RSABridge.call("convertPublicKeyToPKCS1", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<dynamic> convertPublicKeyToJWK(String publicKey) async {
@@ -205,8 +145,9 @@ class RSA {
       publicKey: publicKey,
     );
 
-    return jsonDecode(await _stringResponse(
-        "convertPublicKeyToJWK", requestBuilder.toBytes()));
+    return RSABridge.call("convertPublicKeyToJWK", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse)
+        .then(jsonDecode);
   }
 
   static Future<String> decryptPrivateKey(
@@ -216,7 +157,8 @@ class RSA {
       password: password,
     );
 
-    return await _stringResponse("decryptPrivateKey", requestBuilder.toBytes());
+    return RSABridge.call("decryptPrivateKey", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> encryptPrivateKey(
@@ -227,7 +169,8 @@ class RSA {
       cipher: model.Pemcipher.values[cipher.index],
     );
 
-    return await _stringResponse("encryptPrivateKey", requestBuilder.toBytes());
+    return RSABridge.call("encryptPrivateKey", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> decryptOAEP(
@@ -239,7 +182,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _stringResponse("decryptOAEP", requestBuilder.toBytes());
+    return RSABridge.call("decryptOAEP", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<Uint8List> decryptOAEPBytes(
@@ -251,7 +195,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _bytesResponse("decryptOAEPBytes", requestBuilder.toBytes());
+    return RSABridge.call("decryptOAEPBytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.bytesResponse);
   }
 
   static Future<String> decryptPKCS1v15(
@@ -261,7 +206,8 @@ class RSA {
       ciphertext: ciphertext,
     );
 
-    return await _stringResponse("decryptPKCS1v15", requestBuilder.toBytes());
+    return RSABridge.call("decryptPKCS1v15", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<Uint8List> decryptPKCS1v15Bytes(
@@ -271,8 +217,8 @@ class RSA {
       ciphertext: ciphertext,
     );
 
-    return await _bytesResponse(
-        "decryptPKCS1v15Bytes", requestBuilder.toBytes());
+    return RSABridge.call("decryptPKCS1v15Bytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.bytesResponse);
   }
 
   static Future<String> encryptOAEP(
@@ -284,7 +230,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _stringResponse("encryptOAEP", requestBuilder.toBytes());
+    return RSABridge.call("encryptOAEP", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<Uint8List> encryptOAEPBytes(
@@ -296,7 +243,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _bytesResponse("encryptOAEPBytes", requestBuilder.toBytes());
+    return RSABridge.call("encryptOAEPBytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.bytesResponse);
   }
 
   static Future<String> encryptPKCS1v15(
@@ -306,7 +254,8 @@ class RSA {
       publicKey: publicKey,
     );
 
-    return await _stringResponse("encryptPKCS1v15", requestBuilder.toBytes());
+    return RSABridge.call("encryptPKCS1v15", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<Uint8List> encryptPKCS1v15Bytes(
@@ -316,8 +265,8 @@ class RSA {
       publicKey: publicKey,
     );
 
-    return await _bytesResponse(
-        "encryptPKCS1v15Bytes", requestBuilder.toBytes());
+    return RSABridge.call("encryptPKCS1v15Bytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.bytesResponse);
   }
 
   static Future<String> signPSS(String message, Hash hash,
@@ -329,7 +278,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _stringResponse("signPSS", requestBuilder.toBytes());
+    return RSABridge.call("signPSS", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<Uint8List> signPSSBytes(Uint8List message, Hash hash,
@@ -341,7 +291,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _bytesResponse("signPSSBytes", requestBuilder.toBytes());
+    return RSABridge.call("signPSSBytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.bytesResponse);
   }
 
   static Future<String> signPKCS1v15(
@@ -352,7 +303,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _stringResponse("signPKCS1v15", requestBuilder.toBytes());
+    return RSABridge.call("signPKCS1v15", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<Uint8List> signPKCS1v15Bytes(
@@ -363,7 +315,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _bytesResponse("signPKCS1v15Bytes", requestBuilder.toBytes());
+    return RSABridge.call("signPKCS1v15Bytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.bytesResponse);
   }
 
   static Future<bool> verifyPSS(String signature, String message, Hash hash,
@@ -376,7 +329,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _boolResponse("verifyPSS", requestBuilder.toBytes());
+    return RSABridge.call("verifyPSS", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.boolResponse);
   }
 
   static Future<bool> verifyPSSBytes(Uint8List signature, Uint8List message,
@@ -389,7 +343,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _boolResponse("verifyPSSBytes", requestBuilder.toBytes());
+    return RSABridge.call("verifyPSSBytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.boolResponse);
   }
 
   static Future<bool> verifyPKCS1v15(
@@ -401,7 +356,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _boolResponse("verifyPKCS1v15", requestBuilder.toBytes());
+    return RSABridge.call("verifyPKCS1v15", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.boolResponse);
   }
 
   static Future<bool> verifyPKCS1v15Bytes(Uint8List signature,
@@ -413,7 +369,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _boolResponse("verifyPKCS1v15Bytes", requestBuilder.toBytes());
+    return RSABridge.call("verifyPKCS1v15Bytes", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.boolResponse);
   }
 
   static Future<String> hash(String message, Hash hash) async {
@@ -422,7 +379,8 @@ class RSA {
       hash: model.Hash.values[hash.index],
     );
 
-    return await _stringResponse("hash", requestBuilder.toBytes());
+    return RSABridge.call("hash", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<String> base64(String message) async {
@@ -430,7 +388,8 @@ class RSA {
       message: message,
     );
 
-    return await _stringResponse("base64", requestBuilder.toBytes());
+    return RSABridge.call("base64", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.stringResponse);
   }
 
   static Future<KeyPair> generate(int bits) async {
@@ -438,6 +397,7 @@ class RSA {
       nBits: bits,
     );
 
-    return await _keyPairResponse("generate", requestBuilder.toBytes());
+    return RSABridge.call("generate", requestBuilder.toBytes())
+        .then(RSAResponseHandlers.keyPairResponse);
   }
 }

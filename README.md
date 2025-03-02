@@ -11,18 +11,14 @@ Library for use RSA with support for android, ios, macos, windows, linux and web
 [![Integration Tests iOS](https://github.com/jerson/flutter-rsa/actions/workflows/tests_ios.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_ios.yml)
 
 [![Integration Tests macOS](https://github.com/jerson/flutter-rsa/actions/workflows/tests_macos.yml/badge.svg)](https://github.com/jerson/flutter-rsa/actions/workflows/tests_macos.yml)
+
 ## Contents
- 
+
 - [Fast RSA](#fast-rsa)
   - [Contents](#contents)
   - [Usage](#usage)
-    - [Encrypt methods](#encrypt-methods)
-    - [Decrypt methods](#decrypt-methods)
-    - [Sign methods](#sign-methods)
-    - [Verify methods](#verify-methods)
-    - [Generate Methods](#generate-methods)
-    - [Convert Methods](#convert-methods)
-    - [Util Methods](#util-methods)
+    - [Async methods](#async-methods)
+    - [Sync methods](#sync-methods)
   - [Setup](#setup)
     - [Android](#android)
     - [iOS](#ios)
@@ -35,7 +31,9 @@ Library for use RSA with support for android, ios, macos, windows, linux and web
 
 ## Usage
 
-### Encrypt methods
+### Async Methods
+
+#### Encrypt methods
 
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
@@ -48,7 +46,7 @@ var result = await RSA.encryptPKCS1v15Bytes(messageBytes, publicKey)
 
 ```
 
-### Decrypt methods
+#### Decrypt methods
 
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
@@ -61,7 +59,7 @@ var result = await RSA.decryptPKCS1v15Bytes(messageBytes, privateKey)
 
 ```
 
-### Sign methods
+#### Sign methods
 
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
@@ -74,7 +72,7 @@ var result = await RSA.signPKCS1v15Bytes(messageBytes, Hash.SHA256, privateKey)
 
 ```
 
-### Verify methods
+#### Verify methods
 
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
@@ -87,7 +85,7 @@ var result = await RSA.verifyPKCS1v15Bytes(signatureBytes, messageBytes, Hash.SH
 
 ```
 
-### Generate Methods
+#### Generate Methods
 
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
@@ -96,38 +94,136 @@ var result = await RSA.generate(2048)
 
 ```
 
-### Convert Methods
+#### Convert Methods
 
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
 
-var result = await RSA.convertJWKToPrivateKey(data, keyId)
-var result = await RSA.convertJWKToPublicKey(data, keyId)
+var result = await RSA.convertJWKToPrivateKey(data, keyId);
+var result = await RSA.convertJWKToPublicKey(data, keyId);
 
-var result = await RSA.convertKeyPairToPKCS12(privateKey, certificate, password)
-var result = await RSA.convertPKCS12ToKeyPair(pkcs12, password)
+var result = await RSA.convertKeyPairToPKCS12(privateKey, certificate, password);
+var result = await RSA.convertPKCS12ToKeyPair(pkcs12, password);
 
-var result = await RSA.convertPrivateKeyToPKCS8(privateKey)
-var result = await RSA.convertPrivateKeyToPKCS1(privateKey)
-var result = await RSA.convertPrivateKeyToJWK(privateKey)
+var result = await RSA.convertPrivateKeyToPKCS8(privateKey);
+var result = await RSA.convertPrivateKeyToPKCS1(privateKey);
+var result = await RSA.convertPrivateKeyToJWK(privateKey);
 
-var result = await RSA.convertPrivateKeyToPublicKey(privateKey)
+var result = await RSA.convertPrivateKeyToPublicKey(privateKey);
 
-var result = await RSA.convertPublicKeyToPKIX(publicKey)
-var result = await RSA.convertPublicKeyToPKCS1(publicKey)
-var result = await RSA.convertPublicKeyToJWK(publicKey)
+var result = await RSA.convertPublicKeyToPKIX(publicKey);
+var result = await RSA.convertPublicKeyToPKCS1(publicKey);
+var result = await RSA.convertPublicKeyToJWK(publicKey);
 
-var result = await RSA.encryptPrivateKey(privateKey, password, PEMCipher.PEMCIPHER_AES256)
-var result = await RSA.decryptPrivateKey(privateKeyEncrypted, password)
+var result = await RSA.encryptPrivateKey(privateKey, password, PEMCipher.PEMCIPHER_AES256);
+var result = await RSA.decryptPrivateKey(privateKeyEncrypted, password);
 ```
 
-### Util Methods
+#### Util Methods
 
 ```dart
 import 'package:fast_rsa/fast_rsa.dart';
 
-var result = await RSA.hash(message, Hash.SHA256)
-var result = await RSA.base64(message)
+var result = await RSA.hash(message, Hash.SHA256);
+var result = await RSA.base64(message);
+
+```
+
+### Sync Methods
+
+#### Encrypt methods
+
+```dart
+import 'package:fast_rsa/fast_rsa_sync.dart';
+
+var result = RSASync.encryptOAEP(message, label, Hash.HASH_SHA256, publicKey);
+var result = RSASync.encryptPKCS1v15(message, publicKey);
+
+var result = RSASync.encryptOAEPBytes(messageBytes, label, Hash.SHA256, publicKey);
+var result = RSASync.encryptPKCS1v15Bytes(messageBytes, publicKey);
+
+```
+
+#### Decrypt methods
+
+```dart
+import 'package:fast_rsa/fast_rsa_sync.dart';
+
+var result = RSASync.decryptOAEP(message, label, Hash.HASH_SHA256, privateKey);
+var result = RSASync.decryptPKCS1v15(message, privateKey);
+
+var result = RSASync.decryptOAEPBytes(messageBytes, label, Hash.SHA256, privateKey);
+var result = RSASync.decryptPKCS1v15Bytes(messageBytes, privateKey);
+
+```
+
+#### Sign methods
+
+```dart
+import 'package:fast_rsa/fast_rsa_sync.dart';
+
+var result = RSASync.signPSS(message, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, privateKey);
+var result = RSASync.signPKCS1v15(message, Hash.SHA256, privateKey);
+
+var result = RSASync.signPSSBytes(messageBytes, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, privateKey);
+var result = RSASync.signPKCS1v15Bytes(messageBytes, Hash.SHA256, privateKey);
+
+```
+
+#### Verify methods
+
+```dart
+import 'package:fast_rsa/fast_rsa_sync.dart';
+
+var result = RSASync.verifyPSS(signature, message, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, publicKey);
+var result = RSASync.verifyPKCS1v15(signature, message, Hash.SHA256, publicKey);
+
+var result = RSASync.verifyPSSBytes(signatureBytes, messageBytes, Hash.SHA256, SaltLength.SALTLENGTH_AUTO, publicKey);
+var result = RSASync.verifyPKCS1v15Bytes(signatureBytes, messageBytes, Hash.SHA256, publicKey);
+
+```
+
+#### Generate Methods
+
+```dart
+import 'package:fast_rsa/fast_rsa_sync.dart';
+
+var result = RSASync.generate(2048)
+
+```
+
+#### Convert Methods
+
+```dart
+import 'package:fast_rsa/fast_rsa_sync.dart';
+
+var result = RSASync.convertJWKToPrivateKey(data, keyId);
+var result = RSASync.convertJWKToPublicKey(data, keyId);
+
+var result = RSASync.convertKeyPairToPKCS12(privateKey, certificate, password);
+var result = RSASync.convertPKCS12ToKeyPair(pkcs12, password);
+
+var result = RSASync.convertPrivateKeyToPKCS8(privateKey);
+var result = RSASync.convertPrivateKeyToPKCS1(privateKey);
+var result = RSASync.convertPrivateKeyToJWK(privateKey);
+
+var result = RSASync.convertPrivateKeyToPublicKey(privateKey);
+
+var result = RSASync.convertPublicKeyToPKIX(publicKey);
+var result = RSASync.convertPublicKeyToPKCS1(publicKey);
+var result = RSASync.convertPublicKeyToJWK(publicKey);
+
+var result = RSASync.encryptPrivateKey(privateKey, password, PEMCipher.PEMCIPHER_AES256);
+var result = RSASync.decryptPrivateKey(privateKeyEncrypted, password);
+```
+
+#### Util Methods
+
+```dart
+import 'package:fast_rsa/fast_rsa_sync.dart';
+
+var result = RSASync.hash(message, Hash.SHA256);
+var result = RSASync.base64(message);
 
 ```
 

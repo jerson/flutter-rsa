@@ -24,8 +24,8 @@ class FastRsaPlugin {
     channel.setMethodCallHandler(instance.handleMethodCall);
   }
 
-  Future<dynamic> handleMethodCall(MethodCall call) async {
-    return await bridgeCall(call.method, call.arguments);
+  Future<dynamic> handleMethodCall(MethodCall call) {
+    return bridgeCall(call.method, call.arguments);
   }
 
   void listen() async {

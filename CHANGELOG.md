@@ -1,3 +1,6 @@
+## 3.8.0
+- Add RSASync methods for all Platforms but web
+
 ## 3.7.1
 - Moved flutter_lints to dev dependencies
 
