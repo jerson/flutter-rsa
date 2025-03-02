@@ -1,114 +1,112 @@
 import 'dart:async';
-import 'dart:ffi' as ffi;
+import 'dart:ffi';
+import 'dart:io' show Platform;
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:fast_rsa/fast_rsa.dart';
 import 'package:ffi/ffi.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fast_rsa/bridge/ffi.dart';
 import 'package:fast_rsa/bridge/isolate.dart';
-import 'package:flutter/foundation.dart';
+import 'package:fast_rsa/fast_rsa.dart';
 import 'package:path/path.dart' as Path;
 
 class Binding {
   static final String _callFuncName = 'RSABridgeCall';
   static final String _libraryName = 'librsa_bridge';
-  static final Binding _singleton = Binding._internal();
+  static final Binding _instance = Binding._internal();
 
-  late ffi.DynamicLibrary _library;
+  late final DynamicLibrary _library;
+
+  late final BridgeCallDart _bridgeCall;
 
   factory Binding() {
-    return _singleton;
+    return _instance;
   }
 
   Binding._internal() {
     _library = openLib();
+    _bridgeCall =
+        _library.lookupFunction<BridgeCallC, BridgeCallDart>(_callFuncName);
   }
 
-  static void callBridge(IsolateArguments args) async {
-    var result = await Binding().call(args.name, args.payload);
+  @pragma('vm:entry-point')
+  static void _callBridge(IsolateArguments args) {
+    var result = _instance.call(args.name, args.payload);
     args.port.send(result);
   }
 
   Future<Uint8List> callAsync(String name, Uint8List payload) async {
-    final port = ReceivePort('${_libraryName}_port');
-    final args = IsolateArguments(name, payload, port.sendPort);
-    final completer = new Completer<Uint8List>();
+    final port = ReceivePort();
+    final completer = Completer<Uint8List>();
 
-    final isolate = await Isolate.spawn(
-      callBridge,
-      args,
-      errorsAreFatal: false,
-      debugName: '${_libraryName}_isolate',
-      onError: port.sendPort,
-    );
+    try {
+      final isolate = await Isolate.spawn(
+        _callBridge,
+        IsolateArguments(name, payload, port.sendPort),
+        errorsAreFatal: false,
+        debugName: '${_libraryName}_isolate',
+        onError: port.sendPort,
+      );
 
-    port.listen(
-      (message) async {
-        if (message is Uint8List) {
-          completer.complete(message);
-        } else if (message is List) {
-          completer.completeError(message.firstOrNull ?? "internal error");
-        } else {
-          completer.completeError(message ?? "spawn error");
+      port.listen((message) {
+        try {
+          if (message is Uint8List) {
+            completer.complete(message);
+          } else if (message is List && message.isNotEmpty) {
+            completer.completeError(message.first ?? "internal error");
+          } else {
+            completer.completeError("spawn error");
+          }
+        } finally {
+          port.close();
+          isolate.kill(priority: Isolate.beforeNextEvent);
         }
-        port.close();
-      },
-      onDone: () {
-        isolate.kill(priority: Isolate.beforeNextEvent);
-      },
-    );
+      });
 
-    return completer.future;
+      return completer.future;
+    } catch (e) {
+      port.close();
+      throw RSAException("Failed to start isolate: $e");
+    }
   }
 
-  Future<Uint8List> call(String name, Uint8List payload) async {
-    final callable = _library
-        .lookup<ffi.NativeFunction<call_func>>(_callFuncName)
-        .asFunction<Call>();
-
-    final pointer = malloc<ffi.Uint8>(payload.length);
-
-    // https://github.com/dart-lang/ffi/issues/27
-    // https://github.com/objectbox/objectbox-dart/issues/69
-    for (var i = 0; i < payload.length; i++) {
-      pointer[i] = payload[i];
+  Uint8List call(String name, Uint8List payload) {
+    if (_bridgeCall == null) {
+      throw RSAException(
+          "FFI function ${_callFuncName} is not initialized. Check library loading.");
     }
-    final payloadPointer = pointer.cast<ffi.Void>();
-    final namePointer = toUtf8(name);
 
-    final result = callable(namePointer, payloadPointer, payload.length);
+    final namePointer = name.toNativeUtf8();
+    final payloadPointer = malloc.allocate<Uint8>(payload.length);
+    payloadPointer.asTypedList(payload.length).setAll(0, payload);
+
+    final result =
+        _bridgeCall(namePointer, payloadPointer.cast<Void>(), payload.length);
+    if (result.address == 0) {
+      throw RSAException(
+          "FFI function ${_callFuncName} returned null pointer. Check rsa-mobile implementation.");
+    }
 
     malloc.free(namePointer);
-    malloc.free(pointer);
+    malloc.free(payloadPointer);
 
-    handleError(result.ref.error, result);
-
-    final output =
-        result.ref.message.cast<ffi.Uint8>().asTypedList(result.ref.size);
+    handleError(result.ref.errorMessage, result);
+    final output = result.ref.toUint8List();
     freeResult(result);
+
     return output;
   }
 
-  void handleError(
-      ffi.Pointer<Utf8> error, ffi.Pointer<FFIBytesReturn> result) {
-    if (error.address != ffi.nullptr.address) {
-      var message = fromUtf8(error);
+  void handleError(String? error, Pointer<BytesReturn> result) {
+    if (error != null && error.isNotEmpty) {
       freeResult(result);
-      throw new RSAException(message);
+      throw RSAException(error);
     }
   }
 
-  ffi.Pointer<Utf8> toUtf8(String? text) {
-    return text == null ? "".toNativeUtf8() : text.toNativeUtf8();
-  }
-
-  String fromUtf8(ffi.Pointer<Utf8>? text) {
-    return text == null ? "" : text.toDartString();
-  }
-
-  void freeResult(ffi.Pointer<FFIBytesReturn> result) {
+  void freeResult(Pointer<BytesReturn> result) {
     if (!Platform.isWindows) {
       malloc.free(result);
     }
@@ -142,7 +140,7 @@ class Binding {
     }
   }
 
-  ffi.DynamicLibrary openLib() {
+  DynamicLibrary openLib() {
     var isFlutterTest = Platform.environment.containsKey('FLUTTER_TEST');
 
     if (Platform.isMacOS || Platform.isIOS) {
@@ -152,13 +150,13 @@ class Binding {
         var ffiFile = Path.join(
             appDirectory.path, "Contents", "Frameworks", "$_libraryName.dylib");
         validateTestFFIFile(ffiFile);
-        return ffi.DynamicLibrary.open(ffiFile);
+        return DynamicLibrary.open(ffiFile);
       }
       if (Platform.isMacOS) {
-        return ffi.DynamicLibrary.open("$_libraryName.dylib");
+        return DynamicLibrary.open("$_libraryName.dylib");
       }
       if (Platform.isIOS) {
-        return ffi.DynamicLibrary.process();
+        return DynamicLibrary.process();
       }
     }
 
@@ -169,24 +167,24 @@ class Binding {
 
         var ffiFile = 'build/linux/$arch/debug/bundle/lib/$_libraryName.so';
         validateTestFFIFile(ffiFile);
-        return ffi.DynamicLibrary.open(ffiFile);
+        return DynamicLibrary.open(ffiFile);
       }
 
       if (Platform.isLinux) {
         try {
-          return ffi.DynamicLibrary.open("$_libraryName.so");
+          return DynamicLibrary.open("$_libraryName.so");
         } catch (e) {
           print(e);
           var binary = File("/proc/self/cmdline").readAsStringSync();
           var suggestedFile =
               Path.join(Path.dirname(binary), "lib", "$_libraryName.so");
-          return ffi.DynamicLibrary.open(suggestedFile);
+          return DynamicLibrary.open(suggestedFile);
         }
       }
 
       if (Platform.isAndroid) {
         try {
-          return ffi.DynamicLibrary.open("$_libraryName.so");
+          return DynamicLibrary.open("$_libraryName.so");
         } catch (e) {
           print("fallback to open DynamicLibrary on older devices");
           //fallback for devices that cannot load dynamic libraries by name: load the library with an absolute path
@@ -197,7 +195,7 @@ class Binding {
           appid = String.fromCharCodes(
               appid.codeUnits.where((element) => element != 0));
           final loadPath = "/data/data/$appid/lib/$_libraryName.so";
-          return ffi.DynamicLibrary.open(loadPath);
+          return DynamicLibrary.open(loadPath);
         }
       }
     }
@@ -210,9 +208,9 @@ class Binding {
         var ffiFile = Path.canonicalize(Path.join(
             r'build\windows', arch, r'runner\Debug', '$_libraryName.dll'));
         validateTestFFIFile(ffiFile);
-        return ffi.DynamicLibrary.open(ffiFile);
+        return DynamicLibrary.open(ffiFile);
       }
-      return ffi.DynamicLibrary.open("$_libraryName.dll");
+      return DynamicLibrary.open("$_libraryName.dll");
     }
 
     throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');

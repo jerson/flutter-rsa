@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fast_rsa/fast_rsa.dart';
+import 'package:fast_rsa/fast_rsa_sync.dart';
 
 import 'package:fast_rsa_example/shared/button_widget.dart';
 import 'package:fast_rsa_example/shared/title_widget.dart';
