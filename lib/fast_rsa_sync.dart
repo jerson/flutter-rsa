@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:fast_rsa/fast_rsa.dart';
 import 'package:fast_rsa/fast_rsa_bridge.dart';
+import 'package:fast_rsa/mixin/fast_rsa_response_handlers.dart';
 import 'package:fast_rsa/model/bridge_model_generated.dart' as model;
 import 'package:flutter/services.dart';
-
-import 'mixin/fast_rsa_response_handlers.dart';
 
 extension RSASync on RSA {
   static String convertJWKToPrivateKey(dynamic data, String keyId) {
