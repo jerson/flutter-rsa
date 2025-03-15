@@ -81,6 +81,8 @@ extern "C" {
 #endif
 
 extern __declspec(dllexport) BytesReturn* RSABridgeCall(char* name, void* payload, int payloadSize);
+extern __declspec(dllexport) BytesReturn* RSAEncodeText(char* input, char* encoding);
+extern __declspec(dllexport) char* RSADecodeText(void* input, int size, char* encoding, int fatal, int ignoreBOM, int stream);
 
 #ifdef __cplusplus
 }

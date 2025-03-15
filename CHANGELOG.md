@@ -1,3 +1,6 @@
+## 3.8.1
+- Updates binaries + Updated Android SDK to r28 for 16KB support
+
 ## 3.8.0
 - Add RSASync methods for all Platforms but web
 
