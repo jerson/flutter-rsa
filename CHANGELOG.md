@@ -1,3 +1,6 @@
+## 3.8.2
+- Update iOS podspec to use xcconfig for shared objects
+
 ## 3.8.1
 - Updates binaries + Updated Android SDK to r28 for 16KB support
 
