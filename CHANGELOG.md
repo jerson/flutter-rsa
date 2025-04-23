@@ -1,3 +1,6 @@
+## 3.8.3
+- Update iOS podspec and xcframework to avoid force load 
+
 ## 3.8.2
 - Update iOS podspec to use xcconfig for shared objects
 

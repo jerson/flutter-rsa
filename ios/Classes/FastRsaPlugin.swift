@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import RSABridge
 
 public class FastRsaPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -12,6 +13,9 @@ public class FastRsaPlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "getPlatformVersion":
       result("iOS " + UIDevice.current.systemVersion)
+    case "init":
+      _ = RSABridge.RSAEncodeText(nil, nil)
+      result("success")
     default:
       result(FlutterMethodNotImplemented)
     }

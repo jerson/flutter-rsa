@@ -1,5 +1,5 @@
 PODS:
-  - fast_rsa (0.6.0):
+  - fast_rsa (0.7.0):
     - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  fast_rsa: f8430fbf47ba59e7ef2fd84a12f5f391d1086727
+  fast_rsa: ddcc7ba1b9b9a1748c2506841269e6a2036492bc
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
 

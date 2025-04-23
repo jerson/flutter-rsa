@@ -1,0 +1,4 @@
+framework module "RSABridge" {
+	header "librsa_bridge.h"
+  export *
+}
