@@ -14,10 +14,13 @@ public class FastRsaPlugin: NSObject, FlutterPlugin {
     case "getPlatformVersion":
       result("iOS " + UIDevice.current.systemVersion)
     case "init":
-      _ = RSABridge.RSAEncodeText(nil, nil)
+        _ = RSABridge.RSAEncodeText(nil, nil)
+        _ = RSABridge.RSABridgeCall(nil, nil, 0)
+        _ = RSABridge.RSAEncodeText(nil, nil)
       result("success")
     default:
       result(FlutterMethodNotImplemented)
     }
   }
 }
+
