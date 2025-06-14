@@ -16,7 +16,7 @@ public class FastRsaPlugin: NSObject, FlutterPlugin {
     case "init":
         _ = RSABridge.RSAEncodeText(nil, nil)
         _ = RSABridge.RSABridgeCall(nil, nil, 0)
-        _ = RSABridge.RSAEncodeText(nil, nil)
+        _ = RSABridge.RSADecodeText(nil, 0, nil, 0, 0, 0)
       result("success")
     default:
       result(FlutterMethodNotImplemented)
