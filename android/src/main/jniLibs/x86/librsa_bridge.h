@@ -81,6 +81,8 @@ extern "C" {
 #endif
 
 extern BytesReturn* RSABridgeCall(char* name, void* payload, int payloadSize);
+extern BytesReturn* RSAEncodeText(char* input, char* encoding);
+extern char* RSADecodeText(void* input, int size, char* encoding, int fatal, int ignoreBOM, int stream);
 
 #ifdef __cplusplus
 }
